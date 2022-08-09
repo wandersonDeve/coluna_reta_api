@@ -3,7 +3,6 @@ import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import 'reflect-metadata';
-import { UserModule } from 'src/modules/user.module';
 
 @Module({
   imports: [
@@ -21,8 +20,7 @@ import { UserModule } from 'src/modules/user.module';
         logging: true,
       }),
     }),
-    ScheduleModule.forRoot(),
-    UserModule,
+    ScheduleModule.forRoot()
   ],
   controllers: [],
   providers: [],
