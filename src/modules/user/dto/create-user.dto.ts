@@ -3,8 +3,9 @@ import { UserRole } from '@prisma/client';
 import {
   IsEmail,
   IsNotEmpty,
-  IsString, Length,
-  Matches
+  IsString,
+  Length,
+  Matches,
 } from 'class-validator';
 
 export class CreateUserDto {
@@ -44,5 +45,4 @@ export class CreateUserDto {
     example: 'User#5678@!',
   })
   passwordHash: string;
-
 }
