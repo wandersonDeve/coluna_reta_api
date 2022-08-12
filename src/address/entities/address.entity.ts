@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client';
 
-export class AddressSucessResponseDTO {
+export class Address implements Prisma.AddressUncheckedCreateInput {
   id?: number;
   zip_code: string;
   street: string;
