@@ -11,7 +11,7 @@ datasource db {
 model User {
   id Int @id      @default(autoincrement())
   name     String @db.VarChar(45)
-  role     UserRole
+  role     String
   email    String @unique @db.VarChar(45)
   passwordHash String @map("password_hash")
   createdAt DateTime @default(now()) @map("created_at")
@@ -20,12 +20,6 @@ model User {
   @@index([id, role])
 
   @@map("user")
-}
-
-enum UserRole {
-  ADMIN
-  BACKOFFICE
-  CAMPO
 }
 
 model Address {
