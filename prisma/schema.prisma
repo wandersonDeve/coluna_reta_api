@@ -5,4 +5,27 @@ generator client {
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model User {
+  id String @id @unique @default(uuid())
+
+  name     String @db.VarChar(45)
+  role     UserRole
+  email    String @unique @db.VarChar(45)
+  passwordHash String @map("password_hash")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([id, role])
+
+  @@map("user")
+}
+
+enum UserRole {
+  ADMIN
+  BACKOFFICE
+  CAMPO
 }
