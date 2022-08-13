@@ -58,6 +58,7 @@ export class UserService {
           name: true,
           role: true,
           email: true,
+          deletedAt: true,
         },
       })
       .catch(handleError);
@@ -98,6 +99,13 @@ export class UserService {
 
   async deleteUser(id: number) {
     await this.findById(id);
-    await this.prisma.user.delete({ where: { id } }).catch(handleError);
+    await this.prisma.user
+      .update({
+        where: { id },
+        data: {
+          deletedAt: new Date(),
+        },
+      })
+      .catch(handleError);
   }
 }
