@@ -52,7 +52,7 @@ export class UserController {
     @Param('id') userId: number,
     @Body() dto: UpdateUserDto,
   ) {
-    return this.userService.updateMyAccount(userId, dto);
+    return this.userService.updateUser(userId, dto);
   }
 
   @Delete('delete/:id')
