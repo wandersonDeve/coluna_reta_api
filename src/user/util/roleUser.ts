@@ -1,5 +1,5 @@
 export enum UserRole {
-  ADMIN = "admin",
-  BACKOFICCE = "backoficce",
-  CAMPO = "campo"
+  ADMIN = "ADMIN",
+  BACKOFICCE = "BACKOFFICE",
+  CAMPO = "CAMPO"
 }

@@ -11,7 +11,6 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { User } from 'src/user/entities/user.entity';
 import { AuthService } from './auth.service';
-import { LoginUserResponseDto } from './dto/login-user-response.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { LoggedUser } from './logged-user.decorator';
 
@@ -29,7 +28,7 @@ export class AuthController {
     return this.authService.LoginUser(loginUserDto);
   }
 
-  @Get('/user')
+  @Get('/user-logged')
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
   @ApiOperation({
