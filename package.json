@@ -1,7 +1,7 @@
 {
   "name": "coluna_reta_api",
   "engines": {
-    "node": "16.x"
+    "node": "18.x"
   },
   "version": "0.0.1",
   "description": "",
