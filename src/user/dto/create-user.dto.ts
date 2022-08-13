@@ -32,7 +32,7 @@ export class CreateUserDto {
   @Length(5, 45)
   @ApiProperty({
     description: 'The email of the user.',
-    example: 'user@user.com',
+    example: 'reta@1.com',
   })
   email: string;
 
@@ -43,7 +43,7 @@ export class CreateUserDto {
   })
   @ApiProperty({
     description: 'The password of the user.',
-    example: 'User#5678@!',
+    example: 'Reta12@#',
   })
   passwordHash: string;
 
