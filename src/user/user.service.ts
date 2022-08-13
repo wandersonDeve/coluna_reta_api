@@ -2,9 +2,10 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'prisma/service/prisma.service';
+import { handleError } from 'src/utils/handle-error.util';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
+import { UserRole } from './util/roleUser';
 
 @Injectable()
 export class UserService {
@@ -13,20 +14,22 @@ export class UserService {
   async create(dto: CreateUserDto) {
     const data: Prisma.UserCreateInput = {
       name: dto.name,
-      role: dto.role,
+      role: UserRole.BACKOFICCE,
       email: dto.email,
       passwordHash: await bcrypt.hash(dto.passwordHash, 10),
     };
 
-    return await this.prisma.user.create({
-      data,
-      select: {
-        id: true,
-        name: true,
-        role: true,
-        email: true,
-      },
-    });
+    return await this.prisma.user
+      .create({
+        data,
+        select: {
+          id: true,
+          name: true,
+          role: true,
+          email: true,
+        },
+      })
+      .catch(handleError);
   }
 
   async findAll() {
@@ -37,6 +40,7 @@ export class UserService {
           name: true,
         },
       })
+      .catch(handleError);
 
     if (allUsers.length === 0) {
       throw new NotFoundException('No a users found');
@@ -56,6 +60,7 @@ export class UserService {
           email: true,
         },
       })
+      .catch(handleError);
 
     if (!record) {
       throw new NotFoundException(`Record with Id '${userId}' not found!`);
@@ -68,7 +73,7 @@ export class UserService {
     return await this.findById(id);
   }
 
-  async updateMyAccount(userId: number, dto: UpdateUserDto) {
+  async updateUser(userId: number, dto: UpdateUserDto) {
     await this.findById(userId);
 
     const data = { ...dto };
@@ -88,10 +93,11 @@ export class UserService {
           email: true,
         },
       })
+      .catch(handleError);
   }
 
   async deleteUser(id: number) {
     await this.findById(id);
-    await this.prisma.user.delete({ where: { id } });
+    await this.prisma.user.delete({ where: { id } }).catch(handleError);
   }
 }
