@@ -30,13 +30,12 @@ export class UserService {
   }
 
   async findAll() {
-    const allUsers = await this.prisma.user
-      .findMany({
-        select: {
-          id: true,
-          name: true,
-        },
-      })
+    const allUsers = await this.prisma.user.findMany({
+      select: {
+        id: true,
+        name: true,
+      },
+    });
 
     if (allUsers.length === 0) {
       throw new NotFoundException('No a users found');
@@ -46,16 +45,15 @@ export class UserService {
   }
 
   async findById(userId: number) {
-    const record = await this.prisma.user
-      .findUnique({
-        where: { id: userId },
-        select: {
-          id: true,
-          name: true,
-          role: true,
-          email: true,
-        },
-      })
+    const record = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        id: true,
+        name: true,
+        role: true,
+        email: true,
+      },
+    });
 
     if (!record) {
       throw new NotFoundException(`Record with Id '${userId}' not found!`);
@@ -77,17 +75,16 @@ export class UserService {
       data.passwordHash = await bcrypt.hash(data.passwordHash, 10);
     }
 
-    return await this.prisma.user
-      .update({
-        where: { id: userId },
-        data,
-        select: {
-          id: true,
-          name: true,
-          role: true,
-          email: true,
-        },
-      })
+    return await this.prisma.user.update({
+      where: { id: userId },
+      data,
+      select: {
+        id: true,
+        name: true,
+        role: true,
+        email: true,
+      },
+    });
   }
 
   async deleteUser(id: number) {

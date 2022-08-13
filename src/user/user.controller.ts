@@ -48,10 +48,7 @@ export class UserController {
   @ApiOperation({
     summary: 'Edit a user by id',
   })
-  updateMyAccount(
-    @Param('id') userId: number,
-    @Body() dto: UpdateUserDto,
-  ) {
+  updateMyAccount(@Param('id') userId: number, @Body() dto: UpdateUserDto) {
     return this.userService.updateMyAccount(userId, dto);
   }
 
