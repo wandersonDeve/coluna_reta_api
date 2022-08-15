@@ -9,4 +9,5 @@ export class User {
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
+  active: Boolean;
 }

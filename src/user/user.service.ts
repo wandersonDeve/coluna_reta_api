@@ -38,6 +38,7 @@ export class UserService {
         select: {
           id: true,
           name: true,
+          active: true
         },
       })
       .catch(handleError);
@@ -58,7 +59,7 @@ export class UserService {
           name: true,
           role: true,
           email: true,
-          deletedAt: true,
+          active: true,
         },
       })
       .catch(handleError);
@@ -104,6 +105,7 @@ export class UserService {
         where: { id },
         data: {
           deletedAt: new Date(),
+          active: false
         },
       })
       .catch(handleError);
