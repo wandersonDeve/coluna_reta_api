@@ -8,6 +8,7 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  Headers,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -36,8 +37,8 @@ export class UserController {
   @ApiOperation({
     summary: 'List all users',
   })
-  findAll(@Param() params: PageOptionsDto) {
-    return this.findAllUsersServices.execute(params);
+  findAll(@Headers() headers: PageOptionsDto) {
+    return this.findAllUsersServices.execute(headers);
   }
 
   @Get('search/:id')
