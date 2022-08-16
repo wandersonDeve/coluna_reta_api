@@ -13,12 +13,16 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-
+import { FindAllUsersServices } from './services';
+import { PageOptionsDto } from './dto/pagination';
 
 @ApiTags('user')
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private findAllUsersServices: FindAllUsersServices,
+  ) {}
 
   @Post('create')
   @ApiOperation({
@@ -32,8 +36,8 @@ export class UserController {
   @ApiOperation({
     summary: 'List all users',
   })
-  findAll() {
-    return this.userService.findAll();
+  findAll(@Param() params: PageOptionsDto) {
+    return this.findAllUsersServices.execute(params);
   }
 
   @Get('search/:id')

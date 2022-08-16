@@ -2,8 +2,9 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
   IsNotEmpty,
-  IsString, Length,
-  Matches
+  IsString,
+  Length,
+  Matches,
 } from 'class-validator';
 
 export class CreateUserDto {
@@ -20,7 +21,7 @@ export class CreateUserDto {
   @IsNotEmpty()
   @ApiProperty({
     description: 'Role of the user available on the platform.',
-    example: "BACKOFICCE"
+    example: 'BACKOFICCE',
   })
   role: string;
 
@@ -43,5 +44,4 @@ export class CreateUserDto {
     example: 'User#5678@!',
   })
   passwordHash: string;
-
-} 
+}
