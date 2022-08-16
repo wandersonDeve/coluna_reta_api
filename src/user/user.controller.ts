@@ -19,7 +19,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { UserService } from './user.service';
 
-@ApiTags('user')
+@ApiTags('User')
 @UseGuards(AuthGuard())
 @ApiBearerAuth()
 @Controller('user')
@@ -42,7 +42,7 @@ export class UserController {
     return this.userService.findAll();
   }
 
-  @Get('search/:id')
+  @Get('search/:userId')
   @ApiOperation({
     summary: 'View a user by Id - (FOR ADMIN).',
   })
@@ -59,9 +59,9 @@ export class UserController {
     return this.userService.searchUsers(searchUserDto);
   }
 
-  @Patch('update-user/:id')
+  @Patch('update/:userId')
   @ApiOperation({
-    summary: 'Edit a user by id - (FOR ADMIN).',
+    summary: 'Edit a user by Id - (FOR ADMIN).',
   })
   updateUser(
     @LoggedAdmin() user: User,
@@ -71,7 +71,7 @@ export class UserController {
     return this.userService.updateUser(userId, updateUserDto);
   }
 
-  @Delete('delete/:id')
+  @Delete('delete/:userId')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({
     summary: 'Remove a user by Id - (FOR ADMIN).',

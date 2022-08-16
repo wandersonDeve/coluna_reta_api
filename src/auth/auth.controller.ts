@@ -14,8 +14,8 @@ import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/login-user.dto';
 import { LoggedUser } from './logged-user.decorator';
 
+@ApiTags('Auth')
 @Controller('auth')
-@ApiTags('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
