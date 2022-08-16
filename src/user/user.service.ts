@@ -4,6 +4,7 @@ import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'prisma/service/prisma.service';
 import { handleError } from 'src/utils/handle-error.util';
 import { CreateUserDto } from './dto/create-user.dto';
+import { SearchUserDto } from './dto/search.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserRole } from './util/roleUser';
 
@@ -11,12 +12,12 @@ import { UserRole } from './util/roleUser';
 export class UserService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(dto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto) {
     const data: Prisma.UserCreateInput = {
-      name: dto.name,
+      name: createUserDto.name,
       role: UserRole.BACKOFICCE,
-      email: dto.email,
-      passwordHash: await bcrypt.hash(dto.passwordHash, 10),
+      email: createUserDto.email,
+      passwordHash: await bcrypt.hash(createUserDto.passwordHash, 10),
     };
 
     return await this.prisma.user
@@ -38,7 +39,7 @@ export class UserService {
         select: {
           id: true,
           name: true,
-          active: true
+          active: true,
         },
       })
       .catch(handleError);
@@ -71,14 +72,58 @@ export class UserService {
     return record;
   }
 
-  async findOneUser(id: number) {
-    return await this.findById(id);
+  async findOneUser(userId: number) {
+    return await this.findById(userId);
   }
 
-  async updateUser(userId: number, dto: UpdateUserDto) {
+  async searchUsers(searchUserDto: SearchUserDto) {
+    const users = await this.prisma.user
+      .findMany({
+        orderBy: [
+          {
+            name: 'asc',
+          },
+        ],
+        where: {
+          OR: [
+            {
+              name: {
+                startsWith: searchUserDto.search,
+              },
+            },
+            {
+              role: {
+                startsWith: searchUserDto.search,
+              },
+            },
+            {
+              email: {
+                startsWith: searchUserDto.search,
+              },
+            },
+          ],
+        },
+        select: {
+          id: true,
+          name: true,
+          role: true,
+          email: true,
+          active: true,
+        },
+      })
+      .catch(handleError);
+
+    if (users.length === 0) {
+      throw new NotFoundException('Nothing was found');
+    }
+
+    return [{ users }];
+  }
+
+  async updateUser(userId: number, updateUserDto: UpdateUserDto) {
     await this.findById(userId);
 
-    const data = { ...dto };
+    const data = { ...updateUserDto };
 
     if (data.passwordHash) {
       data.passwordHash = await bcrypt.hash(data.passwordHash, 10);
@@ -98,14 +143,14 @@ export class UserService {
       .catch(handleError);
   }
 
-  async deleteUser(id: number) {
-    await this.findById(id);
+  async deleteUser(userId: number) {
+    await this.findById(userId);
     await this.prisma.user
       .update({
-        where: { id },
+        where: { id: userId },
         data: {
           deletedAt: new Date(),
-          active: false
+          active: false,
         },
       })
       .catch(handleError);
