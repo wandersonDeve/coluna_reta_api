@@ -4,8 +4,9 @@ const prisma = new PrismaClient();
 
 async function main() {
   console.log(`Start seeding ...`);
-  await prisma.$queryRaw(
-    Prisma.sql`INSERT INTO user (name,role,email,password_hash)
+  await Promise.all([
+    await prisma.$queryRaw(
+      Prisma.sql`INSERT IGNORE INTO user (name,role,email,password_hash)
     VALUES
       ("Autumn Robertson","BACKOFFICE","lacus.quisque@google.org","DEW87RRK1VO"),
       ("Anthony Murray","BACKOFFICE","est.mauris.eu@google.org","FKG11NFY7TS"),
@@ -53,7 +54,33 @@ async function main() {
       ("Jaden Kirby","BACKOFFICE","aenean@yahoo.org","GUN82YPR3BE"),
       ("Quynn Blake","BACKOFFICE","sed@google.couk","WTF85SSB6SE"),
       ("Veda Kemp","BACKOFFICE","consequat.dolor@yahoo.com","SLX83FBY9CI")`,
-  );
+    ),
+
+    await prisma.$queryRaw(
+      Prisma.sql`INSERT IGNORE INTO Address (city,neighborhood,number,state,street,zip_code)
+      VALUES
+        ("Paulista","Picardie","595","Paraíba","nulla vulputate dui,","12383-260"),
+        ("Mogi das Cruzes","Henegouwen","886","Paraná","Nunc mauris","76730-453"),
+        ("Patos","Southwestern Tagalog Region","514","São Paulo","ullamcorper.","97062-045"),
+        ("Goiânia","Arkhangelsk Oblast","943","Minas Gerais","luctus aliquet","82039-158"),
+        ("Blumenau","Borno","405","Pernambuco","luctus, ipsum","25146-653"),
+        ("Fortaleza","Ross-shire","812","Pernambuco","ornare. In","67599-163"),
+        ("Gravataí","Bretagne","067","Goiás","rutrum lorem","27652-662"),
+        ("Rio Verde","Dōngběi","697","Paraná","sodales. Mauris blandit","65702-790"),
+        ("Salvador","Katsina","842","Pará","purus ac tellus.","98916-355"),
+        ("Recife","Nariño","459","Santa Catarina","mollis dui, in","90765-549"),
+        ("Fortaleza","Tabasco","301","Rio Grande do Sul","fringilla","61889-525"),
+        ("João Pessoa","Balochistan","878","Paraíba","Morbi non","68444-719"),
+        ("Petrópolis","Dalarnas län","862","Bahia","leo.","47870-007"),
+        ("Caruaru","Odessa oblast","528","Pernambuco","lacus","44817-054"),
+        ("João Pessoa","Cagayan Valley","675","Pernambuco","ligula. Aenean euismod","13580-621"),
+        ("Petrolina","Adana","451","Bahia","ipsum. Suspendisse sagittis.","42661-419"),
+        ("Lauro de Freitas","Troms og Finnmark","214","Paraná","auctor,","60818-123"),
+        ("Maracanaú","Diyarbakır","547","Pará","Aenean gravida nunc","35037214"),
+        ("Governador Valadares","Vorarlberg","673","Rio Grande do Sul","Donec nibh enim,","61869-033"),
+        ("Anápolis","Ceará","886","Pará","lorem vitae odio","74785-635")`,
+    ),
+  ]);
 
   console.log(`Seeding finished.`);
 }
