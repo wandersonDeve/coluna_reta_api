@@ -15,7 +15,7 @@ export class CreateAddressDto extends Address {
   @IsNotEmpty()
   @ApiProperty({
     description: 'The address complement.',
-    example: 'Near the UNIP Tatuapé',
+    example: 'Near the São Jorge Park',
   })
   complement: string;
 
@@ -31,7 +31,7 @@ export class CreateAddressDto extends Address {
   @IsNotEmpty()
   @ApiProperty({
     description: 'The house number.',
-    example: '15',
+    example: '505',
   })
   number: string;
 
@@ -39,7 +39,7 @@ export class CreateAddressDto extends Address {
   @IsNotEmpty()
   @ApiProperty({
     description: 'The state of the address.',
-    example: 'São Paulo',
+    example: 'SP',
   })
   state: string;
 
@@ -47,7 +47,7 @@ export class CreateAddressDto extends Address {
   @IsNotEmpty()
   @ApiProperty({
     description: 'The strate of the address.',
-    example: 'Syrian street',
+    example: 'Antônio Macedo Street',
   })
   street: string;
 
