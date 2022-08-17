@@ -24,7 +24,7 @@ services:
         databases:
           default:
             connector: mysql
-            host: database_coluna_reta 
+            host: localhost 
             port: 3333
             user: root
             password: root
