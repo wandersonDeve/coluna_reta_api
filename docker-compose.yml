@@ -2,29 +2,33 @@ version: '3.9'
 
 services:
   database_coluna_reta:
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    container_name: database_coluna_reta
+    container_name: base-mysql
+    image: mysql:5.7.31
+    command: --default-authentication-plugin=mysql_native_password
     restart: always
-    ports:
-      - 1433:1433
-    volumes:
-      - ~/apps/mssql/data:/var/lib/mssqlql/data
     environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=mssql1Ipw
+        MYSQL_ROOT_PASSWORD: root
+    volumes:
+        - ./.docker/mysql/dbdata:/var/lib/mysql
+    ports: 
+        - '3333:3306'
   app:
     build: .
     container_name: coluna_reta
     restart: always
     ports:
-      - 5000:5000
-    volumes:
-      - .:/usr/app
-    links:
-      - database_coluna_reta
-
-    depends_on:
-      - database_coluna_reta
+      - '5005:5005'
+    environment:
+      PRISMA_CONFIG: |
+        port: 5005
+        databases:
+          default:
+            connector: mysql
+            host: database_coluna_reta 
+            port: 3333
+            user: root
+            password: root
+            migrations: true
 
 volumes:
   pgdata:

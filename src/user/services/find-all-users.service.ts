@@ -1,13 +1,19 @@
-import { PageDto, PageOptionsDto } from '../dto/pagination';
 import { User } from '../entities/user.entity';
 import { UserRepository } from '../repository/user.repository';
+import { PageDto, PageMetaDto, PageOptionsDto } from '../dto/pagination';
 
 export class FindAllUsersServices {
-  constructor(private readonly userRepository: UserRepository) {}
-
   async execute(pageOptionsDto: PageOptionsDto): Promise<PageDto<User>> {
-    const users = await this.userRepository.findAllUsers(pageOptionsDto);
+    const userRepository = new UserRepository();
 
-    return users;
+    const users = await userRepository.findAllUsers(pageOptionsDto);
+
+    const allUsers = await userRepository.getAllUsers();
+
+    const itemCount = allUsers.length;
+
+    const pageMetaDto = new PageMetaDto({ itemCount, pageOptionsDto });
+
+    return new PageDto(users, pageMetaDto);
   }
 }

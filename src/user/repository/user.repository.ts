@@ -1,25 +1,42 @@
 import { PrismaClient } from '@prisma/client';
+
 import { User } from '../entities/user.entity';
-import { PageDto, PageMetaDto, PageOptionsDto } from '../dto/pagination';
+import { PageOptionsDto } from '../dto/pagination';
+import { CreateUserDto } from '../dto/create-user.dto';
 
 export class UserRepository extends PrismaClient {
-  async findAllUsers(pageOptionsDto: PageOptionsDto): Promise<PageDto<User>> {
-    const { skip, take, order, orderByColumn } = pageOptionsDto;
+  async createUser({
+    name,
+    email,
+    role,
+    passwordHash,
+  }: CreateUserDto): Promise<User> {
+    return this.user.create({
+      data: {
+        name,
+        email,
+        role,
+        passwordHash,
+      },
+    });
+  }
 
-    const users = await this.user.findMany({
+  async findAllUsers({
+    skip,
+    order,
+    orderByColumn,
+    take,
+  }: PageOptionsDto): Promise<User[]> {
+    return this.user.findMany({
       skip,
       take,
       orderBy: {
         [orderByColumn]: order,
       },
     });
+  }
 
-    const allUsers = await this.user.findMany();
-
-    const itemCount = allUsers.length;
-
-    const pageMetaDto = new PageMetaDto({ itemCount, pageOptionsDto });
-
-    return new PageDto(users, pageMetaDto);
+  async getAllUsers(): Promise<User[]> {
+    return this.user.findMany();
   }
 }

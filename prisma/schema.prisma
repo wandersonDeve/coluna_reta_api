@@ -5,7 +5,7 @@ generator client {
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
-  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  // shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model User {
@@ -15,7 +15,7 @@ model User {
   email         String @unique @db.VarChar(45)
   passwordHash  String @map("password_hash")
   createdAt     DateTime @default(now()) @map("created_at")
-  updatedAt     DateTime @updatedAt @map("updated_at")
+  updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
 
   @@index([id, role])
 
@@ -33,6 +33,7 @@ model Address {
   state         String
   created_at    DateTime @default(now())
   institution   Institution?
+
 }
 
 model Institution {
@@ -43,5 +44,6 @@ model Institution {
   address_id    Int? @unique
   created_at    DateTime @default(now())
   updated_at    DateTime @default(now())
-  deleted_at    DateTime
+  deleted_at    DateTime 
+
 }

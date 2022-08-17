@@ -18,7 +18,7 @@ export class PageMetaDto {
   constructor({ pageOptionsDto, itemCount }: PageMetaParametersDTO) {
     this.orderByColumn = pageOptionsDto.orderByColumn;
     this.page = pageOptionsDto.page;
-    this.take = pageOptionsDto.take;
+    this.take = +pageOptionsDto.take;
     this.itemCount = itemCount;
     this.pageCount = Math.ceil(this.itemCount / this.take);
     this.hasPreviousPage = this.page > 1;
