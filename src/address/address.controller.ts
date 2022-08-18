@@ -42,7 +42,7 @@ export class AddressController {
     return this.addressService.findAll();
   }
 
-  @Get('search/:addressId')
+  @Get('search/:id')
   @ApiOperation({
     summary: 'View a address by Id - (FOR ADMIN).',
   })
@@ -50,7 +50,7 @@ export class AddressController {
     return this.addressService.findOne(+id);
   }
 
-  @Patch('update/:addressId')
+  @Patch('update/:id')
   @ApiOperation({
     summary: 'Edit a address by Id - (FOR ADMIN).',
   })
@@ -62,7 +62,7 @@ export class AddressController {
     return this.addressService.update(+id, updateAddressDto);
   }
 
-  @Delete('delete/:addressId')
+  @Delete('delete/:id')
   @ApiOperation({
     summary: 'Remove a address by Id - (FOR ADMIN).',
   })

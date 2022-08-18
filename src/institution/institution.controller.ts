@@ -1,21 +1,20 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
   UseGuards,
 } from '@nestjs/common';
-import { InstitutionService } from './institution.service';
-import { CreateInstitutionDto } from './dto/create-institution.dto';
-import { UpdateInstitutionDto } from './dto/update-institution.dto';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { User } from '@prisma/client';
 import { LoggedAdmin } from 'src/auth/logged-admin.decorator';
-import { LoggedUser } from 'src/auth/logged-user.decorator';
+import { CreateInstitutionDto } from './dto/create-institution.dto';
+import { UpdateInstitutionDto } from './dto/update-institution.dto';
+import { InstitutionService } from './institution.service';
 
 @ApiTags('Institution')
 @UseGuards(AuthGuard())
@@ -43,12 +42,12 @@ export class InstitutionController {
     return this.institutionService.findAll();
   }
 
-  @Get('search/:institutiond')
+  @Get('search/:id')
   @ApiOperation({
     summary: 'View a institution by Id - (FOR ADMIN).',
   })
-  findOne(@LoggedAdmin() user: User, @Param('id') institutionId: number) {
-    return this.institutionService.findOne(institutionId);
+  findOne(@Param('id') institutionId: string) {
+    return this.institutionService.findOne(+institutionId);
   }
 
   @Patch(':id')

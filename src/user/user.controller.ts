@@ -42,7 +42,7 @@ export class UserController {
     return this.userService.findAll();
   }
 
-  @Get('search/:userId')
+  @Get('search/:id')
   @ApiOperation({
     summary: 'View a user by Id - (FOR ADMIN).',
   })
@@ -59,7 +59,7 @@ export class UserController {
     return this.userService.searchUsers(searchUserDto);
   }
 
-  @Patch('update/:userId')
+  @Patch('update/:id')
   @ApiOperation({
     summary: 'Edit a user by Id - (FOR ADMIN).',
   })
@@ -71,7 +71,7 @@ export class UserController {
     return this.userService.updateUser(userId, updateUserDto);
   }
 
-  @Delete('delete/:userId')
+  @Delete('delete/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({
     summary: 'Remove a user by Id - (FOR ADMIN).',
