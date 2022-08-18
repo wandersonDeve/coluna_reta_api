@@ -1,7 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'prisma/service/prisma.service';
+import {
+  PageDto,
+  PageMetaDto,
+  PageOptionsDto,
+} from 'src/shared/pagination-dtos';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
+import { Student } from './entities/student.entity';
 
 @Injectable()
 export class StudentService {
@@ -13,8 +19,16 @@ export class StudentService {
     });
   }
 
-  async findAll() {
-    return this.prisma.student.findMany();
+  async findAll(pageOptionsDto: PageOptionsDto): Promise<PageDto<Student>> {
+    const students = await this.prisma.student.findMany();
+
+    const allStudents = await this.prisma.student.findMany();
+
+    const itemCount = allStudents.length;
+
+    const pageMetaDto = new PageMetaDto({ itemCount, pageOptionsDto });
+
+    return new PageDto(students, pageMetaDto);
   }
 
   async findOne(id: number) {

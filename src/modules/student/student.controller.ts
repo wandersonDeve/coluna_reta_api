@@ -10,6 +10,7 @@ import {
 import { StudentService } from './student.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
+import { PageOptionsDto } from 'src/shared/pagination-dtos';
 
 @Controller('student')
 export class StudentController {
@@ -21,8 +22,8 @@ export class StudentController {
   }
 
   @Get()
-  async findAll() {
-    return this.studentService.findAll();
+  async findAll(pageOptionsDto: PageOptionsDto) {
+    return this.studentService.findAll(pageOptionsDto);
   }
 
   @Get(':id')

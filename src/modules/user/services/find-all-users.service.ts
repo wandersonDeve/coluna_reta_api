@@ -1,6 +1,10 @@
 import { User } from '../entities/user.entity';
 import { UserRepository } from '../repository/user.repository';
-import { PageDto, PageMetaDto, PageOptionsDto } from '../../../shared/pagination-dtos';
+import {
+  PageDto,
+  PageMetaDto,
+  PageOptionsDto,
+} from '../../../shared/pagination-dtos';
 
 export class FindAllUsersServices {
   async execute(pageOptionsDto: PageOptionsDto): Promise<PageDto<User>> {
