@@ -20,7 +20,15 @@ export class StudentService {
   }
 
   async findAll(pageOptionsDto: PageOptionsDto): Promise<PageDto<Student>> {
-    const students = await this.prisma.student.findMany();
+    const { skip, take, order, orderByColumn } = pageOptionsDto;
+
+    const students = await this.prisma.student.findMany({
+      skip,
+      take,
+      orderBy: {
+        [orderByColumn]: order,
+      },
+    });
 
     const allStudents = await this.prisma.student.findMany();
 
