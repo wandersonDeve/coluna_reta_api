@@ -38,7 +38,7 @@ export class UserController {
     summary: 'Create a new user - (FOR ADMIN).',
   })
   create(@LoggedAdmin() user: User, @Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+    return this.createUserService.execute(createUserDto);
   }
 
   @Get('all')
