@@ -9,39 +9,57 @@ datasource db {
 }
 
 model User {
-  id Int @id      @default(autoincrement())
-  name     String @db.VarChar(45)
-  role     String
-  email    String @unique @db.VarChar(45)
-  passwordHash String @map("password_hash")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  id           Int      @id @default(autoincrement())
+  name         String 
+  role         String
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  created_at   DateTime @default(now())
+  updated_at   DateTime @default(now()) @updatedAt
+  deleted      Boolean  @default(false)
 
   @@index([id, role])
-
   @@map("user")
 }
 
 model Address {
-  id Int @id      @default(autoincrement())
-  zip_code String
-  street String
-  number String
-  complement String
+  id           Int          @id @default(autoincrement())
+  zip_code     String
+  street       String
+  number       String
+  complement   String
   neighborhood String
-  city String
-  state String
-  created_at DateTime @default(now())
-  institution Institution?
+  city         String
+  state        String
+  created_at   DateTime     @default(now())
+  updated_at   DateTime     @default(now()) @updatedAt
+  deleted      Boolean      @default(false)
+  institution  Institution?
+  student      Student[]
 }
 
 model Institution {
-  id Int @id      @default(autoincrement())
-  name String
+  id           Int      @id @default(autoincrement())
+  name         String
   phone_number String
-  address Address? @relation(fields: [address_id], references: [id])
-  address_id Int? @unique
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
-  deleted_at DateTime
+  address      Address? @relation(fields: [address_id], references: [id])
+  address_id   Int?     @unique
+  created_at   DateTime @default(now())
+  updated_at   DateTime @default(now()) @updatedAt
+  deleted      Boolean  @default(false)
+  student      Student[]
+}
+
+model Student {
+  id             Int          @id @default(autoincrement())
+  name           String
+  birth_date     String
+  phone          String
+  institution    Institution? @relation(fields: [institution_id], references: [id])
+  institution_id Int?         
+  address        Address?     @relation(fields: [address_id], references: [id])
+  address_id     Int?         
+  created_at     DateTime     @default(now())
+  updated_at     DateTime     @default(now()) @updatedAt
+  deleted        Boolean      @default(false)
 }

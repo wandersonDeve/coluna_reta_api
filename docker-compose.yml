@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+  database_coluna_reta:
+    container_name: base-mysql
+    image: mysql:5.7.31
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+    volumes:
+        - ./.docker/mysql/dbdata:/var/lib/mysql
+    ports: 
+        - '3333:3306'
+  app:
+    build: .
+    container_name: coluna_reta
+    restart: always
+    ports:
+      - '5005:5005'
+    environment:
+      PRISMA_CONFIG: |
+        port: 5005
+        databases:
+          default:
+            connector: mysql
+            host: localhost 
+            port: 3333
+            user: root
+            password: root
+            migrations: true
+
+volumes:
+  pgdata:
+    driver: local

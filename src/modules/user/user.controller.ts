@@ -8,32 +8,39 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  Headers,
+  Query,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-
+import { CreateUserService, FindAllUsersServices } from './services';
+import { PageOptionsDto } from '../../shared/pagination-dtos';
 
 @ApiTags('user')
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private findAllUsersServices: FindAllUsersServices,
+    private createUserService: CreateUserService,
+  ) {}
 
   @Post('create')
   @ApiOperation({
     summary: 'Create a new user',
   })
   create(@Body() dto: CreateUserDto) {
-    return this.userService.create(dto);
+    return this.createUserService.execute(dto);
   }
 
   @Get('all')
   @ApiOperation({
     summary: 'List all users',
   })
-  findAll() {
-    return this.userService.findAll();
+  findAll(@Query() query: PageOptionsDto) {
+    return this.findAllUsersServices.execute(query);
   }
 
   @Get('search/:id')
