@@ -23,7 +23,12 @@ async function bootstrap() {
     .setTitle('Coluna Reta Api')
     .setDescription('')
     .setVersion('1.0.0')
-    .addTag('user')
+    .addTag('Status')
+    .addTag('Auth')
+    .addTag('User')
+    .addTag('Address')
+    .addTag('Institution')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
