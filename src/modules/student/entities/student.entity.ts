@@ -1,6 +1,4 @@
-import { Prisma } from '@prisma/client';
-
-export class Student implements Prisma.StudentUncheckedCreateInput {
+export class Student {
   id?: number;
   name: string;
   birth_date: string;
