@@ -4,10 +4,10 @@ import { AddressModule } from './modules/address/address.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './modules/user/user.module';
-import { StudentModule } from './modules/student/student.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [AddressModule, UserModule, StudentModule],
+  imports: [AuthModule, AddressModule, UserModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })

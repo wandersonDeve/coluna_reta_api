@@ -1,24 +1,32 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
   HttpCode,
   HttpStatus,
-  Headers,
   Query,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
 } from '@nestjs/common';
-import { UserService } from './user.service';
+import { AuthGuard } from '@nestjs/passport';
+import { LoggedAdmin } from 'src/auth/logged-admin.decorator';
 import { CreateUserDto } from './dto/create-user.dto';
+import { SearchUserDto } from './dto/search.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateUserService, FindAllUsersServices } from './services';
 import { PageOptionsDto } from '../../shared/pagination-dtos';
 
 @ApiTags('user')
+import { User } from './entities/user.entity';
+import { UserService } from './user.service';
+
+@ApiTags('User')
+@UseGuards(AuthGuard())
+@ApiBearerAuth()
 @Controller('user')
 export class UserController {
   constructor(
@@ -29,42 +37,55 @@ export class UserController {
 
   @Post('create')
   @ApiOperation({
-    summary: 'Create a new user',
+    summary: 'Create a new user - (FOR ADMIN).',
   })
-  create(@Body() dto: CreateUserDto) {
-    return this.createUserService.execute(dto);
+  create(@LoggedAdmin() user: User, @Body() createUserDto: CreateUserDto) {
+    return this.userService.create(createUserDto);
   }
 
   @Get('all')
   @ApiOperation({
-    summary: 'List all users',
+    summary: 'List all users - (FOR ADMIN).',
   })
-  findAll(@Query() query: PageOptionsDto) {
+  findAll(@LoggedAdmin() user: User, @Query() query: PageOptionsDto) {
     return this.findAllUsersServices.execute(query);
   }
 
-  @Get('search/:id')
+  @Get('search/:userId')
   @ApiOperation({
-    summary: 'View a user by Id',
+    summary: 'View a user by Id - (FOR ADMIN).',
   })
-  findOneUser(@Param('id') userId: number) {
+  findOneUser(@LoggedAdmin() user: User, @Param('id') userId: number) {
     return this.userService.findOneUser(userId);
   }
 
-  @Patch('update-user/:id')
+  @Post('/search')
   @ApiOperation({
-    summary: 'Edit a user by id',
+    summary: `View a user by name, role or email - (FOR ADMIN).`,
   })
-  updateMyAccount(@Param('id') userId: number, @Body() dto: UpdateUserDto) {
-    return this.userService.updateMyAccount(userId, dto);
+  @HttpCode(HttpStatus.OK)
+  searchUsers(@LoggedAdmin() user: User, @Body() searchUserDto: SearchUserDto) {
+    return this.userService.searchUsers(searchUserDto);
   }
 
-  @Delete('delete/:id')
+  @Patch('update/:userId')
+  @ApiOperation({
+    summary: 'Edit a user by Id - (FOR ADMIN).',
+  })
+  updateUser(
+    @LoggedAdmin() user: User,
+    @Param('id') userId: number,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    return this.userService.updateUser(userId, updateUserDto);
+  }
+
+  @Delete('delete/:userId')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({
-    summary: 'Remove a user by Id',
+    summary: 'Remove a user by Id - (FOR ADMIN).',
   })
-  deleteUser(@Param('id') userId: number) {
+  deleteUser(@LoggedAdmin() user: User, @Param('id') userId: number) {
     return this.userService.deleteUser(userId);
   }
 }
