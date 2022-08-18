@@ -5,11 +5,11 @@ import {
   HttpCode,
   HttpStatus,
   Post,
-  UseGuards,
+  UseGuards
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { User } from 'src/modules/user/entities/user.entity';
+import { User } from 'src/user/entities/user.entity';
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/login-user.dto';
 import { LoggedUser } from './logged-user.decorator';
@@ -38,3 +38,4 @@ export class AuthController {
     return user;
   }
 }
+

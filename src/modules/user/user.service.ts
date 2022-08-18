@@ -12,6 +12,45 @@ import { UserRole } from './util/roleUser';
 export class UserService {
   constructor(private readonly prisma: PrismaService) {}
 
+  async create(createUserDto: CreateUserDto) {
+    const data: Prisma.UserCreateInput = {
+      name: createUserDto.name,
+      role: UserRole.BACKOFICCE,
+      email: createUserDto.email,
+      passwordHash: await bcrypt.hash(createUserDto.passwordHash, 10),
+    };
+
+    return await this.prisma.user
+      .create({
+        data,
+        select: {
+          id: true,
+          name: true,
+          role: true,
+          email: true,
+        },
+      })
+      .catch(handleError);
+  }
+
+  async findAll() {
+    const allUsers = await this.prisma.user
+      .findMany({
+        select: {
+          id: true,
+          name: true,
+          active: true,
+        },
+      })
+      .catch(handleError);
+
+    if (allUsers.length === 0) {
+      throw new NotFoundException('No a users found');
+    }
+
+    return allUsers;
+  }
+
   async findById(userId: number) {
     const record = await this.prisma.user
       .findUnique({
