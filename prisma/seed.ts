@@ -6,7 +6,7 @@ async function main() {
   console.log(`Start seeding ...`);
   await Promise.all([
     await prisma.$queryRaw(
-      Prisma.sql`INSERT IGNORE INTO user (name,role,email,password_hash)
+      Prisma.sql`INSERT IGNORE INTO User (name,role,email,password_hash)
     VALUES
       ("Autumn Robertson","BACKOFFICE","lacus.quisque@google.org","DEW87RRK1VO"),
       ("Anthony Murray","BACKOFFICE","est.mauris.eu@google.org","FKG11NFY7TS"),

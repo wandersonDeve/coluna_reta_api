@@ -19,10 +19,8 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateUserService, FindAllUsersServices } from './services';
 import { PageOptionsDto } from '../../shared/pagination-dtos';
-
-@ApiTags('user')
-import { User } from './entities/user.entity';
 import { UserService } from './user.service';
+import { User } from './entities/user.entity';
 
 @ApiTags('User')
 @UseGuards(AuthGuard())
@@ -40,7 +38,7 @@ export class UserController {
     summary: 'Create a new user - (FOR ADMIN).',
   })
   create(@LoggedAdmin() user: User, @Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+    return this.createUserService.execute(createUserDto);
   }
 
   @Get('all')
