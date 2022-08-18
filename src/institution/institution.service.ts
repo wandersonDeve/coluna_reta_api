@@ -49,6 +49,7 @@ export class InstitutionService {
               state: true,
             },
           },
+          deleted_at: true
         },
       })
       .catch(handleError);
@@ -76,6 +77,7 @@ export class InstitutionService {
               neighborhood: true,
             },
           },
+          deleted_at: true
         },
       })
       .catch(handleError);
@@ -89,11 +91,27 @@ export class InstitutionService {
     return record;
   }
 
-  update(id: number, updateInstitutionDto: UpdateInstitutionDto) {
-    return `This action updates a #${id} institution`;
+  async update(institutionId: number, updateInstitutionDto: UpdateInstitutionDto) {
+    await this.findOne(institutionId);
+    const data = { ...updateInstitutionDto };
+
+    return await this.prisma.institution
+      .update({
+        where: { id: institutionId },
+        data
+      })
+      .catch(handleError);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} institution`;
+  async delete(institutionId: number) {
+    await this.findOne(institutionId);
+    await this.prisma.institution
+      .update({
+        where: { id: institutionId },
+        data: {
+          deleted_at: new Date()
+        },
+      })
+      .catch(handleError);
   }
 }

@@ -42,24 +42,31 @@ export class InstitutionController {
     return this.institutionService.findAll();
   }
 
-  @Get('search/:id')
+  @Get('search/:institutionID')
   @ApiOperation({
-    summary: 'View a institution by Id - (FOR ADMIN).',
+    summary: 'View a Institution by Id - (FOR ADMIN).',
   })
-  findOne(@Param('id') institutionId: string) {
-    return this.institutionService.findOne(+institutionId);
+  findOne(@LoggedAdmin() user: User, @Param('institutionID') institutionId: number) {
+    return this.institutionService.findOne(institutionId);
   }
 
-  @Patch(':id')
+  @Patch('update/:institutionID')
+  @ApiOperation({
+    summary: 'Edit a Institution by Id - (FOR ADMIN).',
+  })
   update(
-    @Param('id') id: number,
+    @LoggedAdmin() user: User,
+    @Param('institutionID') id: number,
     @Body() updateInstitutionDto: UpdateInstitutionDto,
   ) {
     return this.institutionService.update(id, updateInstitutionDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: number) {
-    return this.institutionService.remove(id);
+  @Delete('delete/:institutionID')
+  @ApiOperation({
+    summary: 'Remove a Institution by Id - (FOR ADMIN).',
+  })
+  delete(@LoggedAdmin() user: User, @Param('institutionID') id: number) {
+    return this.institutionService.delete(id);
   }
 }
