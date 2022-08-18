@@ -42,31 +42,31 @@ export class AddressController {
     return this.addressService.findAll();
   }
 
-  @Get('search/:id')
+  @Get('search/:addressID')
   @ApiOperation({
     summary: 'View a address by Id - (FOR ADMIN).',
   })
-  findOne(@LoggedAdmin() user: User, @Param('id') id: string) {
+  findOne(@LoggedAdmin() user: User, @Param('addressID') id: string) {
     return this.addressService.findOne(+id);
   }
 
-  @Patch('update/:id')
+  @Patch('update/:addressID')
   @ApiOperation({
     summary: 'Edit a address by Id - (FOR ADMIN).',
   })
   update(
     @LoggedAdmin() user: User,
-    @Param('id') id: string,
+    @Param('addressID') id: string,
     @Body() updateAddressDto: UpdateAddressDto,
   ) {
     return this.addressService.update(+id, updateAddressDto);
   }
 
-  @Delete('delete/:id')
+  @Delete('delete/:addressID')
   @ApiOperation({
     summary: 'Remove a address by Id - (FOR ADMIN).',
   })
-  remove(@LoggedAdmin() user: User, @Param('id') id: string) {
+  remove(@LoggedAdmin() user: User, @Param('addressID') id: string) {
     return this.addressService.remove(+id);
   }
 }

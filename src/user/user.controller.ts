@@ -42,11 +42,11 @@ export class UserController {
     return this.userService.findAll();
   }
 
-  @Get('search/:id')
+  @Get('search/:userID')
   @ApiOperation({
     summary: 'View a user by Id - (FOR ADMIN).',
   })
-  findOneUser(@LoggedAdmin() user: User, @Param('id') userId: number) {
+  findOneUser(@LoggedAdmin() user: User, @Param('userID') userId: number) {
     return this.userService.findOneUser(userId);
   }
 
@@ -59,24 +59,24 @@ export class UserController {
     return this.userService.searchUsers(searchUserDto);
   }
 
-  @Patch('update/:id')
+  @Patch('update/:userID')
   @ApiOperation({
     summary: 'Edit a user by Id - (FOR ADMIN).',
   })
   updateUser(
     @LoggedAdmin() user: User,
-    @Param('id') userId: number,
+    @Param('userID') userId: number,
     @Body() updateUserDto: UpdateUserDto,
   ) {
     return this.userService.updateUser(userId, updateUserDto);
   }
 
-  @Delete('delete/:id')
+  @Delete('delete/:userID')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({
     summary: 'Remove a user by Id - (FOR ADMIN).',
   })
-  deleteUser(@LoggedAdmin() user: User, @Param('id') userId: number) {
+  deleteUser(@LoggedAdmin() user: User, @Param('userID') userId: number) {
     return this.userService.deleteUser(userId);
   }
 }
