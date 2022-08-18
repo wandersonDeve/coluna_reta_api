@@ -4,7 +4,7 @@ import { AddressModule } from './modules/address/address.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './modules/user/user.module';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './modules/auth/auth.module';
 import { StudentModule } from './modules/student/student.module';
 
 @Module({

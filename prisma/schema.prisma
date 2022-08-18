@@ -17,6 +17,7 @@ model User {
   created_at   DateTime @default(now())
   updated_at   DateTime @default(now()) @updatedAt
   deleted      Boolean  @default(false)
+  institutions UsersHasInstitution[]
 
   @@index([id, role])
   @@map("user")
@@ -42,12 +43,13 @@ model Institution {
   id           Int      @id @default(autoincrement())
   name         String
   phone_number String
-  address      Address? @relation(fields: [address_id], references: [id])
+  address      Address? @relation(fields: [address_id], references: [id], onDelete: SetNull, onUpdate: Cascade)
   address_id   Int?     @unique
   created_at   DateTime @default(now())
   updated_at   DateTime @default(now()) @updatedAt
   deleted      Boolean  @default(false)
   student      Student[]
+  users        UsersHasInstitution[]
 }
 
 model Student {
@@ -55,11 +57,21 @@ model Student {
   name           String
   birth_date     String
   phone          String
-  institution    Institution? @relation(fields: [institution_id], references: [id])
+  institution    Institution? @relation(fields: [institution_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   institution_id Int?         
   address        Address?     @relation(fields: [address_id], references: [id])
   address_id     Int?         
   created_at     DateTime     @default(now())
   updated_at     DateTime     @default(now()) @updatedAt
   deleted        Boolean      @default(false)
+}
+
+model UsersHasInstitution {
+  id             Int      @id @default(autoincrement())
+  user           User     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user_id        Int      
+  institution    Institution @relation(fields: [institution_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  institution_id Int      
+  created_at     DateTime @default(now())
+  deleted        Boolean  @default(false)
 }
