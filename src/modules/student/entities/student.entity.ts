@@ -7,4 +7,7 @@ export class Student implements Prisma.StudentUncheckedCreateInput {
   phone: string;
   institution_id?: number;
   address_id?: number;
+  created_at?: string | Date;
+  updated_at?: string | Date;
+  deleted?: boolean;
 }
