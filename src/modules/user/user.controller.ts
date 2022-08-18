@@ -16,7 +16,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateUserService, FindAllUsersServices } from './services';
-import { PageOptionsDto } from './dto/pagination';
+import { PageOptionsDto } from '../../shared/pagination-dtos';
 
 @ApiTags('user')
 @Controller('user')

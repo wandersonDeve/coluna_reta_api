@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 
 import { User } from '../entities/user.entity';
-import { PageOptionsDto } from '../dto/pagination';
+import { PageOptionsDto } from '../../../shared/pagination-dtos';
 import { CreateUserDto } from '../dto/create-user.dto';
 
 export class UserRepository extends PrismaClient {

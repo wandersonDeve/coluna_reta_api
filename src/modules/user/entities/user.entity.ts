@@ -4,6 +4,7 @@ export class User {
   role: string;
   email: string;
   passwordHash: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  created_at?: string | Date;
+  updated_at?: string | Date;
+  deleted?: boolean;
 }
