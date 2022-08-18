@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'prisma/service/prisma.service';
-import { handleError } from 'src/utils/handle-error.util';
+import { handleError } from 'src/shared/utils/handle-error.util';
 import { CreateUserDto } from './dto/create-user.dto';
 import { SearchUserDto } from './dto/search.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -39,7 +39,7 @@ export class UserService {
         select: {
           id: true,
           name: true,
-          active: true,
+          deleted: false,
         },
       })
       .catch(handleError);
@@ -60,7 +60,7 @@ export class UserService {
           name: true,
           role: true,
           email: true,
-          active: true,
+          deleted: false,
         },
       })
       .catch(handleError);
@@ -108,7 +108,7 @@ export class UserService {
           name: true,
           role: true,
           email: true,
-          active: true,
+          deleted: false,
         },
       })
       .catch(handleError);
@@ -149,8 +149,7 @@ export class UserService {
       .update({
         where: { id: userId },
         data: {
-          deletedAt: new Date(),
-          active: false,
+          deleted: true,
         },
       })
       .catch(handleError);
