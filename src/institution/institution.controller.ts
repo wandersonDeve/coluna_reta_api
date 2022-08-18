@@ -15,6 +15,7 @@ import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from '@prisma/client';
 import { LoggedAdmin } from 'src/auth/logged-admin.decorator';
+import { LoggedUser } from 'src/auth/logged-user.decorator';
 
 @ApiTags('Institution')
 @UseGuards(AuthGuard())
@@ -23,7 +24,7 @@ import { LoggedAdmin } from 'src/auth/logged-admin.decorator';
 export class InstitutionController {
   constructor(private readonly institutionService: InstitutionService) {}
 
-  @Post()
+  @Post('create')
   @ApiOperation({
     summary: 'Create a new Instituition - (FOR ADMIN).',
   })
@@ -34,26 +35,32 @@ export class InstitutionController {
     return this.institutionService.create(createInstitutionDto);
   }
 
-  @Get()
-  findAll() {
+  @Get('all')
+  @ApiOperation({
+    summary: 'List all Instituitions - (FOR ADMIN).',
+  })
+  findAll(@LoggedAdmin() user: User) {
     return this.institutionService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.institutionService.findOne(+id);
+  @Get('search/:institutiond')
+  @ApiOperation({
+    summary: 'View a institution by Id - (FOR ADMIN).',
+  })
+  findOne(@LoggedAdmin() user: User, @Param('id') institutionId: number) {
+    return this.institutionService.findOne(institutionId);
   }
 
   @Patch(':id')
   update(
-    @Param('id') id: string,
+    @Param('id') id: number,
     @Body() updateInstitutionDto: UpdateInstitutionDto,
   ) {
-    return this.institutionService.update(+id, updateInstitutionDto);
+    return this.institutionService.update(id, updateInstitutionDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.institutionService.remove(+id);
+  remove(@Param('id') id: number) {
+    return this.institutionService.remove(id);
   }
 }
