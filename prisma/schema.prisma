@@ -39,11 +39,11 @@ model Address {
 
 model Institution {
   id Int @id      @default(autoincrement())
-  name String
+  name String @unique
   phone_number String
   address Address? @relation(fields: [address_id], references: [id])
   address_id Int? @unique
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
-  deleted_at DateTime
+  deleted_at DateTime?
 }
