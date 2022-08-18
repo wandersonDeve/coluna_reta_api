@@ -10,6 +10,7 @@ import {
   Patch,
   Post,
   UseGuards,
+  SetMetadata,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { LoggedAdmin } from 'src/modules/auth/decorator/logged-admin.decorator';
@@ -34,6 +35,7 @@ export class UserController {
   ) {}
 
   @Post('create')
+  @SetMetadata('roles', ['ADMIN'])
   @ApiOperation({
     summary: 'Create a new user - (FOR ADMIN).',
   })
@@ -58,6 +60,7 @@ export class UserController {
   }
 
   @Post('/search')
+  @SetMetadata('roles', ['ADMIN'])
   @ApiOperation({
     summary: `View a user by name, role or email - (FOR ADMIN).`,
   })
@@ -68,7 +71,7 @@ export class UserController {
 
   @Patch('update/:userId')
   @ApiOperation({
-    summary: 'Edit a user by Id - (FOR ADMIN).',
+    summary: 'Edit a user by Id - (FOR ALL USERS).',
   })
   updateUser(
     @LoggedAdmin() user: User,
@@ -79,6 +82,7 @@ export class UserController {
   }
 
   @Delete('delete/:userId')
+  @SetMetadata('roles', ['ADMIN'])
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({
     summary: 'Remove a user by Id - (FOR ADMIN).',

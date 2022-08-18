@@ -9,7 +9,7 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsEnum(UserRole)
   @ApiProperty({
     description: 'Role of the user available on the platform.',
-    example: UserRole.ADMIN
+    example: UserRole.ADMIN,
   })
   role: UserRole;
 }

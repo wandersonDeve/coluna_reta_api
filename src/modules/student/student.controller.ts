@@ -25,7 +25,7 @@ export class StudentController {
   constructor(private readonly studentService: StudentService) {}
 
   @Post()
-  @SetMetadata('roles', ['admin', 'student'])
+  @SetMetadata('roles', ['ADMIN', 'CAMPO'])
   @ApiOperation({
     summary: 'Create a new student - (FOR ADMIN/CAMPO).',
   })
@@ -34,16 +34,25 @@ export class StudentController {
   }
 
   @Get('/all')
+  @ApiOperation({
+    summary: 'Get all students - (FOR ALL USERS).',
+  })
   async findAll(@Query() query: PageOptionsDto) {
     return this.studentService.findAll(query);
   }
 
   @Get(':id')
+  @ApiOperation({
+    summary: 'Get a student by id - (FOR ALL USERS).',
+  })
   async findOne(@Param('id') id: string) {
     return this.studentService.findOne(+id);
   }
 
   @Patch(':id')
+  @ApiOperation({
+    summary: 'Update a student - (FOR ALL USERS).',
+  })
   async update(
     @Param('id') id: string,
     @Body() updateStudentDto: UpdateStudentDto,
@@ -52,6 +61,9 @@ export class StudentController {
   }
 
   @Delete(':id')
+  @ApiOperation({
+    summary: 'Delete a student by id - (FOR ALL USERS).',
+  })
   async remove(@Param('id') id: string) {
     return this.studentService.remove(+id);
   }
