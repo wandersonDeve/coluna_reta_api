@@ -12,7 +12,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { LoggedAdmin } from 'src/auth/logged-admin.decorator';
+import { LoggedAdmin } from 'src/modules/auth/decorator/logged-admin.decorator';
 import { CreateUserDto } from './dto/create-user.dto';
 import { SearchUserDto } from './dto/search.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
