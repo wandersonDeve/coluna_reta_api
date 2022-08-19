@@ -1,7 +1,14 @@
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { PrismaService } from 'prisma/service/prisma.service';
-import { CreateUserService, FindAllUsersServices } from './services';
+import {
+  CreateUserService,
+  DeleteUserService,
+  FindAllUsersServices,
+  FindOneUserService,
+  SearchUsersService,
+  UpdateUserService,
+} from './services';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 
@@ -13,6 +20,10 @@ import { UserService } from './user.service';
     PrismaService,
     FindAllUsersServices,
     CreateUserService,
+    FindOneUserService,
+    SearchUsersService,
+    UpdateUserService,
+    DeleteUserService,
   ],
 })
 export class UserModule {}
