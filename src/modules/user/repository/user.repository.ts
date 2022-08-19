@@ -74,20 +74,17 @@ export class UserRepository extends PrismaClient {
           OR: [
             {
               name: {
-                startsWith: searchUserDto.search,
-                mode: 'insensitive',
+                contains: searchUserDto.search
               },
             },
             {
               role: {
-                startsWith: searchUserDto.search,
-                mode: 'insensitive',
+                contains: searchUserDto.search
               },
             },
             {
               email: {
-                startsWith: searchUserDto.search,
-                mode: 'insensitive',
+                contains: searchUserDto.search
               },
             },
           ],
