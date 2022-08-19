@@ -1,6 +1,5 @@
 import { PrismaClient } from '@prisma/client';
 import { handleError } from 'src/shared/utils/handle-error.util';
-
 import { PageOptionsDto } from '../../../shared/pagination-dtos';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { SearchUserDto } from '../dto/search.dto';
