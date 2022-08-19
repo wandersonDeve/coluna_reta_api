@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'prisma/service/prisma.service';
 import {
   PageDto,
@@ -14,7 +15,23 @@ export class StudentService {
   constructor(private prisma: PrismaService) {}
 
   async create(data: CreateStudentDto) {
-    return this.prisma.student.create({
+    const student: Prisma.StudentCreateInput = {
+      name: data.name,
+      birth_date: data.birth_date,
+      phone: data.phone,
+      institution: {
+        connect: {
+          id: data.institution_id,
+        },
+      },
+      address: {
+        connect: {
+          id: data.address_id,
+        },
+      },
+    };
+
+    return await this.prisma.student.create({
       data,
     });
   }
