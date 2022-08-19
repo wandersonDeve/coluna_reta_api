@@ -1,8 +1,11 @@
 import { PrismaClient } from '@prisma/client';
+import { handleError } from 'src/shared/utils/handle-error.util';
 
-import { User } from '../entities/user.entity';
 import { PageOptionsDto } from '../../../shared/pagination-dtos';
 import { CreateUserDto } from '../dto/create-user.dto';
+import { SearchUserDto } from '../dto/search.dto';
+import { UpdateUserDto } from '../dto/update-user.dto';
+import { User } from '../entities/user.entity';
 
 export class UserRepository extends PrismaClient {
   async createUser({
@@ -11,14 +14,16 @@ export class UserRepository extends PrismaClient {
     role,
     passwordHash,
   }: CreateUserDto): Promise<User> {
-    return this.user.create({
-      data: {
-        name,
-        email,
-        role,
-        passwordHash,
-      },
-    });
+    return this.user
+      .create({
+        data: {
+          name,
+          email,
+          role,
+          passwordHash,
+        },
+      })
+      .catch(handleError);
   }
 
   async findAllUsers({
@@ -27,16 +32,101 @@ export class UserRepository extends PrismaClient {
     orderByColumn,
     take,
   }: PageOptionsDto): Promise<User[]> {
-    return this.user.findMany({
-      skip,
-      take,
-      orderBy: {
-        [orderByColumn]: order,
-      },
-    });
+    return this.user
+      .findMany({
+        skip,
+        take,
+        orderBy: {
+          [orderByColumn]: order,
+        },
+        where: { deleted: false },
+      })
+      .catch(handleError);
   }
 
   async getAllUsers(): Promise<User[]> {
-    return this.user.findMany();
+    return this.user.findMany().catch(handleError);
+  }
+
+  async findOneUser(userId: number) {
+    return await this.user
+      .findUnique({
+        where: { id: userId },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          role: true,
+          deleted: true,
+        },
+      })
+      .catch(handleError);
+  }
+
+  async searchUsers(searchUserDto: SearchUserDto) {
+    return await this.user
+      .findMany({
+        orderBy: [
+          {
+            name: 'asc',
+          },
+        ],
+        where: {
+          OR: [
+            {
+              name: {
+                startsWith: searchUserDto.search,
+                mode: 'insensitive',
+              },
+            },
+            {
+              role: {
+                startsWith: searchUserDto.search,
+                mode: 'insensitive',
+              },
+            },
+            {
+              email: {
+                startsWith: searchUserDto.search,
+                mode: 'insensitive',
+              },
+            },
+          ],
+        },
+        select: {
+          id: true,
+          name: true,
+          role: true,
+          email: true,
+          deleted: true,
+        },
+      })
+      .catch(handleError);
+  }
+
+  async updateUser(userId: number, { ...data }: UpdateUserDto) {
+    return await this.user
+      .update({
+        where: { id: userId },
+        data,
+        select: {
+          id: true,
+          name: true,
+          role: true,
+          email: true,
+        },
+      })
+      .catch(handleError);
+  }
+
+  async deleteUser(userId: number) {
+    return await this.user
+      .update({
+        where: { id: userId },
+        data: {
+          deleted: true,
+        },
+      })
+      .catch(handleError);
   }
 }
