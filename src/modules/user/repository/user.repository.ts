@@ -1,6 +1,6 @@
+import { NotFoundException } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { handleError } from 'src/shared/utils/handle-error.util';
-
 import { PageOptionsDto } from '../../../shared/pagination-dtos';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { SearchUserDto } from '../dto/search.dto';
@@ -32,7 +32,7 @@ export class UserRepository extends PrismaClient {
     orderByColumn,
     take,
   }: PageOptionsDto): Promise<User[]> {
-    return this.user
+    const users = await this.user
       .findMany({
         skip,
         take,
@@ -42,6 +42,12 @@ export class UserRepository extends PrismaClient {
         where: { deleted: false },
       })
       .catch(handleError);
+
+    if (users.length === 0) {
+      throw new NotFoundException('No a users found');
+    }
+
+    return users;
   }
 
   async getAllUsers(): Promise<User[]> {
@@ -49,18 +55,23 @@ export class UserRepository extends PrismaClient {
   }
 
   async findOneUser(userId: number) {
-    return await this.user
-      .findUnique({
-        where: { id: userId },
+    const user = await this.user
+      .findFirst({
+        where: { id: userId, deleted: false },
         select: {
           id: true,
           name: true,
           email: true,
           role: true,
-          deleted: true,
         },
       })
       .catch(handleError);
+
+    if (!user) {
+      throw new NotFoundException(`User with Id '${userId}' not found!`);
+    }
+
+    return user;
   }
 
   async searchUsers(searchUserDto: SearchUserDto) {
@@ -88,6 +99,9 @@ export class UserRepository extends PrismaClient {
                 contains: searchUserDto.search
               },
             },
+            {
+              deleted: false,
+            },
           ],
         },
         select: {
@@ -95,13 +109,14 @@ export class UserRepository extends PrismaClient {
           name: true,
           role: true,
           email: true,
-          deleted: true,
         },
       })
       .catch(handleError);
   }
 
   async updateUser(userId: number, { ...data }: UpdateUserDto) {
+    const user = await this.findOneUser(userId);
+
     return await this.user
       .update({
         where: { id: userId },
@@ -117,6 +132,8 @@ export class UserRepository extends PrismaClient {
   }
 
   async deleteUser(userId: number) {
+    const user = await this.findOneUser(userId);
+
     return await this.user
       .update({
         where: { id: userId },
