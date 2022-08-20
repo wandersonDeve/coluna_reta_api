@@ -71,8 +71,9 @@ export class StudentController {
   async findManyStudents(
     @LoggedAdmin() user: User,
     @Body() data: SearchStudentsDto,
+    @Query() query: PageOptionsDto,
   ) {
-    return this.findManyStudentsByParamService.execute(data);
+    return this.findManyStudentsByParamService.execute(data, query);
   }
 
   @Patch(':id')

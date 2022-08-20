@@ -8,13 +8,17 @@ import { PageOptionsDto } from 'src/shared/pagination-dtos';
 
 export class StudentRepository extends PrismaClient {
   async createStudent(data: CreateStudentDto): Promise<Student> {
-    return this.student
+    const newStudent = await this.student
       .create({
         data: {
           ...data,
         },
       })
       .catch(handleError);
+
+    delete newStudent.deleted;
+
+    return newStudent;
   }
 
   async findOneStudentByAllData({
@@ -58,58 +62,49 @@ export class StudentRepository extends PrismaClient {
     return students;
   }
 
-  async getAllStudents(): Promise<Student[]> {
+  async getAllStudents(where: object): Promise<Student[]> {
     return this.student
       .findMany({
-        where: {
-          deleted: false,
-        },
+        where,
       })
       .catch(handleError);
   }
 
   async findOneStudentById(id: number): Promise<Student> {
-    return this.student.findFirst({
+    const student = await this.student.findFirst({
       where: {
         id,
         deleted: false,
       },
+      include: {
+        institution: true,
+        address: true,
+      },
     });
+
+    delete student.deleted;
+    delete student.address.deleted;
+    delete student.institution.deleted;
+
+    return student;
   }
 
-  async findManyStudentByParam(param: string) {
+  async findManyStudentByParam(
+    where: object,
+    { skip, order, orderByColumn, take }: PageOptionsDto,
+  ) {
     return this.student
       .findMany({
-        orderBy: [
-          {
-            name: 'asc',
-          },
-        ],
-        where: {
-          OR: [
-            {
-              name: {
-                contains: param,
-              },
-            },
-            {
-              birth_date: {
-                contains: param,
-              },
-            },
-            {
-              phone: {
-                contains: param,
-              },
-            },
-            {
-              deleted: false,
-            },
-          ],
-        },
+        where,
         select: {
           id: true,
           name: true,
+          birth_date: true,
+        },
+        skip,
+        take,
+        orderBy: {
+          [orderByColumn]: order,
         },
       })
       .catch(handleError);
@@ -119,12 +114,16 @@ export class StudentRepository extends PrismaClient {
     id: number,
     { ...data }: UpdateStudentDto,
   ): Promise<Student> {
-    return this.student.update({
+    const updatedStudent = await this.student.update({
       where: {
         id,
       },
       data,
     });
+
+    delete updatedStudent.deleted;
+
+    return updatedStudent;
   }
 
   async deleteStudentByid(id: number): Promise<string> {

@@ -9,7 +9,7 @@ export class CreateStudentService {
     const studentAllreadyExist =
       await studentRepository.findOneStudentByAllData(data);
 
-    if (!studentAllreadyExist) {
+    if (studentAllreadyExist) {
       throw new BadRequestException('Student allready exist');
     }
 

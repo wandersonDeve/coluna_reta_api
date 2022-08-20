@@ -12,7 +12,9 @@ export class FindAllStudentsService {
 
     const users = await studentRepository.findAllStudents(pageOptionsDto);
 
-    const allUsers = await studentRepository.getAllStudents();
+    const allUsers = await studentRepository.getAllStudents({
+      deleted: false,
+    });
 
     const itemCount = allUsers.length;
 
