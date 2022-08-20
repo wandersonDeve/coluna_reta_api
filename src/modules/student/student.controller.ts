@@ -9,7 +9,6 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { StudentService } from './student.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { PageOptionsDto } from 'src/shared/pagination-dtos';
@@ -17,9 +16,11 @@ import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import {
   CreateStudentService,
+  DeleteStudentByIdService,
   FindAllStudentsService,
   FindManyStudentsByParamService,
   FindOneStudentByIdService,
+  UpdateStudentService,
 } from './services';
 import { User } from '@prisma/client';
 import { LoggedAdmin } from '../auth/decorator/logged-admin.decorator';
@@ -31,11 +32,12 @@ import { SearchStudentsDto } from './dto/search-students.dto';
 @Controller('student')
 export class StudentController {
   constructor(
-    private readonly studentService: StudentService,
     private createStudentService: CreateStudentService,
     private findAllStudentsService: FindAllStudentsService,
     private findOneStudentByIdService: FindOneStudentByIdService,
     private findManyStudentsByParamService: FindManyStudentsByParamService,
+    private deleteStudentByIdService: DeleteStudentByIdService,
+    private updateStudentService: UpdateStudentService,
   ) {}
 
   @Post()
@@ -77,18 +79,15 @@ export class StudentController {
   @ApiOperation({
     summary: 'Update a student - (FOR ALL USERS).',
   })
-  async update(
-    @Param('id') id: string,
-    @Body() updateStudentDto: UpdateStudentDto,
-  ) {
-    return this.studentService.update(+id, updateStudentDto);
+  async update(@Param('id') id: string, @Body() data: UpdateStudentDto) {
+    return this.updateStudentService.execute(+id, data);
   }
 
   @Delete(':id')
   @ApiOperation({
     summary: 'Delete a student by id - (FOR ALL USERS).',
   })
-  async remove(@Param('id') id: string) {
-    return this.studentService.remove(+id);
+  async remove(@LoggedAdmin() user: User, @Param('id') id: string) {
+    return this.deleteStudentByIdService.execute(+id);
   }
 }

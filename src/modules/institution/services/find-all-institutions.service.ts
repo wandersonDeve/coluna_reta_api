@@ -10,7 +10,9 @@ export class FindAllInstitutionsServices {
   async execute(pageOptionsDto: PageOptionsDto): Promise<PageDto<Institution>> {
     const institutionRepository = new InstitutionRepository();
 
-    const institutions = await institutionRepository.findAllInstitutions(pageOptionsDto);
+    const institutions = await institutionRepository.findAllInstitutions(
+      pageOptionsDto,
+    );
 
     const allInstitutions = await institutionRepository.getAllInstitutions();
 

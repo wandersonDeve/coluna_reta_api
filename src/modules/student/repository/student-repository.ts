@@ -1,3 +1,4 @@
+import { UpdateStudentDto } from './../dto/update-student.dto';
 import { CreateStudentDto } from './../dto/create-student.dto';
 import { PrismaClient } from '@prisma/client';
 import { Student } from '../entities/student.entity';
@@ -112,5 +113,32 @@ export class StudentRepository extends PrismaClient {
         },
       })
       .catch(handleError);
+  }
+
+  async updateStudent(
+    id: number,
+    { ...data }: UpdateStudentDto,
+  ): Promise<Student> {
+    return this.student.update({
+      where: {
+        id,
+      },
+      data,
+    });
+  }
+
+  async deleteStudentByid(id: number): Promise<string> {
+    this.student
+      .update({
+        where: {
+          id,
+        },
+        data: {
+          deleted: true,
+        },
+      })
+      .catch(handleError);
+
+    return 'Student deleted successfully';
   }
 }

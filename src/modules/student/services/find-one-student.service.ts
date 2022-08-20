@@ -11,7 +11,7 @@ export class FindOneStudentByIdService {
     const student = await studentRepository.findOneStudentById(id);
 
     if (!student) {
-      throw new BadRequestException('Student allready exist');
+      throw new BadRequestException('Student not exist');
     }
 
     return student;

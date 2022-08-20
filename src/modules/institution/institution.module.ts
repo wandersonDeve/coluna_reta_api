@@ -2,7 +2,13 @@ import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { PrismaService } from 'prisma/service/prisma.service';
 import { InstitutionController } from './institution.controller';
-import { CreateInstitutionService, DeleteInstitutionService, FindAllInstitutionsServices, FindOneInstitutionService, UpdateInstitutionService } from './services';
+import {
+  CreateInstitutionService,
+  DeleteInstitutionService,
+  FindAllInstitutionsServices,
+  FindOneInstitutionService,
+  UpdateInstitutionService,
+} from './services';
 
 @Module({
   imports: [PassportModule.register({ defaultStrategy: 'jwt' })],
@@ -13,7 +19,7 @@ import { CreateInstitutionService, DeleteInstitutionService, FindAllInstitutions
     FindAllInstitutionsServices,
     FindOneInstitutionService,
     UpdateInstitutionService,
-    DeleteInstitutionService
+    DeleteInstitutionService,
   ],
 })
 export class InstitutionModule {}
