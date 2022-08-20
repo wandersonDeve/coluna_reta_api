@@ -24,7 +24,7 @@ export class CreateUserDto {
   @IsEnum(UserRole)
   @ApiProperty({
     description: 'Role of the user available on the platform.',
-    example: UserRole.BACKOFICCE
+    example: UserRole.BACKOFICCE,
   })
   role: UserRole;
 

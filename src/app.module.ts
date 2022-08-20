@@ -9,7 +9,13 @@ import { StudentModule } from './modules/student/student.module';
 import { InstitutionModule } from './modules/institution/institution.module';
 
 @Module({
-  imports: [AuthModule, AddressModule, UserModule, StudentModule, InstitutionModule],
+  imports: [
+    AuthModule,
+    AddressModule,
+    UserModule,
+    StudentModule,
+    InstitutionModule,
+  ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })
