@@ -1,36 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'prisma/service/prisma.service';
-import {
-  PageDto,
-  PageMetaDto,
-  PageOptionsDto,
-} from 'src/shared/pagination-dtos';
 import { UpdateStudentDto } from './dto/update-student.dto';
-import { Student } from './entities/student.entity';
 
 @Injectable()
 export class StudentService {
   constructor(private prisma: PrismaService) {}
-
-  async findAll(pageOptionsDto: PageOptionsDto): Promise<PageDto<Student>> {
-    const { skip, take, order, orderByColumn } = pageOptionsDto;
-
-    const students = await this.prisma.student.findMany({
-      skip,
-      take,
-      orderBy: {
-        [orderByColumn]: order,
-      },
-    });
-
-    const allStudents = await this.prisma.student.findMany();
-
-    const itemCount = allStudents.length;
-
-    const pageMetaDto = new PageMetaDto({ itemCount, pageOptionsDto });
-
-    return new PageDto(students, pageMetaDto);
-  }
 
   async findOne(id: number) {
     return this.prisma.student.findUnique({

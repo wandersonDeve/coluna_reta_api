@@ -51,7 +51,13 @@ export class UserRepository extends PrismaClient {
   }
 
   async getAllUsers(): Promise<User[]> {
-    return this.user.findMany().catch(handleError);
+    return this.user
+      .findMany({
+        where: {
+          deleted: false,
+        },
+      })
+      .catch(handleError);
   }
 
   async findOneUser(userId: number) {
@@ -63,6 +69,7 @@ export class UserRepository extends PrismaClient {
           name: true,
           email: true,
           role: true,
+          deleted: false,
         },
       })
       .catch(handleError);
@@ -75,7 +82,7 @@ export class UserRepository extends PrismaClient {
   }
 
   async searchUsers(searchUserDto: SearchUserDto) {
-    return await this.user
+    return this.user
       .findMany({
         orderBy: [
           {

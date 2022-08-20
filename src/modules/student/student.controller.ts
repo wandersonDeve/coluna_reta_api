@@ -8,7 +8,6 @@ import {
   Delete,
   Query,
   UseGuards,
-  SetMetadata,
 } from '@nestjs/common';
 import { StudentService } from './student.service';
 import { CreateStudentDto } from './dto/create-student.dto';
@@ -16,9 +15,15 @@ import { UpdateStudentDto } from './dto/update-student.dto';
 import { PageOptionsDto } from 'src/shared/pagination-dtos';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { CreateStudentService } from './services';
+import {
+  CreateStudentService,
+  FindAllStudentsService,
+  FindManyStudentsByParamService,
+  FindOneStudentByIdService,
+} from './services';
 import { User } from '@prisma/client';
 import { LoggedAdmin } from '../auth/decorator/logged-admin.decorator';
+import { SearchStudentsDto } from './dto/search-students.dto';
 
 @ApiTags('Student')
 @UseGuards(AuthGuard())
@@ -28,6 +33,9 @@ export class StudentController {
   constructor(
     private readonly studentService: StudentService,
     private createStudentService: CreateStudentService,
+    private findAllStudentsService: FindAllStudentsService,
+    private findOneStudentByIdService: FindOneStudentByIdService,
+    private findManyStudentsByParamService: FindManyStudentsByParamService,
   ) {}
 
   @Post()
@@ -42,16 +50,27 @@ export class StudentController {
   @ApiOperation({
     summary: 'Get all students - (FOR ALL USERS).',
   })
-  async findAll(@Query() query: PageOptionsDto) {
-    return this.studentService.findAll(query);
+  async findAll(@LoggedAdmin() user: User, @Query() query: PageOptionsDto) {
+    return this.findAllStudentsService.execute(query);
   }
 
-  @Get(':id')
+  @Get('search/:id')
   @ApiOperation({
     summary: 'Get a student by id - (FOR ALL USERS).',
   })
-  async findOne(@Param('id') id: string) {
-    return this.studentService.findOne(+id);
+  async findOne(@LoggedAdmin() user: User, @Param('id') id: string) {
+    return this.findOneStudentByIdService.execute(+id);
+  }
+
+  @Get('/search')
+  @ApiOperation({
+    summary: 'Get students by any param - (FOR ALL USERS).',
+  })
+  async findManyStudents(
+    @LoggedAdmin() user: User,
+    @Body() data: SearchStudentsDto,
+  ) {
+    return this.findManyStudentsByParamService.execute(data);
   }
 
   @Patch(':id')
