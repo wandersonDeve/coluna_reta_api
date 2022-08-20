@@ -16,21 +16,26 @@ import { UpdateStudentDto } from './dto/update-student.dto';
 import { PageOptionsDto } from 'src/shared/pagination-dtos';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
+import { CreateStudentService } from './services';
+import { User } from '@prisma/client';
+import { LoggedAdmin } from '../auth/decorator/logged-admin.decorator';
 
 @ApiTags('Student')
 @UseGuards(AuthGuard())
 @ApiBearerAuth()
 @Controller('student')
 export class StudentController {
-  constructor(private readonly studentService: StudentService) {}
+  constructor(
+    private readonly studentService: StudentService,
+    private createStudentService: CreateStudentService,
+  ) {}
 
   @Post()
-  @SetMetadata('roles', ['ADMIN', 'CAMPO'])
   @ApiOperation({
-    summary: 'Create a new student - (FOR ADMIN/CAMPO).',
+    summary: 'Create a new student - (FOR ALL USERS).',
   })
-  async create(@Body() createStudentDto: CreateStudentDto) {
-    return this.studentService.create(createStudentDto);
+  async create(@LoggedAdmin() user: User, @Body() data: CreateStudentDto) {
+    return this.createStudentService.execute(data);
   }
 
   @Get('/all')
