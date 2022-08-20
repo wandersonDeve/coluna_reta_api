@@ -1,17 +1,43 @@
-import { UseGuards, Controller, Post, Body } from '@nestjs/common';
+import {
+  UseGuards,
+  Controller,
+  Post,
+  Body,
+  Query,
+  Get,
+  Param,
+  Patch,
+  Delete,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { PageOptionsDto } from 'src/shared/pagination-dtos';
 import { LoggedAdmin } from '../auth/decorator/logged-admin.decorator';
 import { User } from '../user/entities/user.entity';
 import { CreateInstitutionDto } from './dto/create-institution';
-import { CreateInstitutionService } from './services/create-institution.service';
+import { UpdateInstitutionDto } from './dto/update.institution';
+import {
+  CreateInstitutionService,
+  DeleteInstitutionService,
+  FindAllInstitutionsServices,
+  FindOneInstitutionService,
+  UpdateInstitutionService,
+} from './services';
 
 @ApiTags('Institution')
 @UseGuards(AuthGuard())
 @ApiBearerAuth()
 @Controller('institution')
 export class InstitutionController {
-  constructor(private createInstitutionService: CreateInstitutionService) {}
+  constructor(
+    private createInstitutionService: CreateInstitutionService,
+    private findAllInstitutionsServices: FindAllInstitutionsServices,
+    private findOneInstitutionService: FindOneInstitutionService,
+    private updateInstitutionService: UpdateInstitutionService,
+    private deleteInstitutionService: DeleteInstitutionService,
+  ) {}
 
   @Post('create')
   @ApiOperation({
@@ -22,5 +48,51 @@ export class InstitutionController {
     @Body() createInstitutionDto: CreateInstitutionDto,
   ) {
     return this.createInstitutionService.execute(createInstitutionDto);
+  }
+
+  @Get('all')
+  @ApiOperation({
+    summary: 'List all institutions - (FOR ADMIN).',
+  })
+  findAll(@LoggedAdmin() user: User, @Query() query: PageOptionsDto) {
+    return this.findAllInstitutionsServices.execute(query);
+  }
+
+  @Get('search/:institutionID')
+  @ApiOperation({
+    summary: 'View a institution by Id - (FOR ADMIN).',
+  })
+  findOneInstitution(
+    @LoggedAdmin() user: User,
+    @Param('institutionID') institutionId: number,
+  ) {
+    return this.findOneInstitutionService.execute(institutionId);
+  }
+
+  @Patch('update/:institutionID')
+  @ApiOperation({
+    summary: 'Edit a institutions by Id - (FOR ADMIN).',
+  })
+  updateInstitution(
+    @LoggedAdmin() user: User,
+    @Param('institutionID') institutionId: number,
+    @Body() updateInstitutionDto: UpdateInstitutionDto,
+  ) {
+    return this.updateInstitutionService.execute(
+      institutionId,
+      updateInstitutionDto,
+    );
+  }
+
+  @Delete('delete/:institutionID')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({
+    summary: 'Remove a institution by Id - (FOR ADMIN).',
+  })
+  deleteInstitution(
+    @LoggedAdmin() user: User,
+    @Param('institutionID') institutionId: number,
+  ) {
+    return this.deleteInstitutionService.execute(institutionId);
   }
 }
