@@ -74,9 +74,6 @@ export class UserRepository extends PrismaClient {
     const user = await this.user
       .findFirst({
         where: { id: userId, deleted: false },
-        include: {
-          institutions: true,
-        },
       })
       .catch(handleError);
 
