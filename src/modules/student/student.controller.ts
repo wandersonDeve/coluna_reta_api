@@ -25,6 +25,7 @@ import {
 import { User } from '@prisma/client';
 import { LoggedAdmin } from '../auth/decorator/logged-admin.decorator';
 import { SearchStudentsDto } from './dto/search-students.dto';
+import { LoggedUser } from '../auth/decorator/logged-user.decorator';
 
 @ApiTags('Student')
 @UseGuards(AuthGuard())
@@ -42,7 +43,7 @@ export class StudentController {
 
   @Post()
   @ApiOperation({
-    summary: 'Create a new student - (FOR ALL USERS).',
+    summary: 'Create a new student - (FOR ADMIN).',
   })
   async create(@LoggedAdmin() user: User, @Body() data: CreateStudentDto) {
     return this.createStudentService.execute(data);
@@ -52,7 +53,7 @@ export class StudentController {
   @ApiOperation({
     summary: 'Get all students - (FOR ALL USERS).',
   })
-  async findAll(@LoggedAdmin() user: User, @Query() query: PageOptionsDto) {
+  async findAll(@LoggedUser() user: User, @Query() query: PageOptionsDto) {
     return this.findAllStudentsService.execute(query);
   }
 
@@ -60,7 +61,7 @@ export class StudentController {
   @ApiOperation({
     summary: 'Get a student by id - (FOR ALL USERS).',
   })
-  async findOne(@LoggedAdmin() user: User, @Param('id') id: string) {
+  async findOne(@LoggedUser() user: User, @Param('id') id: string) {
     return this.findOneStudentByIdService.execute(+id);
   }
 
@@ -69,7 +70,7 @@ export class StudentController {
     summary: 'Get students by any param - (FOR ALL USERS).',
   })
   async findManyStudents(
-    @LoggedAdmin() user: User,
+    @LoggedUser() user: User,
     @Body() data: SearchStudentsDto,
     @Query() query: PageOptionsDto,
   ) {
@@ -78,15 +79,19 @@ export class StudentController {
 
   @Patch(':id')
   @ApiOperation({
-    summary: 'Update a student - (FOR ALL USERS).',
+    summary: 'Update a student - (FOR ADMIN).',
   })
-  async update(@Param('id') id: string, @Body() data: UpdateStudentDto) {
+  async update(
+    @LoggedAdmin() user: User,
+    @Param('id') id: string,
+    @Body() data: UpdateStudentDto,
+  ) {
     return this.updateStudentService.execute(+id, data);
   }
 
   @Delete(':id')
   @ApiOperation({
-    summary: 'Delete a student by id - (FOR ALL USERS).',
+    summary: 'Delete a student by id - (FOR ADMIN).',
   })
   async remove(@LoggedAdmin() user: User, @Param('id') id: string) {
     return this.deleteStudentByIdService.execute(+id);

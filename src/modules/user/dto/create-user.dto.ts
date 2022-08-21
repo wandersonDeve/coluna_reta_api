@@ -3,6 +3,7 @@ import {
   IsEmail,
   IsEnum,
   IsNotEmpty,
+  IsNumber,
   IsString,
   Length,
   Matches,
@@ -47,4 +48,11 @@ export class CreateUserDto {
     example: 'Reta12@#',
   })
   passwordHash: string;
+
+  @IsNotEmpty()
+  @ApiProperty({
+    description: 'The user institution id.',
+    example: [514, 584],
+  })
+  institutions: number[];
 }

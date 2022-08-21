@@ -62,7 +62,7 @@ export class UserController {
   @ApiOperation({
     summary: 'View a user by Id - (FOR ADMIN).',
   })
-  findOneUser(@LoggedAdmin() user: User, @Param('userID') userId: number): Promise<User> {
+  findOneUser(@LoggedAdmin() user: User, @Param('userID') userId: number) {
     return this.findOneUserService.execute(userId);
   }
 
