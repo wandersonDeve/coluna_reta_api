@@ -56,7 +56,7 @@ export class StudentRepository extends PrismaClient {
       .catch(handleError);
 
     if (students.length === 0) {
-      throw new NotFoundException('No a users found');
+      throw new NotFoundException('No a students found');
     }
 
     return students;

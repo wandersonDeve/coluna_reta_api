@@ -64,7 +64,7 @@ export class StudentController {
     return this.findOneStudentByIdService.execute(+id);
   }
 
-  @Get('/search')
+  @Post('/search')
   @ApiOperation({
     summary: 'Get students by any param - (FOR ALL USERS).',
   })
