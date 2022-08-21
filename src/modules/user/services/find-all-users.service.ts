@@ -7,7 +7,7 @@ import {
 } from '../../../shared/pagination-dtos';
 
 export class FindAllUsersServices {
-  async execute(pageOptionsDto: PageOptionsDto): Promise<PageDto<User>> {
+  async execute(pageOptionsDto: PageOptionsDto) {
     const userRepository = new UserRepository();
 
     const users = await userRepository.findAllUsers(pageOptionsDto);

@@ -8,13 +8,16 @@ import { UpdateUserDto } from '../dto/update-user.dto';
 import { User } from '../entities/user.entity';
 
 export class UserRepository extends PrismaClient {
-  async createUser({
-    name,
-    email,
-    role,
-    passwordHash,
-  }: CreateUserDto): Promise<User> {
-    return this.user
+  private userSelect = {
+    id: true,
+    name: true,
+    email: true,
+    role: true,
+    passwordHash: false,
+    deleted: false,
+  };
+  async createUser({ name, email, role, passwordHash }: CreateUserDto) {
+    const newUser = await this.user
       .create({
         data: {
           name,
@@ -24,6 +27,12 @@ export class UserRepository extends PrismaClient {
         },
       })
       .catch(handleError);
+
+    delete newUser.passwordHash;
+
+    delete newUser.deleted;
+
+    return newUser;
   }
 
   async findAllUsers({
@@ -40,6 +49,7 @@ export class UserRepository extends PrismaClient {
           [orderByColumn]: order,
         },
         where: { deleted: false },
+        select: this.userSelect,
       })
       .catch(handleError);
 
@@ -60,16 +70,12 @@ export class UserRepository extends PrismaClient {
       .catch(handleError);
   }
 
-  async findOneUser(userId: number) {
+  async findOneUser(userId: number): Promise<User> {
     const user = await this.user
       .findFirst({
         where: { id: userId, deleted: false },
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          role: true,
-          deleted: false,
+        include: {
+          institutions: true,
         },
       })
       .catch(handleError);
@@ -78,70 +84,67 @@ export class UserRepository extends PrismaClient {
       throw new NotFoundException(`User with Id '${userId}' not found!`);
     }
 
+    delete user.passwordHash;
+
+    delete user.deleted;
+
     return user;
   }
 
-  async searchUsers(searchUserDto: SearchUserDto) {
+  async searchUsers(
+    { skip, order, orderByColumn, take }: PageOptionsDto,
+    searchUserDto: SearchUserDto,
+  ): Promise<User[]> {
     return this.user
       .findMany({
-        orderBy: [
-          {
-            name: 'asc',
-          },
-        ],
+        skip,
+        take,
+        orderBy: {
+          [orderByColumn]: order,
+        },
         where: {
           OR: [
             {
               name: {
                 contains: searchUserDto.search,
               },
+              deleted: false,
             },
             {
               role: {
                 contains: searchUserDto.search,
               },
+              deleted: false,
             },
             {
               email: {
                 contains: searchUserDto.search,
               },
-            },
-            {
               deleted: false,
             },
           ],
         },
-        select: {
-          id: true,
-          name: true,
-          role: true,
-          email: true,
-        },
+        select: this.userSelect,
       })
       .catch(handleError);
   }
 
-  async updateUser(userId: number, { ...data }: UpdateUserDto) {
-    const user = await this.findOneUser(userId);
-
-    return await this.user
+  async updateUser(userId: number, { ...data }: UpdateUserDto): Promise<User> {
+    const updatedUser = await this.user
       .update({
         where: { id: userId },
         data,
-        select: {
-          id: true,
-          name: true,
-          role: true,
-          email: true,
-        },
       })
       .catch(handleError);
+
+    delete updatedUser.passwordHash;
+    delete updatedUser.deleted;
+
+    return updatedUser;
   }
 
-  async deleteUser(userId: number) {
-    const user = await this.findOneUser(userId);
-
-    return await this.user
+  async deleteUser(userId: number): Promise<object> {
+    await this.user
       .update({
         where: { id: userId },
         data: {
@@ -149,5 +152,7 @@ export class UserRepository extends PrismaClient {
         },
       })
       .catch(handleError);
+
+    return { message: 'User deleted successfully' };
   }
 }

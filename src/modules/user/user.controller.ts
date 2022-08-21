@@ -46,7 +46,7 @@ export class UserController {
   @ApiOperation({
     summary: 'Create a new user - (FOR ADMIN).',
   })
-  create(@LoggedAdmin() user: User, @Body() createUserDto: CreateUserDto) {
+  create(@LoggedAdmin() user: User, @Body() createUserDto: CreateUserDto): Promise<User> {
     return this.createUserService.execute(createUserDto);
   }
 
@@ -62,7 +62,7 @@ export class UserController {
   @ApiOperation({
     summary: 'View a user by Id - (FOR ADMIN).',
   })
-  findOneUser(@LoggedAdmin() user: User, @Param('userID') userId: number) {
+  findOneUser(@LoggedAdmin() user: User, @Param('userID') userId: number): Promise<User> {
     return this.findOneUserService.execute(userId);
   }
 
@@ -71,8 +71,12 @@ export class UserController {
     summary: `View a user by name, role or email - (FOR ADMIN).`,
   })
   @HttpCode(HttpStatus.OK)
-  searchUsers(@LoggedAdmin() user: User, @Body() searchUserDto: SearchUserDto) {
-    return this.searchUsersService.execute(searchUserDto);
+  searchUsers(
+    @LoggedAdmin() user: User,
+    @Query() query: PageOptionsDto,
+    @Body() searchUserDto: SearchUserDto,
+  ) {
+    return this.searchUsersService.execute(query, searchUserDto);
   }
 
   @Patch('update/:userID')
@@ -83,7 +87,7 @@ export class UserController {
     @LoggedAdmin() user: User,
     @Param('userID') userId: number,
     @Body() updateUserDto: UpdateUserDto,
-  ) {
+  ): Promise<User> {
     return this.updateUserService.execute(userId, updateUserDto);
   }
 
@@ -92,7 +96,7 @@ export class UserController {
   @ApiOperation({
     summary: 'Remove a user by Id - (FOR ADMIN).',
   })
-  deleteUser(@LoggedAdmin() user: User, @Param('userID') userId: number) {
+  deleteUser(@LoggedAdmin() user: User, @Param('userID') userId: number): Promise<object> {
     return this.deleteUserService.execute(userId);
   }
 }
