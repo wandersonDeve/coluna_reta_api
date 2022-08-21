@@ -15,8 +15,15 @@ export class UserRepository extends PrismaClient {
     role: true,
     passwordHash: false,
     deleted: false,
+    institutions: true,
   };
-  async createUser({ name, email, role, passwordHash }: CreateUserDto) {
+  async createUser({
+    name,
+    email,
+    role,
+    passwordHash,
+    institutions,
+  }: CreateUserDto) {
     const newUser = await this.user
       .create({
         data: {
@@ -24,6 +31,13 @@ export class UserRepository extends PrismaClient {
           email,
           role,
           passwordHash,
+          institutions: {
+            createMany: {
+              data: institutions.map((institutions) => ({
+                institution_id: institutions,
+              })),
+            },
+          },
         },
       })
       .catch(handleError);
@@ -35,12 +49,7 @@ export class UserRepository extends PrismaClient {
     return newUser;
   }
 
-  async findAllUsers({
-    skip,
-    order,
-    orderByColumn,
-    take,
-  }: PageOptionsDto): Promise<User[]> {
+  async findAllUsers({ skip, order, orderByColumn, take }: PageOptionsDto) {
     const users = await this.user
       .findMany({
         skip,
@@ -70,10 +79,17 @@ export class UserRepository extends PrismaClient {
       .catch(handleError);
   }
 
-  async findOneUser(userId: number): Promise<User> {
+  async findOneUser(userId: number) {
     const user = await this.user
       .findFirst({
         where: { id: userId, deleted: false },
+        include: {
+          institutions: {
+            include: {
+              institution: true
+            }
+          }
+        },
       })
       .catch(handleError);
 
@@ -91,7 +107,7 @@ export class UserRepository extends PrismaClient {
   async searchUsers(
     { skip, order, orderByColumn, take }: PageOptionsDto,
     searchUserDto: SearchUserDto,
-  ): Promise<User[]> {
+  ) {
     return this.user
       .findMany({
         skip,
@@ -118,6 +134,18 @@ export class UserRepository extends PrismaClient {
                 contains: searchUserDto.search,
               },
               deleted: false,
+            },
+            {
+              institutions: {
+                some: {
+                  institution: {
+                    name: {
+                      contains: searchUserDto.search,
+                    },
+                    deleted: false,
+                  },
+                },
+              },
             },
           ],
         },

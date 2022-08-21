@@ -15,6 +15,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { PageOptionsDto } from 'src/shared/pagination-dtos';
 import { LoggedAdmin } from '../auth/decorator/logged-admin.decorator';
+import { LoggedUser } from '../auth/decorator/logged-user.decorator';
 import { User } from '../user/entities/user.entity';
 import { CreateInstitutionDto } from './dto/create-institution';
 import { UpdateInstitutionDto } from './dto/update.institution';
@@ -52,18 +53,18 @@ export class InstitutionController {
 
   @Get('all')
   @ApiOperation({
-    summary: 'List all institutions - (FOR ADMIN).',
+    summary: 'List all institutions - (FOR ALL USERS).',
   })
-  findAll(@LoggedAdmin() user: User, @Query() query: PageOptionsDto) {
+  findAll(@LoggedUser() user: User, @Query() query: PageOptionsDto) {
     return this.findAllInstitutionsServices.execute(query);
   }
 
   @Get('search/:institutionID')
   @ApiOperation({
-    summary: 'View a institution by Id - (FOR ADMIN).',
+    summary: 'View a institution by Id - (FOR ALL USERS).',
   })
   findOneInstitution(
-    @LoggedAdmin() user: User,
+    @LoggedUser() user: User,
     @Param('institutionID') institutionId: number,
   ) {
     return this.findOneInstitutionService.execute(institutionId);
