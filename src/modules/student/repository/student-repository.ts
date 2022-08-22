@@ -82,6 +82,10 @@ export class StudentRepository extends PrismaClient {
       },
     });
 
+    if (!student) {
+      return student;
+    }
+
     delete student.deleted;
     delete student.address.deleted;
     delete student.institution.deleted;
