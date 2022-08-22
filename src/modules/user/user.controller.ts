@@ -46,7 +46,10 @@ export class UserController {
   @ApiOperation({
     summary: 'Create a new user - (FOR ADMIN).',
   })
-  create(@LoggedAdmin() user: User, @Body() createUserDto: CreateUserDto): Promise<User> {
+  create(
+    @LoggedAdmin() user: User,
+    @Body() createUserDto: CreateUserDto,
+  ): Promise<User> {
     return this.createUserService.execute(createUserDto);
   }
 
@@ -96,7 +99,10 @@ export class UserController {
   @ApiOperation({
     summary: 'Remove a user by Id - (FOR ADMIN).',
   })
-  deleteUser(@LoggedAdmin() user: User, @Param('userID') userId: number): Promise<object> {
+  deleteUser(
+    @LoggedAdmin() user: User,
+    @Param('userID') userId: number,
+  ): Promise<object> {
     return this.deleteUserService.execute(userId);
   }
 }

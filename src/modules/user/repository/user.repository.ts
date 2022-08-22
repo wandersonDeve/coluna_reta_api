@@ -69,7 +69,7 @@ export class UserRepository extends PrismaClient {
     return users;
   }
 
-  async getAllUsers(): Promise<User[]> {
+  async getAllUsers() {
     return this.user
       .findMany({
         where: {
@@ -85,10 +85,10 @@ export class UserRepository extends PrismaClient {
         where: { id: userId, deleted: false },
         include: {
           institutions: {
-            include: {
-              institution: true
-            }
-          }
+            select: {
+              institution: true,
+            },
+          },
         },
       })
       .catch(handleError);
@@ -142,14 +142,20 @@ export class UserRepository extends PrismaClient {
                     name: {
                       contains: searchUserDto.search,
                     },
-                    deleted: false,
                   },
+                  deleted: false,
                 },
               },
             },
           ],
         },
-        select: this.userSelect,
+        include: {
+          institutions: {
+            select: {
+              institution: true,
+            },
+          },
+        },
       })
       .catch(handleError);
   }
