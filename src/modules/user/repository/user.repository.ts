@@ -137,24 +137,14 @@ export class UserRepository extends PrismaClient {
             },
             {
               institutions: {
-                some: {
+                every: {
                   institution: {
-                    name: {
-                      contains: searchUserDto.search,
-                    },
+                    name: searchUserDto.search,
                   },
-                  deleted: false,
                 },
               },
             },
           ],
-        },
-        include: {
-          institutions: {
-            select: {
-              institution: true,
-            },
-          },
         },
       })
       .catch(handleError);
