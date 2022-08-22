@@ -1,6 +1,6 @@
-import { Prisma } from '@prisma/client';
+import { Institution } from 'src/modules/institution/entities/institution.entity';
 
-export class User implements Prisma.UserUncheckedCreateInput {
+export class User {
   id?: number;
   name: string;
   role: string;
@@ -9,5 +9,15 @@ export class User implements Prisma.UserUncheckedCreateInput {
   created_at?: string | Date;
   updated_at?: string | Date;
   deleted?: boolean;
-  institutions?: Prisma.UsersHasInstitutionUncheckedCreateNestedManyWithoutUserInput;
+  institutions?: UsersHasInstitution;
 }
+
+type UsersHasInstitution = {
+  id: number;
+  user: User;
+  user_id: number;
+  institution: Institution;
+  institution_id: number;
+  created_at: Date;
+  deleted: boolean;
+};

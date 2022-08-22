@@ -135,15 +135,6 @@ export class UserRepository extends PrismaClient {
               },
               deleted: false,
             },
-            {
-              institutions: {
-                every: {
-                  institution: {
-                    name: searchUserDto.search,
-                  },
-                },
-              },
-            },
           ],
         },
       })
