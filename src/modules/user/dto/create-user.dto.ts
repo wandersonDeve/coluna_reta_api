@@ -50,9 +50,10 @@ export class CreateUserDto {
   passwordHash: string;
 
   @IsNotEmpty()
+  @IsNumber()
   @ApiProperty({
     description: 'The user institution id.',
-    example: [514, 584],
+    example: 5,
   })
-  institutions: number[];
+  institution_id: number;
 }

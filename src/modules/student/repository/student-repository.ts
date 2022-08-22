@@ -25,7 +25,7 @@ export class StudentRepository extends PrismaClient {
     name,
     birth_date,
     phone,
-  }: CreateStudentDto): Promise<Student> {
+  }: CreateStudentDto): Promise<any> {
     return this.student
       .findFirst({
         where: {
@@ -52,6 +52,9 @@ export class StudentRepository extends PrismaClient {
           [orderByColumn]: order,
         },
         where: { deleted: false },
+        include: {
+          institution: true,
+        },
       })
       .catch(handleError);
 

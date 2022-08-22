@@ -35,12 +35,12 @@ export class CreateStudentDto extends Student {
   phone: string;
 
   @IsNumber()
-  @IsOptional()
+  @IsNotEmpty()
   @ApiProperty({
     description: 'Institution to which the student belongs.',
     example: 1,
   })
-  institution_id?: number;
+  institution_id: number;
 
   @IsNumber()
   @IsOptional()
