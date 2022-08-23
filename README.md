@@ -94,4 +94,3 @@ Link para baixar: https://insomnia.rest/download
 
 [Voltar ao 🔝](#coluna_reta_api)
 
-

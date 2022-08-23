@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  coluna_reta:
+    build: .
+    container_name: coluna_reta
+    restart: always
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/usr/app
+    depends_on:
+      - database_coluna_reta
+    environment:
+      - DATABASE_URL=mysql://root:root@database_coluna_reta:3306/coluna_reta?reconnect=true
+      - SECRET_KEY=superteste
+
+  database_coluna_reta:
+    container_name: database_coluna_reta
+    image: mysql:5.7.31
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - '3333:3306'
+    volumes:
+      - pgdata:/data/mysql
+    env_file:
+      - .env
+
+volumes:
+  pgdata: ~
