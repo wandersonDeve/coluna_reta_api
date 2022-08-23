@@ -8,9 +8,7 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
-  "prisma": {
-    
-  },
+  "prisma": {},
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -26,7 +24,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "seed": "ts-node ./prisma/seed.ts"
+    "seed": "ts-node ./prisma/seed/seed.ts",
+    "seed:admin": "ts-node ./prisma/seed/admin.ts"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",

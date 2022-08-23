@@ -1,30 +1,28 @@
-import { Prisma, PrismaClient } from '@prisma/client';
+import { PrismaClient, Prisma } from '@prisma/client';
 
-export const users: Prisma.UserCreateInput[] = [
-  {
-    name: 'Charles Xavier',
-    role: 'ADMIN',
-    email: 'reta@1.com',
-    passwordHash:
-      '$2a$10$6EgPRZqqBJIzIya.NknvZeJA9MN20EjSvfWgZwkf.Z6KYTM9eJm9W',
-  },
-  {
-    name: 'Scott Summers',
-    role: 'BACKOFFICE',
-    email: 'reta@2.com',
-    passwordHash:
-      '$2a$10$6EgPRZqqBJIzIya.NknvZeJA9MN20EjSvfWgZwkf.Z6KYTM9eJm9W',
-  },
-];
+const prisma = new PrismaClient();
 
-export const user = async (prisma: PrismaClient) => {
-  for (const obj of Object.values(users)) {
-    await prisma.user.upsert({
-      where: { email: obj.email },
-      update: {},
-      create: {
-        ...obj,
-      },
-    });
-  }
-};
+async function main() {
+  console.log(`Start seeding ...`);
+  await Promise.all([
+    await prisma.$queryRaw(
+      Prisma.sql`INSERT IGNORE INTO user (name,role,email,password_hash)
+    VALUES
+      ("Jinpachi Mishima","ADMIN","admin@colunareta.com","$2a$10$6EgPRZqqBJIzIya.NknvZeJA9MN20EjSvfWgZwkf.Z6KYTM9eJm9W"),
+      ("Julia Chang","CAMPO","campo@colunareta.com","$2a$10$6EgPRZqqBJIzIya.NknvZeJA9MN20EjSvfWgZwkf.Z6KYTM9eJm9W"),
+      ("Jack","BACKOFFICE","backoffice@colunareta.com","$2a$10$6EgPRZqqBJIzIya.NknvZeJA9MN20EjSvfWgZwkf.Z6KYTM9eJm9W")`,
+    ),
+  ]);
+
+  console.log(`Seeding admin finished.`);
+}
+
+main()
+  .then(async () => {
+    await prisma.$disconnect();
+  })
+  .catch(async (e) => {
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });

@@ -6,6 +6,46 @@ async function main() {
   console.log(`Start seeding ...`);
   await Promise.all([
     await prisma.$queryRaw(
+      Prisma.sql`INSERT IGNORE INTO Address (id,city,neighborhood,number,state,street,zip_code)
+      VALUES
+        (1,"Paulista","Picardie","595","Paraíba","nulla vulputate dui,","12383-260"),
+        (2,"Mogi das Cruzes","Henegouwen","886","Paraná","Nunc mauris","76730-453"),
+        (3,"Patos","Southwestern Tagalog Region","514","São Paulo","ullamcorper.","97062-045"),
+        (4,"Goiânia","Arkhangelsk Oblast","943","Minas Gerais","luctus aliquet","82039-158"),
+        (5,"Blumenau","Borno","405","Pernambuco","luctus, ipsum","25146-653"),
+        (6,"Fortaleza","Ross-shire","812","Pernambuco","ornare. In","67599-163"),
+        (7,"Gravataí","Bretagne","067","Goiás","rutrum lorem","27652-662"),
+        (8,"Rio Verde","Dōngběi","697","Paraná","sodales. Mauris blandit","65702-790"),
+        (9,"Salvador","Katsina","842","Pará","purus ac tellus.","98916-355"),
+        (10,"Recife","Nariño","459","Santa Catarina","mollis dui, in","90765-549"),
+        (11,"Fortaleza","Tabasco","301","Rio Grande do Sul","fringilla","61889-525"),
+        (12,"João Pessoa","Balochistan","878","Paraíba","Morbi non","68444-719"),
+        (13,"Petrópolis","Dalarnas län","862","Bahia","leo.","47870-007"),
+        (14,"Caruaru","Odessa oblast","528","Pernambuco","lacus","44817-054"),
+        (15,"João Pessoa","Cagayan Valley","675","Pernambuco","ligula. Aenean euismod","13580-621"),
+        (16,"Petrolina","Adana","451","Bahia","ipsum. Suspendisse sagittis.","42661-419"),
+        (17,"Lauro de Freitas","Troms og Finnmark","214","Paraná","auctor,","60818-123"),
+        (18,"Maracanaú","Diyarbakır","547","Pará","Aenean gravida nunc","35037214"),
+        (19,"Governador Valadares","Vorarlberg","673","Rio Grande do Sul","Donec nibh enim,","61869-033"),
+        (20,"Anápolis","Ceará","886","Pará","lorem vitae odio","74785-635")`,
+    ),
+
+    await prisma.$queryRaw(
+      Prisma.sql`INSERT IGNORE INTO Institution (id, name,phone_number,address_id)
+    VALUES
+      (1,"Urna Vivamus Corp.","(55) 86 2148 2912",5),
+      (2,"Natoque Penatibus LLP","(55) 11 2705 3468",15),
+      (3,"Ante Vivamus Institute","(55) 81 8716 1788",8),
+      (4,"Dui Augue Eu Ltd","(55) 44 7881 6137",19),
+      (5,"Nullam Inc.","(55) 68 3283 3699",7),
+      (6,"Eget Massa Institute","(55) 65 5518 0603",1),
+      (7,"Elit Foundation","(55) 56 1131 6953",9),
+      (8,"Sit Amet Corp.","(55) 21 5678 1214",3),
+      (9,"Luctus Ut Corp.","(55) 28 9306 9166",13),
+      (10,"Velit Industries","(55) 32 1459 6114",2);`,
+    ),
+
+    await prisma.$queryRaw(
       Prisma.sql`INSERT IGNORE INTO user (name,role,email,password_hash)
     VALUES
       ("Autumn Robertson","BACKOFFICE","lacus.quisque@google.org","DEW87RRK1VO"),
@@ -17,46 +57,6 @@ async function main() {
       ("Gregory Suarez","BACKOFFICE","nec.tellus@aol.com","YNY07DXY5QP"),
       ("Nayda Barber","BACKOFFICE","ipsum@yahoo.edu","HHM11EMQ6KO"),
       ("Quon Brady","BACKOFFICE","malesuada@google.org","WQK22RIX2ZL")`,
-    ),
-
-    await prisma.$queryRaw(
-      Prisma.sql`INSERT IGNORE INTO Address (city,neighborhood,number,state,street,zip_code)
-      VALUES
-        ("Paulista","Picardie","595","Paraíba","nulla vulputate dui,","12383-260"),
-        ("Mogi das Cruzes","Henegouwen","886","Paraná","Nunc mauris","76730-453"),
-        ("Patos","Southwestern Tagalog Region","514","São Paulo","ullamcorper.","97062-045"),
-        ("Goiânia","Arkhangelsk Oblast","943","Minas Gerais","luctus aliquet","82039-158"),
-        ("Blumenau","Borno","405","Pernambuco","luctus, ipsum","25146-653"),
-        ("Fortaleza","Ross-shire","812","Pernambuco","ornare. In","67599-163"),
-        ("Gravataí","Bretagne","067","Goiás","rutrum lorem","27652-662"),
-        ("Rio Verde","Dōngběi","697","Paraná","sodales. Mauris blandit","65702-790"),
-        ("Salvador","Katsina","842","Pará","purus ac tellus.","98916-355"),
-        ("Recife","Nariño","459","Santa Catarina","mollis dui, in","90765-549"),
-        ("Fortaleza","Tabasco","301","Rio Grande do Sul","fringilla","61889-525"),
-        ("João Pessoa","Balochistan","878","Paraíba","Morbi non","68444-719"),
-        ("Petrópolis","Dalarnas län","862","Bahia","leo.","47870-007"),
-        ("Caruaru","Odessa oblast","528","Pernambuco","lacus","44817-054"),
-        ("João Pessoa","Cagayan Valley","675","Pernambuco","ligula. Aenean euismod","13580-621"),
-        ("Petrolina","Adana","451","Bahia","ipsum. Suspendisse sagittis.","42661-419"),
-        ("Lauro de Freitas","Troms og Finnmark","214","Paraná","auctor,","60818-123"),
-        ("Maracanaú","Diyarbakır","547","Pará","Aenean gravida nunc","35037214"),
-        ("Governador Valadares","Vorarlberg","673","Rio Grande do Sul","Donec nibh enim,","61869-033"),
-        ("Anápolis","Ceará","886","Pará","lorem vitae odio","74785-635")`,
-    ),
-
-    await prisma.$queryRaw(
-      Prisma.sql`INSERT IGNORE INTO Institution (name,phone_number,address_id)
-    VALUES
-      ("Urna Vivamus Corp.","(55) 86 2148 2912",5),
-      ("Natoque Penatibus LLP","(55) 11 2705 3468",15),
-      ("Ante Vivamus Institute","(55) 81 8716 1788",8),
-      ("Dui Augue Eu Ltd","(55) 44 7881 6137",19),
-      ("Nullam Inc.","(55) 68 3283 3699",7),
-      ("Eget Massa Institute","(55) 65 5518 0603",1),
-      ("Elit Foundation","(55) 56 1131 6953",9),
-      ("Sit Amet Corp.","(55) 21 5678 1214",3),
-      ("Luctus Ut Corp.","(55) 28 9306 9166",13),
-      ("Velit Industries","(55) 32 1459 6114",2);`,
     ),
 
     await prisma.$queryRaw(
@@ -149,26 +149,6 @@ async function main() {
         ("Odysseus K. Bird","17/07/10","(55) 43 8103 9979",6,9),
         ("Colby E. Colon","26/05/11","(55) 28 0756 5563",4,19),
         ("Thor H. Doyle","16/10/12","(55) 85 5438 3783",5,3)`,
-    ),
-
-    await prisma.$queryRaw(
-      Prisma.sql`INSERT IGNORE INTO UsersHasInstitution (user_id,institution_id)
-      VALUES
-        (7,3),
-        (7,6),
-        (6,8),
-        (7,1),
-        (8,9),
-        (4,3),
-        (3,5),
-        (2,3),
-        (6,1),
-        (6,4),
-        (8,2),
-        (3,10),
-        (6,6),
-        (3,5),
-        (6,8)`,
     ),
   ]);
 

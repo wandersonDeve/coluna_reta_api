@@ -32,10 +32,8 @@ export class UserRepository extends PrismaClient {
           role,
           passwordHash,
           institutions: {
-            connectOrCreate: {
-              where: {
-                id: institution_id,
-              },
+            connect: {
+              id: institution_id,
             },
           },
         },
@@ -84,11 +82,7 @@ export class UserRepository extends PrismaClient {
       .findFirst({
         where: { id: userId, deleted: false },
         include: {
-          institutions: {
-            select: {
-              institution: true,
-            },
-          },
+          institutions: true,
         },
       })
       .catch(handleError);
