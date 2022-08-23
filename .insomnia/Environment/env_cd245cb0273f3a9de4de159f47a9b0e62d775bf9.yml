@@ -1,0 +1,26 @@
+_id: env_cd245cb0273f3a9de4de159f47a9b0e62d775bf9
+type: Environment
+parentId: wrk_36782d168d264dfa90a7f23599be283b
+modified: 1661218587819
+created: 1660654790095
+name: Base Environment
+data:
+  local: http://localhost:5005
+  docker: http://localhost:3000
+  dev: https://dev-coluna-reta-wandersondeve.koyeb.app
+  prod: ""
+  token_admin: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGNvbHVuYXJldGEuY29tIiwiaWF0IjoxNjYxMjEzMTM0LCJleHAiOjE2NjEyOTk1MzR9.576RnQCRygnlD7SH7YyRCa-bG7qFvLPeRA9Nq3iNGKk
+  token_campo: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNhbXBvQGNvbHVuYXJldGEuY29tIiwiaWF0IjoxNjYxMjE0NDgzLCJleHAiOjE2NjEzMDA4ODN9.Kc4Ih6lERtE7tmdzC_7RKm2XL3Ux3t32lIoS-Oz--OU
+  token_backoffice: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJhY2tvZmZpY2VAY29sdW5hcmV0YS5jb20iLCJpYXQiOjE2NjA4NjczNDEsImV4cCI6MTY2MDk1Mzc0MX0.JzZwUBqXQc0lpTyYceSGrP2IU9mVl3w68MazGWSwmc4
+dataPropertyOrder:
+  "&":
+    - local
+    - docker
+    - dev
+    - prod
+    - token_admin
+    - token_campo
+    - token_backoffice
+color: null
+isPrivate: false
+metaSortKey: 1660654790095

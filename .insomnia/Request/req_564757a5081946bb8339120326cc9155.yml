@@ -1,0 +1,44 @@
+_id: req_564757a5081946bb8339120326cc9155
+type: Request
+parentId: fld_e6d627d92529469495151a3bbb4f92a1
+modified: 1661214645993
+created: 1660680569109
+url: "{{ _.local }}/user/update/16"
+name: Update User
+description: |-
+  Atualiza as informações do usuario.
+  Todos os campos sao opcionais, deve passar o id na url
+
+  exemplo de requisição:
+
+  body:
+
+  ```json
+  {
+    "name": "Charles Xavier",
+    "email": "user@user.com",
+  }
+  ```
+method: PATCH
+body:
+  mimeType: application/json
+  text: |-
+    {
+      "name": "Gun Jack"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_69643f8219574623a52e335e240d61b3
+authentication:
+  type: bearer
+  token: "{{ _.token_campo }}"
+metaSortKey: -1660680583242.25
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

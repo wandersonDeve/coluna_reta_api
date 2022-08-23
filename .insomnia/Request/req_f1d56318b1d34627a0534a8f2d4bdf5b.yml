@@ -1,0 +1,23 @@
+_id: req_f1d56318b1d34627a0534a8f2d4bdf5b
+type: Request
+parentId: fld_4d0e815c095a422494213a87e8b962c1
+modified: 1661217024527
+created: 1661216834484
+url: "{{ _.local }}/institution/delete/12"
+name: Delete Institution
+description: ""
+method: DELETE
+body: {}
+parameters: []
+headers: []
+authentication:
+  type: bearer
+  token: "{{ _.token_admin }}"
+metaSortKey: -1661082175159.5
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

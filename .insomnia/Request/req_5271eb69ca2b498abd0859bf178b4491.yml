@@ -1,0 +1,45 @@
+_id: req_5271eb69ca2b498abd0859bf178b4491
+type: Request
+parentId: fld_7e81fac6323c4155b84b9f8d335763fb
+modified: 1661219317957
+created: 1660782942448
+url: "{{ _.dev }}/student/all"
+name: Get All Students
+description: ""
+method: GET
+body: {}
+parameters:
+  - id: pair_1be2d3696bbc422e9012ba737bf0cea7
+    name: page
+    value: "1"
+    description: ""
+  - id: pair_fba71068293d44abb8d4cb7339e7588d
+    name: take
+    value: "2"
+    description: ""
+    disabled: false
+  - id: pair_d516c8b460144b05aa09d2ec7a66d621
+    name: order
+    value: asc
+    description: ""
+    disabled: false
+    type: text
+    multiline: false
+  - id: pair_37561951bd054ed58a9697ea69708c10
+    name: orderByColumn
+    value: id
+    description: ""
+    disabled: false
+headers: []
+authentication:
+  type: bearer
+  token: "{{ _.token_admin }}"
+  disabled: false
+metaSortKey: -1660680583279.75
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

@@ -1,0 +1,50 @@
+_id: req_fe22b55d5c6d4c46a48bb7e07faec0ba
+type: Request
+parentId: fld_e6d627d92529469495151a3bbb4f92a1
+modified: 1661218683617
+created: 1660680486981
+url: "{{ _.dev }}/user/create"
+name: Create New User
+description: |-
+  Rota responsavel por criar novos usuarios na plataforma.
+  Para criar novos user o usuarioi deve estar com o token valido e role admin.
+
+  exemplo de requesição:
+
+  Body:
+
+  ```json
+  {
+    "name": "Charles Xavier",
+    "role": "BACKOFICCE",
+    "email": "user@user.com",
+    "passwordHash": "User#5678@!"
+  }
+  ```
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+      "name": "Charles Xavier",
+      "role": "BACKOFFICE",
+      "email": "user@user.com",
+      "passwordHash": "User#5678@!",
+    	"institution_id":514
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_0b27803e197f4054955cfce84b7057c3
+authentication:
+  type: bearer
+  token: "{{ _.token_admin }}"
+metaSortKey: -1660680583286
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

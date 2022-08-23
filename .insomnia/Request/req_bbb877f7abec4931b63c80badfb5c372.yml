@@ -1,0 +1,23 @@
+_id: req_bbb877f7abec4931b63c80badfb5c372
+type: Request
+parentId: fld_7e81fac6323c4155b84b9f8d335763fb
+modified: 1661213753951
+created: 1660782942491
+url: "{{ _.local }}/student/56"
+name: Delete Student
+description: ""
+method: DELETE
+body: {}
+parameters: []
+headers: []
+authentication:
+  type: bearer
+  token: "{{ _.token_admin }}"
+metaSortKey: -1660680583236
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

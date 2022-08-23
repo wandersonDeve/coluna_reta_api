@@ -1,0 +1,48 @@
+_id: req_82b70deef1ad460380a08462271a82f9
+type: Request
+parentId: fld_7e81fac6323c4155b84b9f8d335763fb
+modified: 1661219177787
+created: 1660782942463
+url: "{{ _.local }}/student/search"
+name: Search Students
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"search":"Yoshimitsu"
+    }
+parameters:
+  - id: pair_ac88d0e6f44b452cb11f92e5382b3c85
+    name: page
+    value: "2"
+    description: ""
+  - id: pair_b31c5da1972c478b8da4a2ac9b7fe26d
+    name: take
+    value: "10"
+    description: ""
+  - id: pair_5d8710bd5e82400392841e7abac3dce6
+    name: order
+    value: asc
+    description: ""
+  - id: pair_5c14872df30b430d81a143d7ab59775b
+    name: orderByColumn
+    value: id
+    description: ""
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_becec1c0933144e4b762a4d3c29d0882
+authentication:
+  type: bearer
+  token: "{{ _.token_admin }}"
+  disabled: false
+metaSortKey: -1660680583248.5
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

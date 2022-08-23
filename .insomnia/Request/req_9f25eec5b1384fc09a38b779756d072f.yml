@@ -1,0 +1,49 @@
+_id: req_9f25eec5b1384fc09a38b779756d072f
+type: Request
+parentId: fld_7e81fac6323c4155b84b9f8d335763fb
+modified: 1661213656048
+created: 1660782942447
+url: "{{ _.local }}/student"
+name: Create New Student
+description: |-
+  Rota responsavel por criar novos usuarios na plataforma.
+  Para criar novos usuarios deve estar com o token valido.
+
+  exemplo de requesição:
+
+  Body:
+
+  ```json
+  {
+    "name": "Charles Xavier",
+    "role": "BACKOFICCE",
+    "email": "user@user.com",
+    "passwordHash": "User#5678@!"
+  }
+  ```
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"name":"Yoshimitsu",
+    	"birth_date":"10/10/1996",
+    	"phone":"(55) 11 9 9999 9999",
+    	"institution_id": 5
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_0b27803e197f4054955cfce84b7057c3
+authentication:
+  type: bearer
+  token: "{{ _.token_admin }}"
+metaSortKey: -1660680583286
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
