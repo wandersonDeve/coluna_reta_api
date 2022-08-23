@@ -53,19 +53,19 @@ export class InstitutionController {
     return this.createInstitutionService.execute(createInstitutionDto);
   }
 
-  // @Get('all')
-  // @ApiOperation({
-  //   summary: 'List all institutions - (FOR ALL USERS).',
-  // })
-  // findAll(@LoggedUser() user: User, @Query() query: PageOptionsDto) {
-  //   return this.findAllInstitutionsService.execute(query);
-  // }
-
   @Get('all')
   @ApiOperation({
     summary: 'List all institutions - (FOR ALL USERS).',
   })
-  findAll(@LoggedUser() user: User) {
+  findAll(@LoggedUser() user: User, @Query() query: PageOptionsDto) {
+    return this.findAllInstitutionsService.execute(query);
+  }
+
+  @Get('all/institutions')
+  @ApiOperation({
+    summary: 'List all institutions - (FOR ALL USERS).',
+  })
+  getAll(@LoggedUser() user: User) {
     return this.getAllInstitutionsService.execute();
   }
 
