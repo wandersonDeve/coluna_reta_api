@@ -22,7 +22,8 @@ import { UpdateInstitutionDto } from './dto/update.institution';
 import {
   CreateInstitutionService,
   DeleteInstitutionService,
-  FindAllInstitutionsServices,
+  FindAllInstitutionsService,
+  GetAllInstitutionsService,
   FindOneInstitutionService,
   UpdateInstitutionService,
 } from './services';
@@ -34,7 +35,8 @@ import {
 export class InstitutionController {
   constructor(
     private createInstitutionService: CreateInstitutionService,
-    private findAllInstitutionsServices: FindAllInstitutionsServices,
+    private findAllInstitutionsService: FindAllInstitutionsService,
+    private getAllInstitutionsService: GetAllInstitutionsService,
     private findOneInstitutionService: FindOneInstitutionService,
     private updateInstitutionService: UpdateInstitutionService,
     private deleteInstitutionService: DeleteInstitutionService,
@@ -56,7 +58,15 @@ export class InstitutionController {
     summary: 'List all institutions - (FOR ALL USERS).',
   })
   findAll(@LoggedUser() user: User, @Query() query: PageOptionsDto) {
-    return this.findAllInstitutionsServices.execute(query);
+    return this.findAllInstitutionsService.execute(query);
+  }
+
+  @Get('all/institutions')
+  @ApiOperation({
+    summary: 'List all institutions - (FOR ALL USERS).',
+  })
+  getAll(@LoggedUser() user: User) {
+    return this.getAllInstitutionsService.execute();
   }
 
   @Get('search/:institutionID')

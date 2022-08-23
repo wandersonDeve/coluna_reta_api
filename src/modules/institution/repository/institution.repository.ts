@@ -56,8 +56,13 @@ export class InstitutionRepository extends PrismaClient {
     return institutions;
   }
 
-  async getAllInstitutions(): Promise<Institution[]> {
-    return this.institution.findMany().catch(handleError);
+  async getAllInstitutions() {
+    return this.institution.findMany({
+      select: {
+        id: true,
+        name: true,
+      }
+    }).catch(handleError);
   }
 
   async findOneInstitution(institutionId: number) {
