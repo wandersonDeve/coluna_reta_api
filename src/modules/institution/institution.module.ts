@@ -5,10 +5,11 @@ import { InstitutionController } from './institution.controller';
 import {
   CreateInstitutionService,
   DeleteInstitutionService,
-  FindAllInstitutionsServices,
+  FindAllInstitutionsService,
   FindOneInstitutionService,
   UpdateInstitutionService,
 } from './services';
+import { GetAllInstitutionsService } from './services/get-all-institutions.service';
 
 @Module({
   imports: [PassportModule.register({ defaultStrategy: 'jwt' })],
@@ -16,8 +17,9 @@ import {
   providers: [
     PrismaService,
     CreateInstitutionService,
-    FindAllInstitutionsServices,
+    FindAllInstitutionsService,
     FindOneInstitutionService,
+    GetAllInstitutionsService,
     UpdateInstitutionService,
     DeleteInstitutionService,
   ],

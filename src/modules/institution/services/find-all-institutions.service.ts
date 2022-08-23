@@ -6,7 +6,7 @@ import {
 } from '../../../shared/pagination-dtos';
 import { InstitutionRepository } from '../repository/institution.repository';
 
-export class FindAllInstitutionsServices {
+export class FindAllInstitutionsService {
   async execute(pageOptionsDto: PageOptionsDto): Promise<PageDto<Institution>> {
     const institutionRepository = new InstitutionRepository();
 
