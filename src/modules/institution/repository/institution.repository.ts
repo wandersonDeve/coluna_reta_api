@@ -17,7 +17,11 @@ export class InstitutionRepository extends PrismaClient {
         data: {
           name,
           phone_number,
-          address_id,
+          address: {
+            connect: {
+              id: address_id,
+            },
+          },
         },
       })
       .catch(handleError);
@@ -37,6 +41,11 @@ export class InstitutionRepository extends PrismaClient {
           [orderByColumn]: order,
         },
         where: { deleted: false },
+        include: {
+          users: true,
+          address: true,
+          student: true,
+        },
       })
       .catch(handleError);
 
@@ -59,10 +68,10 @@ export class InstitutionRepository extends PrismaClient {
           id: true,
           name: true,
           phone_number: true,
-          address: {
+          _count: {
             select: {
-              city: true,
-              state: true,
+              student: true,
+              users: true,
             },
           },
         },

@@ -46,17 +46,17 @@ async function main() {
     ),
 
     await prisma.$queryRaw(
-      Prisma.sql`INSERT IGNORE INTO user (name,role,email,password_hash)
+      Prisma.sql`INSERT IGNORE INTO user (name,role,email,password_hash, institutions)
     VALUES
-      ("Autumn Robertson","BACKOFFICE","lacus.quisque@google.org","DEW87RRK1VO"),
-      ("Anthony Murray","BACKOFFICE","est.mauris.eu@google.org","FKG11NFY7TS"),
-      ("Rebekah Austin","BACKOFFICE","molestie.dapibus@icloud.org","DLP63QMI2IO"),
-      ("Lysandra Rowe","BACKOFFICE","turpis.egestas@hotmail.couk","MHW37HEJ0DD"),
-      ("Chloe Henson","BACKOFFICE","sociis.natoque.penatibus@aol.org","EHW63NPR8CN"),
-      ("Troy Conley","BACKOFFICE","nunc.sed.orci@google.com","LTS08NAI8MY"),
-      ("Gregory Suarez","BACKOFFICE","nec.tellus@aol.com","YNY07DXY5QP"),
-      ("Nayda Barber","BACKOFFICE","ipsum@yahoo.edu","HHM11EMQ6KO"),
-      ("Quon Brady","BACKOFFICE","malesuada@google.org","WQK22RIX2ZL")`,
+      ("Autumn Robertson","BACKOFFICE","lacus.quisque@google.org","DEW87RRK1VO",[1,2]),
+      ("Anthony Murray","BACKOFFICE","est.mauris.eu@google.org","FKG11NFY7TS",[2,3]),
+      ("Rebekah Austin","BACKOFFICE","molestie.dapibus@icloud.org","DLP63QMI2IO",[4,5]),
+      ("Lysandra Rowe","BACKOFFICE","turpis.egestas@hotmail.couk","MHW37HEJ0DD",[5,6]),
+      ("Chloe Henson","BACKOFFICE","sociis.natoque.penatibus@aol.org","EHW63NPR8CN",,[6,7]),
+      ("Troy Conley","BACKOFFICE","nunc.sed.orci@google.com","LTS08NAI8MY",[8,9]),
+      ("Gregory Suarez","BACKOFFICE","nec.tellus@aol.com","YNY07DXY5QP"),[10,1],
+      ("Nayda Barber","BACKOFFICE","ipsum@yahoo.edu","HHM11EMQ6KO"),[1,3,5,7,9],
+      ("Quon Brady","BACKOFFICE","malesuada@google.org","WQK22RIX2ZL"),[2,4,6,8,10]`,
     ),
 
     await prisma.$queryRaw(
@@ -106,7 +106,7 @@ async function main() {
         ("Perry K. Rollins","23/12/10","(55) 34 8102 1363",4,2),
         ("Jorden N. Walker","24/01/14","(55) 08 1633 4423",4,3),
         ("Claire H. Boyle","07/05/13","(55) 73 2272 7754",7,16),
-        ("Ryan L. Riddle","14/08/13","(55) 19 2843 6502",7,12),
+        ("Ryan L. Riddle","14/08/13","(55) 19 2843 6502",10,12),
         ("Hall Y. Guzman","13/05/12","(55) 77 3117 3973",3,2),
         ("Faith A. Knight","29/09/13","(55) 87 2731 4509",8,15),
         ("Gisela W. Whitaker","18/07/12","(55) 38 3182 9741",3,14),
@@ -149,6 +149,28 @@ async function main() {
         ("Odysseus K. Bird","17/07/10","(55) 43 8103 9979",6,9),
         ("Colby E. Colon","26/05/11","(55) 28 0756 5563",4,19),
         ("Thor H. Doyle","16/10/12","(55) 85 5438 3783",5,3)`,
+    ),
+
+    await prisma.$queryRaw(
+      Prisma.sql`      
+      INSERT IGNORE INTO _InstitutionToUser (A,B)
+            VALUES
+              (7,3),
+              (7,6),
+              (8,8),
+              (8,1),
+              (9,9),
+              (9,3),
+              (10,5),
+              (1,3),
+              (2,1),
+              (1,4),
+              (10,2),
+              (8,10),
+              (9,6),
+              (10,5),
+              (6,8)
+      `,
     ),
   ]);
 
