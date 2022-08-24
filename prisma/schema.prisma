@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider          = "mysql"
-  url               = env("DATABASE_URL")
+  provider = "mysql"
+  url      = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
@@ -69,13 +69,14 @@ model Student {
 }
 
 model QueryStudent {
-  id         Int      @id @default(autoincrement())
-  student    Student? @relation(fields: [student_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  student_id Int?
-  note       String
-  date       String
+  id                Int      @id @default(autoincrement())
+  student           Student? @relation(fields: [student_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  student_id        Int?
+  consultation_date String
+  forwarding        String
+  cobb_angle        String
+  return_date       String
 
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
-  deleted    Boolean  @default(false)
 }

@@ -26,8 +26,6 @@ import { User } from '@prisma/client';
 import { LoggedAdmin } from '../auth/decorator/logged-admin.decorator';
 import { SearchStudentsDto } from './dto/search-students.dto';
 import { LoggedUser } from '../auth/decorator/logged-user.decorator';
-import { CreateQueryDto } from './dto/create-query.dto';
-import { CreateQueryService } from './services/create-query.service';
 
 @ApiTags('Student')
 @UseGuards(AuthGuard())
@@ -40,8 +38,7 @@ export class StudentController {
     private findOneStudentByIdService: FindOneStudentByIdService,
     private findManyStudentsByParamService: FindManyStudentsByParamService,
     private deleteStudentByIdService: DeleteStudentByIdService,
-    private updateStudentService: UpdateStudentService,
-    private createQueryService: CreateQueryService
+    private updateStudentService: UpdateStudentService
   ) {}
 
   @Post()
@@ -98,13 +95,5 @@ export class StudentController {
   })
   async remove(@LoggedAdmin() user: User, @Param('id') id: string) {
     return this.deleteStudentByIdService.execute(+id);
-  }
-
-  @Post('/query')
-  @ApiOperation({
-    summary: 'Create a new query for student - (FOR USERS).',
-  })
-  async createQuery(@LoggedUser() user: User, @Body() data: CreateQueryDto) {
-    return this.createQueryService.execute(data);
   }
 }

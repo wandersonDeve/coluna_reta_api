@@ -10,7 +10,6 @@ import {
   FindOneStudentByIdService,
   UpdateStudentService,
 } from './services';
-import { CreateQueryService } from './services/create-query.service';
 
 @Module({
   imports: [PassportModule.register({ defaultStrategy: 'jwt' })],
@@ -22,8 +21,7 @@ import { CreateQueryService } from './services/create-query.service';
     FindOneStudentByIdService,
     FindManyStudentsByParamService,
     DeleteStudentByIdService,
-    UpdateStudentService,
-    CreateQueryService
+    UpdateStudentService
   ],
 })
 export class StudentModule {}
