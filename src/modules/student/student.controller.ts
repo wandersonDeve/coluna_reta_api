@@ -38,7 +38,7 @@ export class StudentController {
     private findOneStudentByIdService: FindOneStudentByIdService,
     private findManyStudentsByParamService: FindManyStudentsByParamService,
     private deleteStudentByIdService: DeleteStudentByIdService,
-    private updateStudentService: UpdateStudentService,
+    private updateStudentService: UpdateStudentService
   ) {}
 
   @Post()
