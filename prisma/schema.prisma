@@ -13,12 +13,12 @@ model User {
   name                 String
   role                 String
   email                String        @unique
-  passwordHash         String        @map("password_hash")
+  passwordHash         String?       @map("password_hash")
   created_at           DateTime      @default(now())
   updated_at           DateTime      @default(now()) @updatedAt
   deleted              Boolean       @default(false)
   institutions         Institution[]
-  recoverPasswordToken String
+  recoverPasswordToken String?
 
   @@index([id, role])
   @@map("user")

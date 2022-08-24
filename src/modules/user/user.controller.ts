@@ -49,7 +49,7 @@ export class UserController {
   create(
     @LoggedAdmin() user: User,
     @Body() createUserDto: CreateUserDto,
-  ): Promise<User> {
+  ): Promise<string> {
     return this.createUserService.execute(createUserDto);
   }
 

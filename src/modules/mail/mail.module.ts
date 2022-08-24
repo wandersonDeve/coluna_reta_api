@@ -1,9 +1,10 @@
-import { MailerModule } from '@nestjs-modules/mailer';
-import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { Global, Module } from '@nestjs/common';
+import { MailerModule } from '@nestjs-modules/mailer';
 import { MailService } from './mail.service';
-import { ConfigService } from '@nestjs/config';
+
 import { join } from 'path';
+import { ConfigService } from '@nestjs/config';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 
 @Global()
 @Module({
@@ -19,11 +20,14 @@ import { join } from 'path';
             pass: config.get('MAIL_PASSWORD'),
           },
         },
+        defaults: {
+          from: 'no-reply <no-reply@colunareta.com>',
+        },
         template: {
-          dir: join(__dirname, 'templates'),
+          dir: __dirname + '../../../templates',
           adapter: new HandlebarsAdapter(),
           options: {
-            strict: true,
+            strict: false,
           },
         },
       }),

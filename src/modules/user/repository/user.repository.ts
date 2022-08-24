@@ -21,8 +21,8 @@ export class UserRepository extends PrismaClient {
     name,
     email,
     role,
-    passwordHash,
-    institutions,
+    institution_id,
+    recoverPasswordToken,
   }: CreateUserDto) {
     const newUser = await this.user
       .create({
@@ -30,10 +30,10 @@ export class UserRepository extends PrismaClient {
           name,
           email,
           role,
-          passwordHash,
+          recoverPasswordToken,
           institutions: {
-            connect: institutions.map((institutions) => ({
-              id: institutions,
+            connect: institution_id.map((id) => ({
+              id,
             })),
           },
         },
@@ -96,6 +96,14 @@ export class UserRepository extends PrismaClient {
     delete user.deleted;
 
     return user;
+  }
+
+  async findOneByEmail(email: string): Promise<User> {
+    return this.user.findFirst({
+      where: {
+        email,
+      },
+    });
   }
 
   async searchUsers(

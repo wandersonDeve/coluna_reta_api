@@ -7,22 +7,22 @@ export class MailService {
   constructor(private mailerService: MailerService) {}
 
   async sendUserConfirmation(user: User) {
-    const { } = user
-    const url = `http://localhost:5005/auth/confirm?token=${token}&email=${user.email}`;
+    const { email, name, recoverPasswordToken } = user;
+
+    const url = `http://localhost:5005/auth/confirm?token=${recoverPasswordToken}&email=${email}`;
 
     await this.mailerService.sendMail({
-      to: user.email,
+      to: email,
       from: process.env.MAIL_FROM,
       subject: 'Bem Vindo a Coluna Reta',
-      template: './createAccount',
+      template: './send.hbs',
       context: {
-        name: user.name,
+        name,
         url,
       },
     });
-    return {
-      message: 'Foi enviado para o seu email uma link para confirmação',
-    };
+
+    return 'Foi enviado para o seu email uma link para confirmação';
   }
 
   async sendLogErro(error: any) {
