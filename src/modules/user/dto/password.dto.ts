@@ -1,5 +1,5 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsString, Length, Matches } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsString, Length, Matches } from 'class-validator';
 
 export class CreatePasswordHashDto {
   @IsString()
@@ -19,4 +19,11 @@ export class CreatePasswordHashDto {
     example: 'Reta12@#',
   })
   confirmPassword: string;
+
+  @IsString()
+  @ApiProperty({
+    description: 'The users recovery token.',
+    example: '44b7044c452a76be1ec1c63d4a0653e1cd231108d6fb418b264e1435ca80763d',
+  })
+  recoverPasswordToken?: string;
 }
