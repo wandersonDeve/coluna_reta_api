@@ -21,8 +21,8 @@ export class UserRepository extends PrismaClient {
     name,
     email,
     role,
-    passwordHash,
-    institutions,
+    institution_id,
+    recoverPasswordToken,
   }: CreateUserDto) {
     const newUser = await this.user
       .create({
@@ -30,10 +30,10 @@ export class UserRepository extends PrismaClient {
           name,
           email,
           role,
-          passwordHash,
+          recoverPasswordToken,
           institutions: {
-            connect: institutions.map((institutions) => ({
-              id: institutions,
+            connect: institution_id.map((id) => ({
+              id,
             })),
           },
         },
@@ -98,6 +98,22 @@ export class UserRepository extends PrismaClient {
     return user;
   }
 
+  async findOneByEmail(email: string): Promise<User> {
+    return this.user.findFirst({
+      where: {
+        email,
+      },
+    });
+  }
+
+  async findByToken(token: string): Promise<User> {
+    return this.user.findFirst({
+      where: {
+        recoverPasswordToken: token,
+      },
+    });
+  }
+
   async searchUsers(
     { skip, order, orderByColumn, take }: PageOptionsDto,
     searchUserDto: SearchUserDto,
@@ -145,6 +161,22 @@ export class UserRepository extends PrismaClient {
 
     delete updatedUser.passwordHash;
     delete updatedUser.deleted;
+
+    return updatedUser;
+  }
+
+  async updatePassword(id: number, passwordHash: string): Promise<User> {
+    const updatedUser = await this.user.update({
+      where: {
+        id,
+      },
+      data: {
+        recoverPasswordToken: null,
+        passwordHash,
+      },
+    });
+
+    delete updatedUser.passwordHash;
 
     return updatedUser;
   }
