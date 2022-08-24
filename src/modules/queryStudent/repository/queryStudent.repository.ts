@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { CreateQueryDto } from 'queryStudent/dto/create-query.dto';
+import { CreateQueryDto } from 'src/modules/queryStudent/dto/create-query.dto';
 import { handleError } from 'src/shared/utils/handle-error.util';
 
 export class QueryStudentRepository extends PrismaClient {

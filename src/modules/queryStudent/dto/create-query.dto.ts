@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
-import { Forwarding } from 'queryStudent/utils/fowarding.enum';
+import { Forwarding } from 'src/modules/queryStudent/utils/fowarding.enum';
 
 export class CreateQueryDto {
   @IsNumber()

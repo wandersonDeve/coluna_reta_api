@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { PrismaService } from 'prisma/service/prisma.service';
-import { QueryStudentModule } from 'queryStudent/queryStudent.module';
+import { QueryStudentModule } from 'src/modules/queryStudent/queryStudent.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AddressModule } from './modules/address/address.module';

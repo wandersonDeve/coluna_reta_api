@@ -1,4 +1,4 @@
-import { QueryStudentRepository } from 'queryStudent/repository/queryStudent.repository';
+import { QueryStudentRepository } from 'src/modules/queryStudent/repository/queryStudent.repository';
 import { CreateQueryDto } from '../dto/create-query.dto';
 
 export class CreateQueryService {
