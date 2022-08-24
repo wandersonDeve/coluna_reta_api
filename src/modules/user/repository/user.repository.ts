@@ -22,7 +22,7 @@ export class UserRepository extends PrismaClient {
     email,
     role,
     passwordHash,
-    institution_id,
+    institutions,
   }: CreateUserDto) {
     const newUser = await this.user
       .create({
@@ -32,9 +32,9 @@ export class UserRepository extends PrismaClient {
           role,
           passwordHash,
           institutions: {
-            connect: {
-              id: institution_id,
-            },
+            connect: institutions.map((institutions) => ({
+              id: institutions,
+            })),
           },
         },
       })

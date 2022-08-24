@@ -3,10 +3,10 @@ import {
   IsEmail,
   IsEnum,
   IsNotEmpty,
-  IsNumber,
   IsString,
   Length,
   Matches,
+  NotEquals,
 } from 'class-validator';
 import { UserRole } from '../util/roleUser';
 
@@ -23,6 +23,7 @@ export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
   @IsEnum(UserRole)
+  @NotEquals(UserRole.ADMIN)
   @ApiProperty({
     description: 'Role of the user available on the platform.',
     example: UserRole.BACKOFICCE,
@@ -50,10 +51,9 @@ export class CreateUserDto {
   passwordHash: string;
 
   @IsNotEmpty()
-  @IsNumber()
   @ApiProperty({
     description: 'The user institution id.',
-    example: 5,
+    example: [514, 584],
   })
-  institution_id: number;
+  institutions: number[];
 }
