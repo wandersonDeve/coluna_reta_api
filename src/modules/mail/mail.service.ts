@@ -9,7 +9,7 @@ export class MailService {
   async sendUserConfirmation(user: User) {
     const { email, name, recoverPasswordToken } = user;
 
-    const url = `http://localhost:5005/auth/confirm?token=${recoverPasswordToken}&email=${email}`;
+    const url = `http://localhost:5005/user/update_password/confirm?token=${recoverPasswordToken}&email=${email}`;
 
     await this.mailerService.sendMail({
       to: email,

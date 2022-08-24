@@ -8,6 +8,7 @@ import {
   FindAllUsersServices,
   FindOneUserService,
   SearchUsersService,
+  UpdatePasswordByEmailService,
   UpdateUserService,
 } from './services';
 import { UserController } from './user.controller';
@@ -23,6 +24,7 @@ import { UserController } from './user.controller';
     SearchUsersService,
     UpdateUserService,
     DeleteUserService,
+    UpdatePasswordByEmailService,
   ],
 })
 export class UserModule {}

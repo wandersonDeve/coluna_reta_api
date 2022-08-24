@@ -24,10 +24,10 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
           from: 'no-reply <no-reply@colunareta.com>',
         },
         template: {
-          dir: __dirname + '../../../templates',
+          dir: __dirname + '../../../../templates',
           adapter: new HandlebarsAdapter(),
           options: {
-            strict: false,
+            strict: true,
           },
         },
       }),

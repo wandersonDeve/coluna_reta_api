@@ -106,6 +106,14 @@ export class UserRepository extends PrismaClient {
     });
   }
 
+  async findByToken(token: string): Promise<User> {
+    return this.user.findFirst({
+      where: {
+        recoverPasswordToken: token,
+      },
+    });
+  }
+
   async searchUsers(
     { skip, order, orderByColumn, take }: PageOptionsDto,
     searchUserDto: SearchUserDto,
@@ -153,6 +161,22 @@ export class UserRepository extends PrismaClient {
 
     delete updatedUser.passwordHash;
     delete updatedUser.deleted;
+
+    return updatedUser;
+  }
+
+  async updatePassword(id: number, passwordHash: string): Promise<User> {
+    const updatedUser = await this.user.update({
+      where: {
+        id,
+      },
+      data: {
+        recoverPasswordToken: null,
+        passwordHash,
+      },
+    });
+
+    delete updatedUser.passwordHash;
 
     return updatedUser;
   }

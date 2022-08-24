@@ -16,6 +16,7 @@ import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { PageOptionsDto } from '../../shared/pagination-dtos';
 import { LoggedAdmin } from '../auth/decorator/logged-admin.decorator';
 import { CreateUserDto } from './dto/create-user.dto';
+import { CreatePasswordHashDto } from './dto/password.dto';
 import { SearchUserDto } from './dto/search.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -25,12 +26,11 @@ import {
   FindAllUsersServices,
   FindOneUserService,
   SearchUsersService,
+  UpdatePasswordByEmailService,
   UpdateUserService,
 } from './services';
 
 @ApiTags('User')
-@UseGuards(AuthGuard())
-@ApiBearerAuth()
 @Controller('user')
 export class UserController {
   constructor(
@@ -40,9 +40,12 @@ export class UserController {
     private searchUsersService: SearchUsersService,
     private updateUserService: UpdateUserService,
     private deleteUserService: DeleteUserService,
+    private updatePasswordByEmailService: UpdatePasswordByEmailService,
   ) {}
 
   @Post('create')
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Create a new user - (FOR ADMIN).',
   })
@@ -54,6 +57,8 @@ export class UserController {
   }
 
   @Get('all')
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'List all users - (FOR ADMIN).',
   })
@@ -62,6 +67,8 @@ export class UserController {
   }
 
   @Get('search/:userID')
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'View a user by Id - (FOR ADMIN).',
   })
@@ -70,6 +77,8 @@ export class UserController {
   }
 
   @Post('/search')
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @ApiOperation({
     summary: `View a user by name, role or email - (FOR ADMIN).`,
   })
@@ -83,6 +92,8 @@ export class UserController {
   }
 
   @Patch('update/:userID')
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Edit a user by Id - (FOR ALL USERS).',
   })
@@ -94,7 +105,17 @@ export class UserController {
     return this.updateUserService.execute(userId, updateUserDto);
   }
 
+  @Patch('update_password')
+  @ApiOperation({
+    summary: 'User update password- (FOR ALL USERS).',
+  })
+  updatePassword(@Body() updatePassword: CreatePasswordHashDto): Promise<User> {
+    return this.updatePasswordByEmailService.execute(updatePassword);
+  }
+
   @Delete('delete/:userID')
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({
     summary: 'Remove a user by Id - (FOR ADMIN).',
