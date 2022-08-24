@@ -18,7 +18,7 @@ model User {
   updated_at           DateTime      @default(now()) @updatedAt
   deleted              Boolean       @default(false)
   institutions         Institution[]
-  recoverPasswordToken String
+  recoverPasswordToken String?
 
   @@index([id, role])
   @@map("user")
@@ -54,15 +54,28 @@ model Institution {
 }
 
 model Student {
-  id             Int          @id @default(autoincrement())
+  id             Int            @id @default(autoincrement())
   name           String
   birth_date     String
   phone          String
-  institution    Institution? @relation(fields: [institution_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  institution    Institution?   @relation(fields: [institution_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   institution_id Int?
-  address        Address?     @relation(fields: [address_id], references: [id])
+  address        Address?       @relation(fields: [address_id], references: [id])
   address_id     Int?
-  created_at     DateTime     @default(now())
-  updated_at     DateTime     @default(now()) @updatedAt
-  deleted        Boolean      @default(false)
+  query_student  QueryStudent[]
+  created_at     DateTime       @default(now())
+  updated_at     DateTime       @default(now()) @updatedAt
+  deleted        Boolean        @default(false)
+}
+
+model QueryStudent {
+  id         Int      @id @default(autoincrement())
+  student    Student? @relation(fields: [student_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  student_id Int?
+  note       String
+  date       String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+  deleted    Boolean  @default(false)
 }

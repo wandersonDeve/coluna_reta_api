@@ -5,6 +5,7 @@ import { Student } from '../entities/student.entity';
 import { handleError } from 'src/shared/utils/handle-error.util';
 import { NotFoundException } from '@nestjs/common';
 import { PageOptionsDto } from 'src/shared/pagination-dtos';
+import { CreateQueryDto } from '../dto/create-query.dto';
 
 export class StudentRepository extends PrismaClient {
   async createStudent(data: CreateStudentDto): Promise<Student> {
@@ -144,5 +145,21 @@ export class StudentRepository extends PrismaClient {
       .catch(handleError);
 
     return 'Student deleted successfully';
+  }
+
+  async createQuery(data: CreateQueryDto) {
+    return this.queryStudent
+      .create({
+        data: {
+          student: {
+            connect: {
+              id: data.student_id,
+            },
+          },
+          note: data.note,
+          date: data.date,
+        },
+      })
+      .catch(handleError);
   }
 }
