@@ -3,21 +3,22 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model User {
-  id           Int      @id @default(autoincrement())
-  name         String 
-  role         String
-  email        String   @unique
-  passwordHash String   @map("password_hash")
-  created_at   DateTime @default(now())
-  updated_at   DateTime @default(now()) @updatedAt
-  deleted      Boolean  @default(false)
-  institutions Institution[]
+  id                   Int           @id @default(autoincrement())
+  name                 String
+  role                 String
+  email                String        @unique
+  passwordHash         String        @map("password_hash")
+  created_at           DateTime      @default(now())
+  updated_at           DateTime      @default(now()) @updatedAt
+  deleted              Boolean       @default(false)
+  institutions         Institution[]
+  recoverPasswordToken String
 
   @@index([id, role])
   @@map("user")
@@ -40,14 +41,14 @@ model Address {
 }
 
 model Institution {
-  id           Int      @id @default(autoincrement())
+  id           Int       @id @default(autoincrement())
   name         String
   phone_number String
-  address      Address? @relation(fields: [address_id], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  address_id   Int?     @unique
-  created_at   DateTime @default(now())
-  updated_at   DateTime @default(now()) @updatedAt
-  deleted      Boolean  @default(false)
+  address      Address?  @relation(fields: [address_id], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  address_id   Int?      @unique
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @default(now()) @updatedAt
+  deleted      Boolean   @default(false)
   student      Student[]
   users        User[]
 }
@@ -58,9 +59,9 @@ model Student {
   birth_date     String
   phone          String
   institution    Institution? @relation(fields: [institution_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  institution_id Int?         
+  institution_id Int?
   address        Address?     @relation(fields: [address_id], references: [id])
-  address_id     Int?         
+  address_id     Int?
   created_at     DateTime     @default(now())
   updated_at     DateTime     @default(now()) @updatedAt
   deleted        Boolean      @default(false)
