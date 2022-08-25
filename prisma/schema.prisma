@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgres"
   url      = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
@@ -62,13 +62,13 @@ model Student {
   institution_id Int?
   address        Address?       @relation(fields: [address_id], references: [id])
   address_id     Int?
-  query_student  QueryStudent[]
+  consultation  Consultation[]
   created_at     DateTime       @default(now())
   updated_at     DateTime       @default(now()) @updatedAt
   deleted        Boolean        @default(false)
 }
 
-model QueryStudent {
+model Consultation {
   id                Int      @id @default(autoincrement())
   student           Student? @relation(fields: [student_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   student_id        Int?

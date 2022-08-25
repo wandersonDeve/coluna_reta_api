@@ -1,4 +1,4 @@
-export class Query {
+export class Consultation {
   id?: number
   student_id: number | null
   consultation_date: string

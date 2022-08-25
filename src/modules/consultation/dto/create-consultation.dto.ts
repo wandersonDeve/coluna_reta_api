@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
-import { Forwarding } from 'src/modules/queryStudent/utils/fowarding.enum';
+import { Forwarding } from 'src/modules/consultation/utils/fowarding.enum';
 
-export class CreateQueryDto {
+export class CreateConsultationDto {
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty({
@@ -14,7 +14,7 @@ export class CreateQueryDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
-    description: `Date the Query.`,
+    description: `Consultation date.`,
     example: '23/08/2022',
   })
   consultation_date: string;
@@ -22,7 +22,7 @@ export class CreateQueryDto {
   @IsEnum(Forwarding)
   @IsNotEmpty()
   @ApiProperty({
-    description: `Referral of the query`,
+    description: `Referral of student consultation.`,
     example: Forwarding.PHYSIOTHERAPY,
   })
   forwarding: string;
@@ -30,7 +30,7 @@ export class CreateQueryDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
-    description: `Cobb angle for student query.`,
+    description: `Cobb angle for student consultation.`,
     example: '60°',
   })
   cobb_angle: string;
@@ -38,7 +38,7 @@ export class CreateQueryDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
-    description: `Date Return the Query.`,
+    description: `Date Return the consultation.`,
     example: '03/09/2022',
   })
   return_date: string;

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { PrismaService } from 'prisma/service/prisma.service';
-import { QueryStudentModule } from 'src/modules/queryStudent/queryStudent.module';
+import { ConsultationModule } from 'src/modules/consultation/consultation.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AddressModule } from './modules/address/address.module';
@@ -22,7 +22,7 @@ import { ConfigModule } from '@nestjs/config';
     StudentModule,
     InstitutionModule,
     MailModule,
-    QueryStudentModule
+    ConsultationModule
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
