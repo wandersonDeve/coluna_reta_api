@@ -29,7 +29,7 @@ async function bootstrap() {
     .addTag('Address')
     .addTag('Institution')
     .addTag('Student')
-    .addTag('Consultation')
+    .addTag('Historic')
     .addBearerAuth()
     .build();
 

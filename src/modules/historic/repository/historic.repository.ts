@@ -1,10 +1,10 @@
 import { PrismaClient } from '@prisma/client';
-import { CreateConsultationDto } from 'src/modules/consultation/dto/create-consultation.dto';
+import { CreateHistoricDto } from 'src/modules/historic/dto/create-historic.dto';
 import { handleError } from 'src/shared/utils/handle-error.util';
 
-export class ConsultationRepository extends PrismaClient {
-  async createConsultation(data: CreateConsultationDto) {
-    return this.consultation
+export class HistoricRepository extends PrismaClient {
+  async createHistoric(data: CreateHistoricDto) {
+    return this.historic
       .create({
         data: {
           student: {
@@ -12,7 +12,6 @@ export class ConsultationRepository extends PrismaClient {
               id: data.student_id,
             },
           },
-          consultation_date: data.consultation_date,
           forwarding: data.forwarding,
           cobb_angle: data.cobb_angle,
           return_date: data.return_date,

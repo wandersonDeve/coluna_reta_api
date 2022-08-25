@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgres"
-  url      = env("DATABASE_URL")
+  provider          = "postgres"
+  url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
@@ -54,29 +54,28 @@ model Institution {
 }
 
 model Student {
-  id             Int            @id @default(autoincrement())
+  id             Int          @id @default(autoincrement())
   name           String
   birth_date     String
   phone          String
-  institution    Institution?   @relation(fields: [institution_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  institution    Institution? @relation(fields: [institution_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   institution_id Int?
-  address        Address?       @relation(fields: [address_id], references: [id])
+  address        Address?     @relation(fields: [address_id], references: [id])
   address_id     Int?
-  consultation  Consultation[]
-  created_at     DateTime       @default(now())
-  updated_at     DateTime       @default(now()) @updatedAt
-  deleted        Boolean        @default(false)
+  historic       Historic[]
+  created_at     DateTime     @default(now())
+  updated_at     DateTime     @default(now()) @updatedAt
+  deleted        Boolean      @default(false)
 }
 
-model Consultation {
+model Historic {
   id                Int      @id @default(autoincrement())
   student           Student? @relation(fields: [student_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   student_id        Int?
-  consultation_date String
-  forwarding        String
+  consultation_date DateTime @default(now())
+  forwarding        String?
   cobb_angle        String
   return_date       String
 
-  created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
 }
