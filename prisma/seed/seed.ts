@@ -46,17 +46,17 @@ async function main() {
     ),
 
     await prisma.$queryRaw(
-      Prisma.sql`INSERT IGNORE INTO user (name,role,email,password_hash, institutions)
+      Prisma.sql`INSERT IGNORE INTO user (id,name,role,email,password_hash)
     VALUES
-      ("Autumn Robertson","BACKOFFICE","lacus.quisque@google.org","DEW87RRK1VO",[1,2]),
-      ("Anthony Murray","BACKOFFICE","est.mauris.eu@google.org","FKG11NFY7TS",[2,3]),
-      ("Rebekah Austin","BACKOFFICE","molestie.dapibus@icloud.org","DLP63QMI2IO",[4,5]),
-      ("Lysandra Rowe","BACKOFFICE","turpis.egestas@hotmail.couk","MHW37HEJ0DD",[5,6]),
-      ("Chloe Henson","BACKOFFICE","sociis.natoque.penatibus@aol.org","EHW63NPR8CN",,[6,7]),
-      ("Troy Conley","BACKOFFICE","nunc.sed.orci@google.com","LTS08NAI8MY",[8,9]),
-      ("Gregory Suarez","BACKOFFICE","nec.tellus@aol.com","YNY07DXY5QP"),[10,1],
-      ("Nayda Barber","BACKOFFICE","ipsum@yahoo.edu","HHM11EMQ6KO"),[1,3,5,7,9],
-      ("Quon Brady","BACKOFFICE","malesuada@google.org","WQK22RIX2ZL"),[2,4,6,8,10]`,
+      (10,"Autumn Robertson","BACKOFFICE","lacus.quisque@google.org","DEW87RRK1VO"),
+      (11,"Anthony Murray","BACKOFFICE","est.mauris.eu@google.org","FKG11NFY7TS"),
+      (12,"Rebekah Austin","BACKOFFICE","molestie.dapibus@icloud.org","DLP63QMI2IO"),
+      (13,"Lysandra Rowe","BACKOFFICE","turpis.egestas@hotmail.couk","MHW37HEJ0DD"),
+      (14,"Chloe Henson","BACKOFFICE","sociis.natoque.penatibus@aol.org","EHW63NPR8CN"),
+      (15,"Troy Conley","BACKOFFICE","nunc.sed.orci@google.com","LTS08NAI8MY"),
+      (16,"Gregory Suarez","BACKOFFICE","nec.tellus@aol.com","YNY07DXY5QP"),
+      (17,"Nayda Barber","BACKOFFICE","ipsum@yahoo.edu","HHM11EMQ6KO"),
+      (18,"Quon Brady","BACKOFFICE","malesuada@google.org","WQK22RIX2ZL")`,
     ),
 
     await prisma.$queryRaw(
@@ -155,21 +155,21 @@ async function main() {
       Prisma.sql`      
       INSERT IGNORE INTO _InstitutionToUser (A,B)
             VALUES
-              (7,3),
-              (7,6),
-              (8,8),
-              (8,1),
-              (9,9),
-              (9,3),
-              (10,5),
-              (1,3),
-              (2,1),
-              (1,4),
-              (10,2),
+              (7,13),
+              (7,16),
+              (8,18),
+              (8,11),
+              (9,10),
+              (9,13),
+              (10,15),
+              (1,13),
+              (2,11),
+              (1,14),
+              (10,12),
               (8,10),
-              (9,6),
-              (10,5),
-              (6,8)
+              (9,16),
+              (10,15),
+              (6,18)
       `,
     ),
   ]);
