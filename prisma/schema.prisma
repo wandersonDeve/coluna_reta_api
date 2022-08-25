@@ -76,6 +76,6 @@ model Historic {
   forwarding        String?
   cobb_angle        String
   return_date       String
-
-  updated_at DateTime @default(now()) @updatedAt
+  updated_at        DateTime @default(now()) @updatedAt
+  deleted           Boolean  @default(false)
 }

@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { HistoricController } from './historic.controller';
-import { CreateHistoricService } from './services';
+import { CreateHistoricService, FindHistoricByStudentService } from './services';
 
 @Module({
   imports: [PassportModule.register({ defaultStrategy: 'jwt' })],
   controllers: [HistoricController],
-  providers: [CreateHistoricService],
+  providers: [CreateHistoricService, FindHistoricByStudentService],
 })
 export class HistoricModule {}
