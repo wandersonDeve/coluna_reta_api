@@ -106,6 +106,7 @@ export class StudentRepository extends PrismaClient {
           id: true,
           name: true,
           birth_date: true,
+          institution: true
         },
         skip,
         take,

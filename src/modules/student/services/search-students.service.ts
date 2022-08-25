@@ -30,6 +30,16 @@ export class FindManyStudentsByParamService {
           },
           deleted: false,
         },
+        {
+          institution: {
+            is: {
+              name: {
+                contains: search,
+              },
+            },
+          },
+          deleted: false,
+        },
       ],
     };
 
