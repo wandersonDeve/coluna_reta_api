@@ -9,10 +9,6 @@ export class UpdateUserService {
 
     const user = await userRepository.findOneUser(userID);
 
-    if (data.passwordHash) {
-      data.passwordHash = await bcrypt.hash(data.passwordHash, 10);
-    }
-
     return await userRepository.updateUser(userID, data);
   }
 }

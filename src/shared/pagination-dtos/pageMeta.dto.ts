@@ -2,25 +2,25 @@ import { PageMetaParametersDTO } from './pageMetaParameters.dto';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class PageMetaDto {
-  @ApiProperty()
+  // @ApiProperty()
   readonly page: number;
 
-  @ApiProperty()
+  // @ApiProperty()
   readonly take: number;
 
-  @ApiProperty()
+  // @ApiProperty()
   readonly itemCount: number;
 
-  @ApiProperty()
+  // @ApiProperty()
   readonly pageCount: number;
 
-  @ApiProperty()
+  // @ApiProperty()
   readonly hasPreviousPage: boolean;
 
-  @ApiProperty()
+  // @ApiProperty()
   readonly hasNextPage: boolean;
 
-  @ApiProperty()
+  // @ApiProperty()
   readonly orderByColumn: string;
 
   constructor({ pageOptionsDto, itemCount }: PageMetaParametersDTO) {
