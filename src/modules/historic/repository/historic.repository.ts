@@ -6,6 +6,17 @@ import { handleError } from 'src/shared/utils/handle-error.util';
 
 export class HistoricRepository extends PrismaClient {
   async createHistoric(data: CreateHistoricDto) {
+    const student = await this.student.findFirst({
+      where: {
+        id: data.student_id,
+        deleted: false,
+      },
+    });
+
+    if (!student) {
+      throw new NotFoundException(`Student with Id '${data.student_id}' not found!`);
+    }
+
     return this.historic
       .create({
         data: {
