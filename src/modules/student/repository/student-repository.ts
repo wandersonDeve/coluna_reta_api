@@ -1,10 +1,10 @@
-import { UpdateStudentDto } from './../dto/update-student.dto';
-import { CreateStudentDto } from './../dto/create-student.dto';
-import { PrismaClient } from '@prisma/client';
-import { Student } from '../entities/student.entity';
-import { handleError } from 'src/shared/utils/handle-error.util';
 import { NotFoundException } from '@nestjs/common';
+import { PrismaClient } from '@prisma/client';
 import { PageOptionsDto } from 'src/shared/pagination-dtos';
+import { handleError } from 'src/shared/utils/handle-error.util';
+import { Student } from '../entities/student.entity';
+import { CreateStudentDto } from './../dto/create-student.dto';
+import { UpdateStudentDto } from './../dto/update-student.dto';
 
 export class StudentRepository extends PrismaClient {
   async createStudent(data: CreateStudentDto): Promise<Student> {
@@ -106,6 +106,7 @@ export class StudentRepository extends PrismaClient {
           id: true,
           name: true,
           birth_date: true,
+          institution: true,
         },
         skip,
         take,

@@ -67,7 +67,7 @@ export class StudentController {
 
   @Post('/search')
   @ApiOperation({
-    summary: 'Get students by any param - (FOR ALL USERS).',
+    summary: 'Get students by name with institution name filter - (FOR ALL USERS).',
   })
   async findManyStudents(
     @LoggedUser() user: User,

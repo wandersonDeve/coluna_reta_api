@@ -1,3 +1,4 @@
+import { NotFoundException } from '@nestjs/common';
 import {
   PageDto,
   PageMetaDto,
@@ -7,30 +8,34 @@ import { SearchStudentsDto } from '../dto/search-students.dto';
 import { StudentRepository } from '../repository/student-repository';
 
 export class FindManyStudentsByParamService {
-  async execute({ search }: SearchStudentsDto, pageOptionsDto: PageOptionsDto) {
+  async execute(data: SearchStudentsDto, pageOptionsDto: PageOptionsDto) {
     const studentRepository = new StudentRepository();
 
     const where = {
-      OR: [
-        {
-          name: {
-            contains: search,
+      name: {
+        contains: data.search,
+      },
+      deleted: false,
+      OR: {
+        institution: {
+          is: {
+            name: {
+              contains: data.filter,
+            },
+            deleted: false,
+            AND: {
+              student: {
+                some: {
+                  name: {
+                    contains: data.search,
+                  },
+                  deleted: false,
+                },
+              },
+            },
           },
-          deleted: false,
         },
-        {
-          birth_date: {
-            contains: search,
-          },
-          deleted: false,
-        },
-        {
-          phone: {
-            contains: search,
-          },
-          deleted: false,
-        },
-      ],
+      },
     };
 
     const students = await studentRepository.findManyStudentByParam(
@@ -45,5 +50,6 @@ export class FindManyStudentsByParamService {
     const pageMetaDto = new PageMetaDto({ itemCount, pageOptionsDto });
 
     return new PageDto(students, pageMetaDto);
+
   }
 }
