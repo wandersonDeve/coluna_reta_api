@@ -1,10 +1,9 @@
-export class Query {
+export class Historic {
   id?: number
   student_id: number | null
-  consultation_date: string
+  consultation_date?: Date
   forwarding: string
   cobb_angle: string
   return_date: string
-  created_at?: Date
   updated_at?: Date
 }

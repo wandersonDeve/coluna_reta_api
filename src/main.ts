@@ -28,6 +28,8 @@ async function bootstrap() {
     .addTag('User')
     .addTag('Address')
     .addTag('Institution')
+    .addTag('Student')
+    .addTag('Historic')
     .addBearerAuth()
     .build();
 

@@ -82,6 +82,7 @@ export class StudentRepository extends PrismaClient {
       include: {
         institution: true,
         address: true,
+        historic: true,
       },
     });
 
