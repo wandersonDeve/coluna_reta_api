@@ -5,6 +5,7 @@ import { PageOptionsDto } from '../../../shared/pagination-dtos';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { SearchUserDto } from '../dto/search.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
+import { UpdateMyAccountDto} from '../dto/update-my-account.dto'
 import { User } from '../entities/user.entity';
 
 export class UserRepository extends PrismaClient {
@@ -163,6 +164,23 @@ export class UserRepository extends PrismaClient {
     delete updatedUser.deleted;
 
     return updatedUser;
+  }
+
+  async updateMyAccount(userId: number, { ...data }: UpdateMyAccountDto) {
+    const updateMyAccount = await this.user
+      .update({
+        where: {
+          id: userId
+        },
+        data,
+      })
+      .catch(handleError);
+
+    delete updateMyAccount.passwordHash;
+    delete updateMyAccount.deleted;
+    delete updateMyAccount.role
+
+    return updateMyAccount;
   }
 
   async updatePassword(id: number, passwordHash: string): Promise<User> {

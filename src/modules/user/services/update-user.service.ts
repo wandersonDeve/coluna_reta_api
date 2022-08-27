@@ -1,4 +1,3 @@
-import * as bcrypt from 'bcrypt';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { User } from '../entities/user.entity';
 import { UserRepository } from '../repository/user.repository';

@@ -15,9 +15,11 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { PageOptionsDto } from '../../shared/pagination-dtos';
 import { LoggedAdmin } from '../auth/decorator/logged-admin.decorator';
+import { LoggedUser } from '../auth/decorator/logged-user.decorator';
 import { CreateUserDto } from './dto/create-user.dto';
 import { CreatePasswordHashDto } from './dto/password.dto';
 import { SearchUserDto } from './dto/search.dto';
+import { UpdateMyAccountDto } from './dto/update-my-account.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import {
@@ -28,6 +30,7 @@ import {
   SearchUsersService,
   UpdatePasswordByEmailService,
   UpdateUserService,
+  UpdateMyAccountService
 } from './services';
 
 @ApiTags('User')
@@ -41,6 +44,7 @@ export class UserController {
     private updateUserService: UpdateUserService,
     private deleteUserService: DeleteUserService,
     private updatePasswordByEmailService: UpdatePasswordByEmailService,
+    private updateMyAccountService: UpdateMyAccountService
   ) {}
 
   @Post('create')
@@ -95,14 +99,27 @@ export class UserController {
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
   @ApiOperation({
-    summary: 'Edit a user by Id - (FOR ALL USERS).',
+    summary: 'Edit a user by Id - (FOR ADMIN).',
   })
-  updateUser(
+  updateUserByAdmin(
     @LoggedAdmin() user: User,
     @Param('userID') userId: number,
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<User> {
     return this.updateUserService.execute(userId, updateUserDto);
+  }
+
+  @Patch('update-my-account')
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Edit a user logged - (FOR ALL USERS).',
+  })
+  updateMyAccount(
+    @LoggedUser() user: User,
+    @Body() updateMyAccountDto: UpdateMyAccountDto,
+  ) {
+    return this.updateMyAccountService.execute(user.id, updateMyAccountDto);
   }
 
   @Patch('update_password')
