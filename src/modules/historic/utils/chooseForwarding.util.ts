@@ -1,38 +1,52 @@
 export class ChooseForwardingUtil {
-  execute(choice: string) {
-    switch (choice) {
-      case 'RX':
-        return `doc
-        .save()
-        .moveTo(93, 498)
-        .lineTo(76, 482)
-        .moveTo(93, 482)
-        .lineTo(76, 498)
-        .stroke();`;
-      case 'PHYSIOTHERAPY':
-        return `doc
-        .save()
-        .moveTo(189, 498)
-        .lineTo(171, 482)
-        .moveTo(189, 482)
-        .lineTo(498)
-        .stroke();`;
-      case 'VEST':
-        return `doc
-        .save()
-        .moveTo(318, 498)
-        .lineTo(301, 482)
-        .moveTo(318, 482)
-        .lineTo(301, 498)
-        .stroke();`;
-      case 'SURGERY':
-        return `doc
-        .save()
-        .moveTo(438, 498)
-        .lineTo(422, 482)
-        .moveTo(438, 482)
-        .lineTo(422, 498)
-        .stroke();`;
-    }
+  RX() {
+    const fistMovieTo = [93, 498];
+    const fistLineTo = [76, 482];
+    const SecondMoveTo = [93, 482];
+    const secondLineTo = [76, 498];
+    return {
+      fistMovieTo,
+      fistLineTo,
+      SecondMoveTo,
+      secondLineTo,
+    };
+  }
+
+  PHYSIOTHERAPY() {
+    const fistMovieTo = [189, 498];
+    const fistLineTo = [171, 482];
+    const SecondMoveTo = [189, 482];
+    const secondLineTo = [498, 498];
+    return {
+      fistMovieTo,
+      fistLineTo,
+      SecondMoveTo,
+      secondLineTo,
+    };
+  }
+
+  VEST() {
+    const fistMovieTo = [318, 498];
+    const fistLineTo = [301, 482];
+    const SecondMoveTo = [318, 482];
+    const secondLineTo = [301, 498];
+    return {
+      fistMovieTo,
+      fistLineTo,
+      SecondMoveTo,
+      secondLineTo,
+    };
+  }
+  SURGERY() {
+    const fistMovieTo = [438, 498];
+    const fistLineTo = [422, 482];
+    const SecondMoveTo = [438, 482];
+    const secondLineTo = [422, 498];
+    return {
+      fistMovieTo,
+      fistLineTo,
+      SecondMoveTo,
+      secondLineTo,
+    };
   }
 }

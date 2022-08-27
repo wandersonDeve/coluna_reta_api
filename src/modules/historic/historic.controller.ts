@@ -55,9 +55,9 @@ export class HistoricController {
     return this.findHistoricByStudentService.execute(query, studentId);
   }
 
-  @Get('/pdf')
-  async getPDF(@Body() ids: number[], @Res() res: Response): Promise<void> {
-    const buffer = await this.generatePdfService.execute(ids);
+  @Post('/pdf')
+  async getPDF(@Body() data: any, @Res() res: Response): Promise<void> {
+    const buffer = await this.generatePdfService.execute(data.ids);
 
     res.set({
       'Content-Type': 'application/pdf',

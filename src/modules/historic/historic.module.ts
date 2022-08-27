@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { HistoricController } from './historic.controller';
+import { HistoricRepository } from './repository/historic.repository';
 import {
   CreateHistoricService,
   FindHistoricByStudentService,
@@ -14,6 +15,7 @@ import { GeneratePdfService } from './services/generate-pdf.service';
     CreateHistoricService,
     FindHistoricByStudentService,
     GeneratePdfService,
+    HistoricRepository,
   ],
 })
 export class HistoricModule {}

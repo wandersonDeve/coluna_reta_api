@@ -88,9 +88,17 @@ export class HistoricRepository extends PrismaClient {
     return historic;
   }
 
-  async getHistoricById(id: number): Promise<Historic> {
+  async getHistoricById(id: number): Promise<any> {
     const prisma = new PrismaClient();
 
-    return prisma.$queryRaw(Prisma.sql`SELECT `);
+    const result =
+      await prisma.$queryRaw(Prisma.sql`SELECT student.name, student.birth_date, student.phone, historic.consultation_date, historic.cobb_angle, historic.return_date, historic.forwarding
+    FROM Student as student
+    LEFT JOIN Historic as historic
+    ON student.id = historic.student_id
+    where historic.id = ${id}
+    `);
+
+    return result[0];
   }
 }
