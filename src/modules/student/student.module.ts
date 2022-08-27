@@ -21,7 +21,7 @@ import {
     FindOneStudentByIdService,
     FindManyStudentsByParamService,
     DeleteStudentByIdService,
-    UpdateStudentService
+    UpdateStudentService,
   ],
 })
 export class StudentModule {}

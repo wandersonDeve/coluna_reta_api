@@ -6,7 +6,9 @@ import {
   Get,
   Query,
   Param,
+  Res,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { User } from '@prisma/client';
@@ -17,15 +19,17 @@ import {
   CreateHistoricService,
   FindHistoricByStudentService,
 } from './services';
+import { GeneratePdfService } from './services/generate-pdf.service';
 
 @ApiTags('Historic')
-@UseGuards(AuthGuard())
+//@UseGuards(AuthGuard())
 @ApiBearerAuth()
 @Controller('historic')
 export class HistoricController {
   constructor(
     private createhistoricService: CreateHistoricService,
     private findHistoricByStudentService: FindHistoricByStudentService,
+    private generatePdfService: GeneratePdfService,
   ) {}
 
   @Post('create')
@@ -49,5 +53,18 @@ export class HistoricController {
     @Param('studentID') studentId: number,
   ) {
     return this.findHistoricByStudentService.execute(query, studentId);
+  }
+
+  @Get('/pdf')
+  async getPDF(@Body() ids: number[], @Res() res: Response): Promise<void> {
+    const buffer = await this.generatePdfService.execute(ids);
+
+    res.set({
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': `attachment; filename=${Date.now()}.pdf`,
+      'Content-Length': buffer.length,
+    });
+
+    res.end(buffer);
   }
 }

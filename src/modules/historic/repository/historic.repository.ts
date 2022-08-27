@@ -1,8 +1,9 @@
 import { NotFoundException } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { Prisma, prisma, PrismaClient } from '@prisma/client';
 import { CreateHistoricDto } from 'src/modules/historic/dto/create-historic.dto';
 import { PageOptionsDto } from 'src/shared/pagination-dtos';
 import { handleError } from 'src/shared/utils/handle-error.util';
+import { Historic } from '../entities/historic.entity';
 
 export class HistoricRepository extends PrismaClient {
   async createHistoric(data: CreateHistoricDto) {
@@ -14,7 +15,9 @@ export class HistoricRepository extends PrismaClient {
     });
 
     if (!student) {
-      throw new NotFoundException(`Student with Id '${data.student_id}' not found!`);
+      throw new NotFoundException(
+        `Student with Id '${data.student_id}' not found!`,
+      );
     }
 
     return this.historic
@@ -83,5 +86,11 @@ export class HistoricRepository extends PrismaClient {
     }
 
     return historic;
+  }
+
+  async getHistoricById(id: number): Promise<Historic> {
+    const prisma = new PrismaClient();
+
+    return prisma.$queryRaw(Prisma.sql`SELECT `);
   }
 }
