@@ -9,8 +9,8 @@ export const LoggedAdmin = createParamDecorator((_, ctx: ExecutionContext) => {
   const request = ctx.switchToHttp().getRequest();
   const userObject = request.user;
 
-  if (userObject.user.role === UserRole.ADMIN) {
-    delete userObject.user.passwordHash;
+  if (userObject.role === UserRole.ADMIN) {
+    delete userObject.passwordHash;
 
     return userObject;
   } else {

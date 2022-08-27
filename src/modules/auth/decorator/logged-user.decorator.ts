@@ -10,11 +10,13 @@ export const LoggedUser = createParamDecorator((_, ctx: ExecutionContext) => {
   const userObject = request.user;
 
   if (
-    userObject.user.role === UserRole.BACKOFICCE ||
+    userObject.role === UserRole.BACKOFICCE ||
     UserRole.ADMIN ||
     UserRole.CAMPO
   ) {
-    delete userObject.user.passwordHash;
+    delete userObject.passwordHash;
+    delete userObject.role
+    delete userObject.deleted
 
     return userObject;
   } else {
