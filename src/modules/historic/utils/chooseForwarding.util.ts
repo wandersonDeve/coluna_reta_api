@@ -49,4 +49,16 @@ export class ChooseForwardingUtil {
       secondLineTo,
     };
   }
+  execute(forwarding: string) {
+    switch (forwarding) {
+      case 'RX':
+        return this.RX();
+      case 'PHYSIOTHERAPY':
+        return this.PHYSIOTHERAPY();
+      case 'VEST':
+        return this.VEST();
+      case 'SURGERY':
+        return this.SURGERY();
+    }
+  }
 }

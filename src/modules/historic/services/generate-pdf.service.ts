@@ -42,7 +42,7 @@ export class GeneratePdfService {
         const dateFormatted = formatDateUtil.execute(consultation_date);
 
         const { fistMovieTo, fistLineTo, SecondMoveTo, secondLineTo } =
-          chooseForwardingUtil.RX();
+          chooseForwardingUtil.execute(forwarding);
 
         doc.fontSize(15).fillColor('blue').text(`${name}`, 128, 252); //nome do aluno
         doc.text(`${birth_date}`, 220, 287); //Data de nascimento
