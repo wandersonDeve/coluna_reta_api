@@ -22,7 +22,7 @@ import { ConfigModule } from '@nestjs/config';
     StudentModule,
     InstitutionModule,
     MailModule,
-    HistoricModule
+    HistoricModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

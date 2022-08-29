@@ -6,11 +6,11 @@ async function main() {
   console.log(`Start seeding ...`);
   await Promise.all([
     await prisma.$queryRaw(
-      Prisma.sql`INSERT IGNORE INTO user (name,role,email,password_hash)
+      Prisma.sql`INSERT IGNORE INTO user (id,name,role,email,password_hash)
     VALUES
-      ("Jinpachi Mishima","ADMIN","admin@colunareta.com","$2a$10$6EgPRZqqBJIzIya.NknvZeJA9MN20EjSvfWgZwkf.Z6KYTM9eJm9W"),
-      ("Julia Chang","CAMPO","campo@colunareta.com","$2a$10$6EgPRZqqBJIzIya.NknvZeJA9MN20EjSvfWgZwkf.Z6KYTM9eJm9W"),
-      ("Jack","BACKOFFICE","backoffice@colunareta.com","$2a$10$6EgPRZqqBJIzIya.NknvZeJA9MN20EjSvfWgZwkf.Z6KYTM9eJm9W")`,
+      (1,"Julia Chang","ADMIN","admin@colunareta.com","$2a$10$6EgPRZqqBJIzIya.NknvZeJA9MN20EjSvfWgZwkf.Z6KYTM9eJm9W"),
+      (2,"Jinpachi Mishima","CAMPO","campo@colunareta.com","$2a$10$6EgPRZqqBJIzIya.NknvZeJA9MN20EjSvfWgZwkf.Z6KYTM9eJm9W"),
+      (3,"Jack","BACKOFFICE","backoffice@colunareta.com","$2a$10$6EgPRZqqBJIzIya.NknvZeJA9MN20EjSvfWgZwkf.Z6KYTM9eJm9W")`,
     ),
   ]);
 

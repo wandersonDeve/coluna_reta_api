@@ -60,7 +60,7 @@ model Student {
   phone          String
   institution    Institution? @relation(fields: [institution_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   institution_id Int?
-  address        Address?     @relation(fields: [address_id], references: [id])
+  address        Address?     @relation(fields: [address_id], references: [id], onDelete: SetNull, onUpdate: Cascade)
   address_id     Int?
   historic       Historic[]
   created_at     DateTime     @default(now())

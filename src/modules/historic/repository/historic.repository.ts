@@ -1,8 +1,9 @@
 import { NotFoundException } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { Prisma, prisma, PrismaClient } from '@prisma/client';
 import { CreateHistoricDto } from 'src/modules/historic/dto/create-historic.dto';
 import { PageOptionsDto } from 'src/shared/pagination-dtos';
 import { handleError } from 'src/shared/utils/handle-error.util';
+import { Historic } from '../entities/historic.entity';
 
 export class HistoricRepository extends PrismaClient {
   async createHistoric(data: CreateHistoricDto) {
@@ -14,7 +15,9 @@ export class HistoricRepository extends PrismaClient {
     });
 
     if (!student) {
-      throw new NotFoundException(`Student with Id '${data.student_id}' not found!`);
+      throw new NotFoundException(
+        `Student with Id '${data.student_id}' not found!`,
+      );
     }
 
     return this.historic
@@ -83,5 +86,19 @@ export class HistoricRepository extends PrismaClient {
     }
 
     return historic;
+  }
+
+  async getHistoricById(id: number): Promise<any> {
+    const prisma = new PrismaClient();
+
+    const result =
+      await prisma.$queryRaw(Prisma.sql`SELECT student.name, student.birth_date, student.phone, historic.consultation_date, historic.cobb_angle, historic.return_date, historic.forwarding
+    FROM Student as student
+    LEFT JOIN Historic as historic
+    ON student.id = historic.student_id
+    where historic.id = ${id}
+    `);
+
+    return result[0];
   }
 }

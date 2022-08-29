@@ -1,6 +1,6 @@
 export enum Forwarding {
-  RX = "RX",
-  PHYSIOTHERAPY = "PHYSIOTHERAPY",
-  VEST = "VEST",
-  SURGERY = "SURGERY"
+  RX = 'RX',
+  PHYSIOTHERAPY = 'PHYSIOTHERAPY',
+  VEST = 'VEST',
+  SURGERY = 'SURGERY',
 }
