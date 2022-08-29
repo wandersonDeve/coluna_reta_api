@@ -10,6 +10,7 @@ import {
   SearchUsersService,
   UpdatePasswordByEmailService,
   UpdateUserService,
+  UpdateMyAccountService,
 } from './services';
 import { UserController } from './user.controller';
 
@@ -25,6 +26,7 @@ import { UserController } from './user.controller';
     UpdateUserService,
     DeleteUserService,
     UpdatePasswordByEmailService,
+    UpdateMyAccountService,
   ],
 })
 export class UserModule {}

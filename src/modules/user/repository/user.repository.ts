@@ -5,6 +5,7 @@ import { PageOptionsDto } from '../../../shared/pagination-dtos';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { SearchUserDto } from '../dto/search.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
+import { UpdateMyAccountDto } from '../dto/update-my-account.dto';
 import { User } from '../entities/user.entity';
 
 export class UserRepository extends PrismaClient {
@@ -21,7 +22,7 @@ export class UserRepository extends PrismaClient {
     name,
     email,
     role,
-    institution_id,
+    institutions,
     recoverPasswordToken,
   }: CreateUserDto) {
     const newUser = await this.user
@@ -32,7 +33,7 @@ export class UserRepository extends PrismaClient {
           role,
           recoverPasswordToken,
           institutions: {
-            connect: institution_id.map((id) => ({
+            connect: institutions.map((id) => ({
               id,
             })),
           },
@@ -151,11 +152,20 @@ export class UserRepository extends PrismaClient {
       .catch(handleError);
   }
 
-  async updateUser(userId: number, { ...data }: UpdateUserDto): Promise<User> {
+  async updateUser(userId: number, data: UpdateUserDto): Promise<User> {
     const updatedUser = await this.user
       .update({
         where: { id: userId },
-        data,
+        data: {
+          name: data.name,
+          email: data.email,
+          role: data.role,
+          institutions: {
+            connect: data.institutions.map((id) => ({
+              id,
+            })),
+          },
+        },
       })
       .catch(handleError);
 
@@ -163,6 +173,23 @@ export class UserRepository extends PrismaClient {
     delete updatedUser.deleted;
 
     return updatedUser;
+  }
+
+  async updateMyAccount(userId: number, { ...data }: UpdateMyAccountDto) {
+    const updateMyAccount = await this.user
+      .update({
+        where: {
+          id: userId,
+        },
+        data,
+      })
+      .catch(handleError);
+
+    delete updateMyAccount.passwordHash;
+    delete updateMyAccount.deleted;
+    delete updateMyAccount.role;
+
+    return updateMyAccount;
   }
 
   async updatePassword(id: number, passwordHash: string): Promise<User> {

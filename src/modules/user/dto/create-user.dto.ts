@@ -45,5 +45,5 @@ export class CreateUserDto {
     description: 'The user institution id.',
     example: [514, 584],
   })
-  institution_id: number[];
+  institutions: number[];
 }
