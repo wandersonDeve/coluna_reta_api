@@ -57,12 +57,14 @@ export class InstitutionRepository extends PrismaClient {
   }
 
   async getAllInstitutions() {
-    return this.institution.findMany({
-      select: {
-        id: true,
-        name: true,
-      }
-    }).catch(handleError);
+    return this.institution
+      .findMany({
+        select: {
+          id: true,
+          name: true,
+        },
+      })
+      .catch(handleError);
   }
 
   async findOneInstitution(institutionId: number) {
