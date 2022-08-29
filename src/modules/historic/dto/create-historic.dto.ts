@@ -6,7 +6,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { Forwarding } from 'src/modules/historic/utils/fowarding.enum';
+import { Forwarding } from '../../../modules/historic/utils/fowarding.enum';
 
 export class CreateHistoricDto {
   @IsNumber()

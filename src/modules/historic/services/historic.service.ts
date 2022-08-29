@@ -1,4 +1,4 @@
-import { HistoricRepository } from 'src/modules/historic/repository/historic.repository';
+import { HistoricRepository } from '../../../modules/historic/repository/historic.repository';
 import { CreateHistoricDto } from '../dto/create-historic.dto';
 
 export class CreateHistoricService {

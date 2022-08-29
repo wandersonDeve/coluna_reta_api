@@ -12,8 +12,8 @@ import { Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { User } from '@prisma/client';
-import { LoggedUser } from 'src/modules/auth/decorator/logged-user.decorator';
-import { PageOptionsDto } from 'src/shared/pagination-dtos';
+import { LoggedUser } from '../../modules/auth/decorator/logged-user.decorator';
+import { PageOptionsDto } from '../../shared/pagination-dtos';
 import { CreateHistoricDto } from './dto/create-historic.dto';
 import {
   CreateHistoricService,

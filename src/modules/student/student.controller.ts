@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
-import { PageOptionsDto } from 'src/shared/pagination-dtos';
+import { PageOptionsDto } from '../../shared/pagination-dtos';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import {
@@ -38,7 +38,7 @@ export class StudentController {
     private findOneStudentByIdService: FindOneStudentByIdService,
     private findManyStudentsByParamService: FindManyStudentsByParamService,
     private deleteStudentByIdService: DeleteStudentByIdService,
-    private updateStudentService: UpdateStudentService
+    private updateStudentService: UpdateStudentService,
   ) {}
 
   @Post()
@@ -67,7 +67,8 @@ export class StudentController {
 
   @Post('/search')
   @ApiOperation({
-    summary: 'Get students by name with institution name filter - (FOR ALL USERS).',
+    summary:
+      'Get students by name with institution name filter - (FOR ALL USERS).',
   })
   async findManyStudents(
     @LoggedUser() user: User,

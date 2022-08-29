@@ -1,9 +1,8 @@
 import { NotFoundException } from '@nestjs/common';
-import { Prisma, prisma, PrismaClient } from '@prisma/client';
-import { CreateHistoricDto } from 'src/modules/historic/dto/create-historic.dto';
-import { PageOptionsDto } from 'src/shared/pagination-dtos';
-import { handleError } from 'src/shared/utils/handle-error.util';
-import { Historic } from '../entities/historic.entity';
+import { Prisma, PrismaClient } from '@prisma/client';
+import { CreateHistoricDto } from '../../../modules/historic/dto/create-historic.dto';
+import { PageOptionsDto } from '../../../shared/pagination-dtos';
+import { handleError } from '../../../shared/utils/handle-error.util';
 
 export class HistoricRepository extends PrismaClient {
   async createHistoric(data: CreateHistoricDto) {

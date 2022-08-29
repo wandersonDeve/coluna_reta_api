@@ -1,4 +1,3 @@
-import { User } from '../entities/user.entity';
 import { UserRepository } from '../repository/user.repository';
 import {
   PageDto,

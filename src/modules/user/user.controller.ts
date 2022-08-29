@@ -30,7 +30,7 @@ import {
   SearchUsersService,
   UpdatePasswordByEmailService,
   UpdateUserService,
-  UpdateMyAccountService
+  UpdateMyAccountService,
 } from './services';
 
 @ApiTags('User')
@@ -44,7 +44,7 @@ export class UserController {
     private updateUserService: UpdateUserService,
     private deleteUserService: DeleteUserService,
     private updatePasswordByEmailService: UpdatePasswordByEmailService,
-    private updateMyAccountService: UpdateMyAccountService
+    private updateMyAccountService: UpdateMyAccountService,
   ) {}
 
   @Post('create')

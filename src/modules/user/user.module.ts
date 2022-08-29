@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
-import { PrismaService } from 'prisma/service/prisma.service';
+import { PrismaService } from '../../../prisma/service/prisma.service';
 import { MailModule } from '../mail/mail.module';
 import {
   CreateUserService,

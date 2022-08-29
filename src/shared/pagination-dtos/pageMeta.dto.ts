@@ -5,19 +5,19 @@ export class PageMetaDto {
   @ApiProperty()
   readonly page: number;
 
-  //@ApiProperty()
+  @ApiProperty()
   readonly take: number;
 
-  //@ApiProperty()
+  @ApiProperty()
   readonly itemCount: number;
 
- // @ApiProperty()
+  @ApiProperty()
   readonly pageCount: number;
 
-  //@ApiProperty()
+  @ApiProperty()
   readonly hasPreviousPage: boolean;
 
-  //@ApiProperty()
+  @ApiProperty()
   readonly hasNextPage: boolean;
 
   @ApiProperty()

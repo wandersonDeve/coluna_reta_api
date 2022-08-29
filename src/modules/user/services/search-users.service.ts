@@ -2,7 +2,7 @@ import {
   PageDto,
   PageMetaDto,
   PageOptionsDto,
-} from 'src/shared/pagination-dtos';
+} from '../../../shared/pagination-dtos';
 import { SearchUserDto } from '../dto/search.dto';
 import { UserRepository } from '../repository/user.repository';
 

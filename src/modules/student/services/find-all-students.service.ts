@@ -2,7 +2,7 @@ import {
   PageOptionsDto,
   PageDto,
   PageMetaDto,
-} from 'src/shared/pagination-dtos';
+} from '../../../shared/pagination-dtos';
 import { Student } from '../entities/student.entity';
 import { StudentRepository } from '../repository/student-repository';
 

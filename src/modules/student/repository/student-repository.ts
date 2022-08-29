@@ -1,7 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { PageOptionsDto } from 'src/shared/pagination-dtos';
-import { handleError } from 'src/shared/utils/handle-error.util';
+import { PageOptionsDto } from '../../../shared/pagination-dtos';
+import { handleError } from '../../../shared/utils/handle-error.util';
 import { Student } from '../entities/student.entity';
 import { CreateStudentDto } from './../dto/create-student.dto';
 import { UpdateStudentDto } from './../dto/update-student.dto';

@@ -2,7 +2,7 @@ import {
   PageDto,
   PageMetaDto,
   PageOptionsDto,
-} from 'src/shared/pagination-dtos';
+} from '../../../shared/pagination-dtos';
 import { HistoricRepository } from '../repository/historic.repository';
 
 export class FindHistoricByStudentService {

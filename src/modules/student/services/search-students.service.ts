@@ -1,9 +1,8 @@
-import { NotFoundException } from '@nestjs/common';
 import {
   PageDto,
   PageMetaDto,
   PageOptionsDto,
-} from 'src/shared/pagination-dtos';
+} from '../../../shared/pagination-dtos';
 import { SearchStudentsDto } from '../dto/search-students.dto';
 import { StudentRepository } from '../repository/student-repository';
 
@@ -50,6 +49,5 @@ export class FindManyStudentsByParamService {
     const pageMetaDto = new PageMetaDto({ itemCount, pageOptionsDto });
 
     return new PageDto(students, pageMetaDto);
-
   }
 }

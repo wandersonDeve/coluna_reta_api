@@ -1,8 +1,7 @@
-import { AddressService } from './../../modules/address/address.service';
 import { Type } from 'class-transformer';
 import { IsEnum, IsInt, IsOptional, IsString, Min } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { Order } from 'src/shared/utils/order.util';
+import { Order } from '../../shared/utils/order.util';
 
 export class PageOptionsDto {
   @ApiPropertyOptional({ enum: Order, default: Order.asc })
