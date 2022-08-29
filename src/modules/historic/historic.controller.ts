@@ -22,7 +22,7 @@ import {
 import { GeneratePdfService } from './services/generate-pdf.service';
 
 @ApiTags('Historic')
-//@UseGuards(AuthGuard())
+@UseGuards(AuthGuard())
 @ApiBearerAuth()
 @Controller('historic')
 export class HistoricController {
@@ -56,7 +56,14 @@ export class HistoricController {
   }
 
   @Post('/pdf')
-  async getPDF(@Body() data: any, @Res() res: Response): Promise<void> {
+  @ApiOperation({
+    summary: 'Create a PDF file.',
+  })
+  async getPDF(
+    @LoggedUser() user: User,
+    @Body() data: any,
+    @Res() res: Response,
+  ): Promise<void> {
     const buffer = await this.generatePdfService.execute(data.ids);
 
     res.set({
