@@ -101,7 +101,7 @@ export class UserController {
   @ApiOperation({
     summary: 'Edit a user by Id - (FOR ADMIN).',
   })
-  updateUserByAdmin(
+  updateUser(
     @LoggedAdmin() user: User,
     @Param('userID') userId: number,
     @Body() updateUserDto: UpdateUserDto,

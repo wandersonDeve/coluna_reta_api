@@ -15,8 +15,6 @@ export const LoggedUser = createParamDecorator((_, ctx: ExecutionContext) => {
     UserRole.CAMPO
   ) {
     delete userObject.passwordHash;
-    delete userObject.role
-    delete userObject.deleted
 
     return userObject;
   } else {
