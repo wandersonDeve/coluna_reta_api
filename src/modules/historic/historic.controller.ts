@@ -35,9 +35,9 @@ export class HistoricController {
     private createConsultationService: CreateConsultationService,
   ) {}
 
-  @Post('create')
+  @Post('register-visit')
   @ApiOperation({
-    summary: 'Create a historic for student - (FOR USERS).',
+    summary: 'Register a student visit - (FOR USERS).',
   })
   async createHistoric(
     @LoggedUser() user: User,
@@ -58,9 +58,9 @@ export class HistoricController {
     return this.findHistoricByStudentService.execute(query, studentId);
   }
 
-  @Post('/pdf')
+  @Post('pdf')
   @ApiOperation({
-    summary: 'Create a PDF file.',
+    summary: 'Create a PDF file. - (FOR USERS).',
   })
   async getPDF(
     @LoggedUser() user: User,
@@ -78,9 +78,9 @@ export class HistoricController {
     res.end(buffer);
   }
 
-  @Post('consultation')
+  @Post('make-appointment')
   @ApiOperation({
-    summary: 'Create a Consultation.',
+    summary: 'Make an appointment for a student. - (FOR USERS).',
   })
   async createConsultation(
     @LoggedUser() user: User,

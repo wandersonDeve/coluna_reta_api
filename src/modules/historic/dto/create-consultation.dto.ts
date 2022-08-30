@@ -21,7 +21,7 @@ export class CreateConsultationDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
-    description: `Name the clinic.`,
+    description: `Clinic name for consultation.`,
     example: 'Santa Helena',
   })
   clinic: string;
@@ -29,7 +29,7 @@ export class CreateConsultationDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
-    description: `Consultation Date of the consultation.`,
+    description: `Date the consultation will take place.`,
     example: '05/09/2022',
   })
   consultation_date: string;
