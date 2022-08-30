@@ -3,6 +3,7 @@ import { Prisma, PrismaClient } from '@prisma/client';
 import { CreateHistoricDto } from '../../../modules/historic/dto/create-historic.dto';
 import { PageOptionsDto } from '../../../shared/pagination-dtos';
 import { handleError } from '../../../shared/utils/handle-error.util';
+import { CreateConsultationDto } from '../dto/create-consultation.dto';
 
 export class HistoricRepository extends PrismaClient {
   async createHistoric(data: CreateHistoricDto) {
@@ -77,6 +78,9 @@ export class HistoricRepository extends PrismaClient {
           student_id: studentId,
           deleted: false,
         },
+        include: {
+          consultation: true,
+        },
       })
       .catch(handleError);
 
@@ -99,5 +103,64 @@ export class HistoricRepository extends PrismaClient {
     `);
 
     return result[0];
+  }
+
+  async createConsultation(data: CreateConsultationDto) {
+    const student = await this.student.findFirst({
+      where: {
+        id: data.student_id,
+        deleted: false,
+      },
+    });
+
+    if (!student) {
+      throw new NotFoundException(
+        `Student with Id '${data.student_id}' not found!`,
+      );
+    }
+
+    const historic = await this.historic.findFirst({
+      where: {
+        id: data.historic_id,
+        student_id: data.student_id,
+        deleted: false,
+      },
+      include: {
+        consultation: true,
+      },
+    });
+
+    if (!historic) {
+      throw new NotFoundException(
+        `Historic not found or historic Id '${data.historic_id}' does not match student Id '${data.student_id}'!`,
+      );
+    }
+
+    if (historic.consultation.length > 0) {
+      throw new NotFoundException(
+        `There is already an appointment scheduled with the historic Id '${data.historic_id}' for this student!`,
+      );
+    }
+
+    return this.consultation.create({
+      data: {
+        student: {
+          connect: {
+            id: data.student_id,
+          },
+        },
+        historic: {
+          connect: {
+            id: data.historic_id,
+          },
+        },
+        clinic: data.clinic,
+        consultation_date: data.consultation_date,
+      },
+      include: {
+        student: true,
+        historic: true,
+      },
+    });
   }
 }

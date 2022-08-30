@@ -16,10 +16,12 @@ import { LoggedUser } from '../../modules/auth/decorator/logged-user.decorator';
 import { PageOptionsDto } from '../../shared/pagination-dtos';
 import { CreateHistoricDto } from './dto/create-historic.dto';
 import {
+  CreateConsultationService,
   CreateHistoricService,
   FindHistoricByStudentService,
 } from './services';
 import { GeneratePdfService } from './services/generate-pdf.service';
+import { CreateConsultationDto } from './dto/create-consultation.dto';
 
 @ApiTags('Historic')
 @UseGuards(AuthGuard())
@@ -30,11 +32,12 @@ export class HistoricController {
     private createhistoricService: CreateHistoricService,
     private findHistoricByStudentService: FindHistoricByStudentService,
     private generatePdfService: GeneratePdfService,
+    private createConsultationService: CreateConsultationService,
   ) {}
 
-  @Post('create')
+  @Post('register-visit')
   @ApiOperation({
-    summary: 'Create a historic for student - (FOR USERS).',
+    summary: 'Register a student visit - (FOR USERS).',
   })
   async createHistoric(
     @LoggedUser() user: User,
@@ -55,9 +58,9 @@ export class HistoricController {
     return this.findHistoricByStudentService.execute(query, studentId);
   }
 
-  @Post('/pdf')
+  @Post('pdf')
   @ApiOperation({
-    summary: 'Create a PDF file.',
+    summary: 'Create a PDF file. - (FOR USERS).',
   })
   async getPDF(
     @LoggedUser() user: User,
@@ -73,5 +76,16 @@ export class HistoricController {
     });
 
     res.end(buffer);
+  }
+
+  @Post('make-appointment')
+  @ApiOperation({
+    summary: 'Make an appointment for a student. - (FOR USERS).',
+  })
+  async createConsultation(
+    @LoggedUser() user: User,
+    @Body() data: CreateConsultationDto,
+  ) {
+    return this.createConsultationService.execute(data);
   }
 }
