@@ -16,10 +16,12 @@ import { LoggedUser } from '../../modules/auth/decorator/logged-user.decorator';
 import { PageOptionsDto } from '../../shared/pagination-dtos';
 import { CreateHistoricDto } from './dto/create-historic.dto';
 import {
+  CreateConsultationService,
   CreateHistoricService,
   FindHistoricByStudentService,
 } from './services';
 import { GeneratePdfService } from './services/generate-pdf.service';
+import { CreateConsultationDto } from './dto/create-consultation.dto';
 
 @ApiTags('Historic')
 @UseGuards(AuthGuard())
@@ -30,6 +32,7 @@ export class HistoricController {
     private createhistoricService: CreateHistoricService,
     private findHistoricByStudentService: FindHistoricByStudentService,
     private generatePdfService: GeneratePdfService,
+    private createConsultationService: CreateConsultationService,
   ) {}
 
   @Post('create')
@@ -73,5 +76,16 @@ export class HistoricController {
     });
 
     res.end(buffer);
+  }
+
+  @Post('consultation')
+  @ApiOperation({
+    summary: 'Create a Consultation.',
+  })
+  async createConsultation(
+    @LoggedUser() user: User,
+    @Body() data: CreateConsultationDto,
+  ) {
+    return this.createConsultationService.execute(data);
   }
 }

@@ -3,6 +3,7 @@ import { Prisma, PrismaClient } from '@prisma/client';
 import { CreateHistoricDto } from '../../../modules/historic/dto/create-historic.dto';
 import { PageOptionsDto } from '../../../shared/pagination-dtos';
 import { handleError } from '../../../shared/utils/handle-error.util';
+import { CreateConsultationDto } from '../dto/create-consultation.dto';
 
 export class HistoricRepository extends PrismaClient {
   async createHistoric(data: CreateHistoricDto) {
@@ -99,5 +100,41 @@ export class HistoricRepository extends PrismaClient {
     `);
 
     return result[0];
+  }
+
+  async createConsultation(data: CreateConsultationDto) {
+    const student = await this.student.findFirst({
+      where: {
+        id: data.student_id,
+        deleted: false,
+      },
+    });
+
+    if (!student) {
+      throw new NotFoundException(
+        `Student with Id '${data.student_id}' not found!`,
+      );
+    }
+
+    return this.consultation.create({
+      data: {
+        student: {
+          connect: {
+            id: data.student_id,
+          },
+        },
+        historic: {
+          connect: {
+            id: data.historic_id,
+          },
+        },
+        clinic: data.clinic,
+        consultation_date: data.consultation_date,
+      },
+      include: {
+        student: true,
+        historic: true,
+      },
+    });
   }
 }
