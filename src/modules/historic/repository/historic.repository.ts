@@ -78,6 +78,9 @@ export class HistoricRepository extends PrismaClient {
           student_id: studentId,
           deleted: false,
         },
+        include: {
+          consultation: true,
+        },
       })
       .catch(handleError);
 
@@ -113,6 +116,20 @@ export class HistoricRepository extends PrismaClient {
     if (!student) {
       throw new NotFoundException(
         `Student with Id '${data.student_id}' not found!`,
+      );
+    }
+
+    const historic = await this.historic.findFirst({
+      where: {
+        id: data.historic_id,
+        student_id: data.student_id,
+        deleted: false,
+      },
+    });
+
+    if (!historic) {
+      throw new NotFoundException(
+        `Historic not found or historic Id '${data.historic_id}' does not match student Id '${data.student_id}'!`,
       );
     }
 
