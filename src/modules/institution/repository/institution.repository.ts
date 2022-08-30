@@ -75,6 +75,8 @@ export class InstitutionRepository extends PrismaClient {
           id: true,
           name: true,
           phone_number: true,
+          created_at: true,
+          updated_at: true,
           _count: {
             select: {
               student: true,
