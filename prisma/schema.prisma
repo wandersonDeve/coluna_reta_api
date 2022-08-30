@@ -77,6 +77,8 @@ model Historic {
   forwarding        String?
   cobb_angle        String
   return_date       String
+  image_1           String
+  image_2           String
   consultation      Consultation[]
   updated_at        DateTime       @default(now()) @updatedAt
   deleted           Boolean        @default(false)

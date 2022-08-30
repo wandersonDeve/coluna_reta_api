@@ -5,6 +5,7 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  IsUrl,
 } from 'class-validator';
 import { Forwarding } from '../../../modules/historic/utils/fowarding.enum';
 
@@ -40,4 +41,22 @@ export class CreateHistoricDto {
     example: '03/09/2022',
   })
   return_date: string;
+
+  
+  @IsUrl()
+  @IsNotEmpty()
+  @ApiProperty({
+    description: ``,
+    example: '',
+  })
+  image_1: string;
+
+  
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({
+    description: ``,
+    example: '',
+  })
+  image_2: string;
 }
