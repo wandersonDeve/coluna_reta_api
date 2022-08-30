@@ -125,11 +125,20 @@ export class HistoricRepository extends PrismaClient {
         student_id: data.student_id,
         deleted: false,
       },
+      include: {
+        consultation: true,
+      },
     });
 
     if (!historic) {
       throw new NotFoundException(
         `Historic not found or historic Id '${data.historic_id}' does not match student Id '${data.student_id}'!`,
+      );
+    }
+
+    if (historic.consultation.length > 0) {
+      throw new NotFoundException(
+        `There is already an appointment scheduled with the historic Id '${data.historic_id}' for this student!`,
       );
     }
 
