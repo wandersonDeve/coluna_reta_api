@@ -41,7 +41,6 @@ export class CreateHistoricDto {
     example: '03/09/2022',
   })
   return_date: string;
-
   
   @IsUrl()
   @IsNotEmpty()
@@ -50,7 +49,6 @@ export class CreateHistoricDto {
     example: 'https://notortopedia.com.br/wp-content/uploads/2022/02/osteomielite-conheca-as-causas-e-sintomas-not-ortopedia-blog_1.jpg',
   })
   image_1: string;
-
   
   @IsString()
   @IsNotEmpty()
