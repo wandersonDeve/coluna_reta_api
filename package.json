@@ -25,7 +25,12 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "seed": "ts-node ./prisma/seed/seed.ts",
-    "seed:admin": "ts-node ./prisma/seed/admin.ts"
+    "seed:admin": "ts-node ./prisma/seed/admin.ts",
+    "prisma:introspect": "prisma introspect",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:migrate:deploy": "prisma migrate deploy",
+    "prisma": "prisma"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^1.8.1",
