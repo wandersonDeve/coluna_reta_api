@@ -20,7 +20,7 @@ export class InstitutionRepository extends PrismaClient {
     order,
     orderByColumn,
     take,
-  }: PageOptionsDto): Promise<Institution[]> {
+  }: PageOptionsDto) {
     const institutions = await this.institution
       .findMany({
         skip,
