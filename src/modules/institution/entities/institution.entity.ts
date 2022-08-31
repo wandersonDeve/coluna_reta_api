@@ -1,9 +1,9 @@
 export class Institution {
-  id: number;
+  id?: number;
   name: string;
   phone_number: string;
-  address_id: number | null;
-  created_at: Date;
-  updated_at: Date;
-  deleted: boolean;
+  address_id?: number;
+  created_at?: string | Date;
+  updated_at?: string | Date;
+  deleted?: boolean;
 }

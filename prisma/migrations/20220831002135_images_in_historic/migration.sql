@@ -1,3 +1,14 @@
+/*
+  Warnings:
+
+  - Added the required column `image_1` to the `Historic` table without a default value. This is not possible if the table is not empty.
+  - Added the required column `image_2` to the `Historic` table without a default value. This is not possible if the table is not empty.
+
+*/
+-- AlterTable
+ALTER TABLE `Historic` ADD COLUMN `image_1` VARCHAR(191) NOT NULL,
+    ADD COLUMN `image_2` VARCHAR(191) NOT NULL;
+
 -- CreateTable
 CREATE TABLE `Consultation` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
