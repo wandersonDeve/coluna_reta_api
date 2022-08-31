@@ -41,12 +41,4 @@ export class CreateStudentDto extends Student {
     example: 1,
   })
   institution_id: number;
-
-  @IsNumber()
-  @IsOptional()
-  @ApiProperty({
-    description: ' student address.',
-    example: 1,
-  })
-  address_id?: number;
 }
