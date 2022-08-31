@@ -70,18 +70,18 @@ model Student {
 }
 
 model Historic {
-  id                Int            @id @default(autoincrement())
-  student           Student?       @relation(fields: [student_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  student_id        Int?
-  visit_date DateTime       @default(now())
-  forwarding        String?
-  cobb_angle        String
-  return_date       String
-  image_1           String
-  image_2           String
-  consultation      Consultation[]
-  updated_at        DateTime       @default(now()) @updatedAt
-  deleted           Boolean        @default(false)
+  id           Int            @id @default(autoincrement())
+  student      Student?       @relation(fields: [student_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  student_id   Int?
+  visit_date   DateTime       @default(now())
+  forwarding   String?
+  cobb_angle   String
+  return_date  String
+  image_1      String
+  image_2      String
+  consultation Consultation[]
+  updated_at   DateTime       @default(now()) @updatedAt
+  deleted      Boolean        @default(false)
 }
 
 model Consultation {
