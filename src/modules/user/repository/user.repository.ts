@@ -103,6 +103,7 @@ export class UserRepository extends PrismaClient {
     return this.user.findFirst({
       where: {
         email,
+        deleted: false,
       },
     });
   }
