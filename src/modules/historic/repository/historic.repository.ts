@@ -43,7 +43,7 @@ export class HistoricRepository extends PrismaClient {
               phone: true,
             },
           },
-          consultation_date: true,
+          visit_date: true,
           forwarding: true,
           cobb_angle: true,
           return_date: true,

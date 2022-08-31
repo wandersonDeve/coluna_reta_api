@@ -73,7 +73,7 @@ model Historic {
   id                Int            @id @default(autoincrement())
   student           Student?       @relation(fields: [student_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   student_id        Int?
-  consultation_date DateTime       @default(now())
+  visit_date DateTime       @default(now())
   forwarding        String?
   cobb_angle        String
   return_date       String

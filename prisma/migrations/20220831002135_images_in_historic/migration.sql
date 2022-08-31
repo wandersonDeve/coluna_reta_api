@@ -6,7 +6,7 @@
 
 */
 -- AlterTable
-ALTER TABLE `historic` ADD COLUMN `image_1` VARCHAR(191) NOT NULL,
+ALTER TABLE `Historic` ADD COLUMN `image_1` VARCHAR(191) NOT NULL,
     ADD COLUMN `image_2` VARCHAR(191) NOT NULL;
 
 -- CreateTable
