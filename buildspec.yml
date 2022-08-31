@@ -8,7 +8,7 @@ phases:
   build:
     commands:
       - echo Apply migrations...
-      - npm run prisma:migrate:deploy
+      - npx prisma generate
       - echo Create build...
       - npm run start:prod
   post_build:
