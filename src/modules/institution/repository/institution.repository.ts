@@ -7,22 +7,10 @@ import { UpdateInstitutionDto } from '../dto/update.institution';
 import { Institution } from '../entities/institution.entity';
 
 export class InstitutionRepository extends PrismaClient {
-  async createInstitution({
-    name,
-    phone_number,
-    address_id,
-  }: CreateInstitutionDto) {
+  async createInstitution({ ...data }: CreateInstitutionDto) {
     return this.institution
       .create({
-        data: {
-          name,
-          phone_number,
-          address: {
-            connect: {
-              id: address_id,
-            },
-          },
-        },
+        data,
       })
       .catch(handleError);
   }
@@ -43,7 +31,6 @@ export class InstitutionRepository extends PrismaClient {
         where: { deleted: false },
         include: {
           users: true,
-          address: true,
           student: true,
         },
       })
@@ -105,11 +92,7 @@ export class InstitutionRepository extends PrismaClient {
     return await this.institution
       .update({
         where: { id: institutionId },
-        data: {
-          name: data.name,
-          phone_number: data.phone_number,
-          address_id: data.address_id,
-        },
+        data,
       })
       .catch(handleError);
   }

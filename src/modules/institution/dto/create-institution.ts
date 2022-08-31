@@ -17,10 +17,27 @@ export class CreateInstitutionDto {
   })
   phone_number: string;
 
-  @IsNumber()
+  @IsString()
+  @IsNotEmpty()
   @ApiProperty({
-    description: 'Institution address id.',
-    example: 1,
+    description: 'The state of the address.',
+    example: 'SP',
   })
-  address_id?: number | null;
+  state: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({
+    description: 'The name of the city.',
+    example: 'São Paulo',
+  })
+  city: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({
+    description: 'The zip code of the address.',
+    example: '3086-040',
+  })
+  zip_code: string;
 }
