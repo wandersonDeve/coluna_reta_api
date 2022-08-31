@@ -46,8 +46,8 @@ export class CreateHistoricDto {
   @IsUrl()
   @IsNotEmpty()
   @ApiProperty({
-    description: ``,
-    example: '',
+    description: `1st image of the student for the field visit.`,
+    example: 'https://notortopedia.com.br/wp-content/uploads/2022/02/osteomielite-conheca-as-causas-e-sintomas-not-ortopedia-blog_1.jpg',
   })
   image_1: string;
 
@@ -55,8 +55,8 @@ export class CreateHistoricDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
-    description: ``,
-    example: '',
+    description: `2st image of the student for the field visit`,
+    example: 'https://www.hong.com.br/wp-content/uploads/2016/06/escoliose-o-que-e.jpg',
   })
   image_2: string;
 }

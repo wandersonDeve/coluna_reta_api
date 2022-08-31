@@ -31,6 +31,8 @@ export class HistoricRepository extends PrismaClient {
           forwarding: data.forwarding,
           cobb_angle: data.cobb_angle,
           return_date: data.return_date,
+          image_1: data.image_1,
+          image_2: data.image_2,
         },
         select: {
           id: true,
