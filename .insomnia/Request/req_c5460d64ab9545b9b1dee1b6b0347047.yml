@@ -1,0 +1,24 @@
+_id: req_c5460d64ab9545b9b1dee1b6b0347047
+type: Request
+parentId: wrk_36782d168d264dfa90a7f23599be283b
+modified: 1661219058764
+created: 1660680112415
+url: "{{ _.dev }}/api"
+name: Documentação
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication:
+  type: bearer
+  token: "{{ _.token_admin }}"
+  prefix: ""
+metaSortKey: -1660829148483
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

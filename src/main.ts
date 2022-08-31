@@ -1,8 +1,8 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './modules/app/app.module';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -23,12 +23,19 @@ async function bootstrap() {
     .setTitle('Coluna Reta Api')
     .setDescription('')
     .setVersion('1.0.0')
-    .addTag('user')
+    .addTag('Status')
+    .addTag('Auth')
+    .addTag('User')
+    .addTag('Address')
+    .addTag('Institution')
+    .addTag('Student')
+    .addTag('Historic')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(process.env.PORT || 3007);
+  await app.listen(process.env.PORT || 5005);
 }
 bootstrap();

@@ -3,6 +3,94 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model User {
+  id                   Int           @id @default(autoincrement())
+  name                 String
+  role                 String
+  email                String        @unique
+  passwordHash         String?       @map("password_hash")
+  created_at           DateTime      @default(now())
+  updated_at           DateTime      @default(now()) @updatedAt
+  deleted              Boolean       @default(false)
+  institutions         Institution[]
+  recoverPasswordToken String?
+
+  @@index([id, role])
+  @@map("user")
+}
+
+model Address {
+  id           Int          @id @default(autoincrement())
+  zip_code     String
+  street       String
+  number       String
+  complement   String
+  neighborhood String
+  city         String
+  state        String
+  created_at   DateTime     @default(now())
+  updated_at   DateTime     @default(now()) @updatedAt
+  deleted      Boolean      @default(false)
+  institution  Institution?
+  student      Student[]
+}
+
+model Institution {
+  id           Int       @id @default(autoincrement())
+  name         String
+  phone_number String
+  address      Address?  @relation(fields: [address_id], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  address_id   Int?      @unique
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @default(now()) @updatedAt
+  deleted      Boolean   @default(false)
+  student      Student[]
+  users        User[]
+}
+
+model Student {
+  id             Int            @id @default(autoincrement())
+  name           String
+  birth_date     String
+  phone          String
+  institution    Institution?   @relation(fields: [institution_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  institution_id Int?
+  address        Address?       @relation(fields: [address_id], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  address_id     Int?
+  historic       Historic[]
+  consultation   Consultation[]
+  created_at     DateTime       @default(now())
+  updated_at     DateTime       @default(now()) @updatedAt
+  deleted        Boolean        @default(false)
+}
+
+model Historic {
+  id           Int            @id @default(autoincrement())
+  student      Student?       @relation(fields: [student_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  student_id   Int?
+  visit_date   DateTime       @default(now())
+  forwarding   String?
+  cobb_angle   String
+  return_date  String
+  consultation Consultation[]
+  updated_at   DateTime       @default(now()) @updatedAt
+  deleted      Boolean        @default(false)
+}
+
+model Consultation {
+  id                Int       @id @default(autoincrement())
+  student           Student?  @relation(fields: [student_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  student_id        Int?
+  historic          Historic? @relation(fields: [historic_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  historic_id       Int?
+  clinic            String
+  consultation_date String
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @default(now()) @updatedAt
+  deleted           Boolean   @default(false)
 }

@@ -1,0 +1,43 @@
+_id: req_a2e86dfa84c044e7a18da866594fa257
+type: Request
+parentId: fld_e6d627d92529469495151a3bbb4f92a1
+modified: 1661218695561
+created: 1660680526648
+url: "{{ _.local }}/user/all"
+name: Get All Users
+description: ""
+method: GET
+body: {}
+parameters:
+  - id: pair_1be2d3696bbc422e9012ba737bf0cea7
+    name: page
+    value: "1"
+    description: ""
+  - id: pair_fba71068293d44abb8d4cb7339e7588d
+    name: take
+    value: "5"
+    description: ""
+  - id: pair_d516c8b460144b05aa09d2ec7a66d621
+    name: order
+    value: asc
+    description: ""
+    disabled: false
+    type: text
+    multiline: false
+  - id: pair_37561951bd054ed58a9697ea69708c10
+    name: orderByColumn
+    value: id
+    description: ""
+    disabled: false
+headers: []
+authentication:
+  type: bearer
+  token: "{{ _.token_admin }}"
+metaSortKey: -1660680583261
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

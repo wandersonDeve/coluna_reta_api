@@ -2,7 +2,7 @@
 
 # coluna_reta_api
 
-
+#  <h1 align="center"> [![Typing SVG](https://readme-typing-svg.herokuapp.com/?color=ffffff&size=35&center=true&vCenter=true&width=1000&lines=Seja+bem+vindo(a)+ao+Coluna+Reta!)](https://git.io/typing-svg) </h1>
 
  [Projeto Desenvolvido no Bootcamp da Blue edtech.](https://blueedtech.gitbook.io/bootcamp/cases/87-labs/app-coluna-reta#admin-apenas-sera-necessario-conseguir-fazer-o-cadastro-das-informacoes-via-seed-database-ou-swagger)
  
@@ -93,5 +93,4 @@ Link para baixar: https://insomnia.rest/download
 
 
 [Voltar ao 🔝](#coluna_reta_api)
-
 

@@ -1,0 +1,47 @@
+_id: req_de08cfd1111a4397a0d1c0e5a4a3307f
+type: Request
+parentId: fld_e6d627d92529469495151a3bbb4f92a1
+modified: 1661218694788
+created: 1660680544064
+url: "{{ _.local }}/user/search"
+name: Search users
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"search": "Urna Vivamus Corp"
+    }
+parameters:
+  - id: pair_3caa2cfb1eb8469583e45ecb74ffa216
+    name: page
+    value: "1"
+    description: ""
+  - id: pair_4672b937338f474ca5bf004a3907fc1a
+    name: take
+    value: "10"
+    description: ""
+  - id: pair_f59f0bf8dab84eef842e2dcd36d2d848
+    name: order
+    value: asc
+    description: ""
+  - id: pair_9f8fde28d25b4b67b3ea95995b9e40b4
+    name: orderByColumn
+    value: id
+    description: ""
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_194d9eaae1f74af9ad11a015fa7ce4aa
+authentication:
+  type: bearer
+  token: "{{ _.token_admin }}"
+metaSortKey: -1660680583248.5
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
