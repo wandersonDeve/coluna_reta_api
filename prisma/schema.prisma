@@ -24,28 +24,13 @@ model User {
   @@map("user")
 }
 
-model Address {
-  id           Int          @id @default(autoincrement())
-  zip_code     String
-  street       String
-  number       String
-  complement   String
-  neighborhood String
-  city         String
-  state        String
-  created_at   DateTime     @default(now())
-  updated_at   DateTime     @default(now()) @updatedAt
-  deleted      Boolean      @default(false)
-  institution  Institution?
-  student      Student[]
-}
-
 model Institution {
   id           Int       @id @default(autoincrement())
   name         String
   phone_number String
-  address      Address?  @relation(fields: [address_id], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  address_id   Int?      @unique
+  state        String
+  city         String
+  zip_code     String
   created_at   DateTime  @default(now())
   updated_at   DateTime  @default(now()) @updatedAt
   deleted      Boolean   @default(false)
@@ -60,8 +45,6 @@ model Student {
   phone          String
   institution    Institution?   @relation(fields: [institution_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   institution_id Int?
-  address        Address?       @relation(fields: [address_id], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  address_id     Int?
   historic       Historic[]
   consultation   Consultation[]
   created_at     DateTime       @default(now())
