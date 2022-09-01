@@ -9,6 +9,7 @@ import { StudentModule } from './modules/student/student.module';
 import { UserModule } from './modules/user/user.module';
 import { MailModule } from './modules/mail/mail.module';
 import { ConfigModule } from '@nestjs/config';
+import { UploadModule } from './modules/upload/upload.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ConfigModule } from '@nestjs/config';
     InstitutionModule,
     MailModule,
     HistoricModule,
+    UploadModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

@@ -16,7 +16,7 @@ export class AuthService {
     const { email, passwordHash } = loginUserDto;
 
     const user = await this.prisma.user
-      .findUnique({ where: { email } })
+      .findFirst({ where: { email, deleted: false } })
       .catch(handleError);
 
     if (!user) {
