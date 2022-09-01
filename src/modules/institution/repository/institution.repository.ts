@@ -30,8 +30,12 @@ export class InstitutionRepository extends PrismaClient {
         },
         where: { deleted: false },
         include: {
-          users: true,
-          student: true,
+          _count: {
+            select: {
+              student: true,
+              users: true,
+            },
+          },
         },
       })
       .catch(handleError);
@@ -58,12 +62,7 @@ export class InstitutionRepository extends PrismaClient {
     const institution = await this.institution
       .findFirst({
         where: { id: institutionId, deleted: false },
-        select: {
-          id: true,
-          name: true,
-          phone_number: true,
-          created_at: true,
-          updated_at: true,
+        include: {
           _count: {
             select: {
               student: true,
