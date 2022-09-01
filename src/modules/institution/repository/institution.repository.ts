@@ -4,7 +4,6 @@ import { PageOptionsDto } from '../../../shared/pagination-dtos';
 import { handleError } from '../../../shared/utils/handle-error.util';
 import { CreateInstitutionDto } from '../dto/create-institution';
 import { UpdateInstitutionDto } from '../dto/update.institution';
-import { Institution } from '../entities/institution.entity';
 
 export class InstitutionRepository extends PrismaClient {
   async createInstitution({ ...data }: CreateInstitutionDto) {
@@ -75,7 +74,7 @@ export class InstitutionRepository extends PrismaClient {
 
     if (!institution) {
       throw new NotFoundException(
-        `Institution with Id '${institutionId}' not found!`,
+        `Institution with Id '${institutionId}' not found! Please enter an Id of an existing institution!`,
       );
     }
 
@@ -86,7 +85,7 @@ export class InstitutionRepository extends PrismaClient {
     institutionId: number,
     { ...data }: UpdateInstitutionDto,
   ) {
-    const institution = await this.findOneInstitution(institutionId);
+    await this.findOneInstitution(institutionId);
 
     return await this.institution
       .update({
@@ -97,7 +96,7 @@ export class InstitutionRepository extends PrismaClient {
   }
 
   async deleteInstitution(institutionId: number) {
-    const institution = await this.findOneInstitution(institutionId);
+    await this.findOneInstitution(institutionId);
 
     return await this.institution
       .update({
