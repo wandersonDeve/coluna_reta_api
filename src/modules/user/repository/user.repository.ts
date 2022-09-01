@@ -18,22 +18,18 @@ export class UserRepository extends PrismaClient {
     deleted: false,
     institutions: true,
   };
-  async createUser({
-    name,
-    email,
-    role,
-    institutions,
-    recoverPasswordToken,
-  }: CreateUserDto) {
+  async createUser(data: CreateUserDto) {
+    await this.validationInstitutionExists(data);
+
     const newUser = await this.user
       .create({
         data: {
-          name,
-          email,
-          role,
-          recoverPasswordToken,
+          name: data.name,
+          email: data.email,
+          role: data.role,
+          recoverPasswordToken: data.recoverPasswordToken,
           institutions: {
-            connect: institutions.map((id) => ({
+            connect: data.institutions.map((id) => ({
               id,
             })),
           },
@@ -154,6 +150,8 @@ export class UserRepository extends PrismaClient {
   }
 
   async updateUser(userId: number, data: UpdateUserDto): Promise<User> {
+    await this.validationInstitutionExists(data);
+
     const updatedUser = await this.user
       .update({
         where: { id: userId },
@@ -220,5 +218,22 @@ export class UserRepository extends PrismaClient {
       .catch(handleError);
 
     return { message: 'User deleted successfully' };
+  }
+
+  async validationInstitutionExists(data) {
+    const institution = await this.institution.findFirst({
+      where: {
+        id: {
+          in: data.institutions,
+        },
+        deleted: false,
+      },
+    });
+
+    if (!institution) {
+      throw new NotFoundException(
+        `Institution(s) with Id(s) '${data.institutions}' not found! Please enter an Id(s) of an existing institution(s)!`,
+      );
+    }
   }
 }
