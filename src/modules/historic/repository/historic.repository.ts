@@ -121,28 +121,14 @@ export class HistoricRepository extends PrismaClient {
       );
     }
 
-    const historic = await this.historic.findFirst({
+    const histories = await this.historic.findMany({
       where: {
-        id: data.historic_id,
         student_id: data.student_id,
         deleted: false,
       },
-      include: {
-        consultation: true,
-      },
     });
 
-    if (!historic) {
-      throw new NotFoundException(
-        `Historic not found or historic Id '${data.historic_id}' does not match student Id '${data.student_id}'!`,
-      );
-    }
-
-    if (historic.consultation.length > 0) {
-      throw new NotFoundException(
-        `There is already an appointment scheduled with the historic Id '${data.historic_id}' for this student!`,
-      );
-    }
+    const lastHistory = histories.at(-1).id;
 
     return this.consultation.create({
       data: {
@@ -153,7 +139,7 @@ export class HistoricRepository extends PrismaClient {
         },
         historic: {
           connect: {
-            id: data.historic_id,
+            id: lastHistory,
           },
         },
         clinic: data.clinic,

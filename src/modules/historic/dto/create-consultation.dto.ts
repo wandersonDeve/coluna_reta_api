@@ -10,14 +10,6 @@ export class CreateConsultationDto {
   })
   student_id: number;
 
-  @IsNumber()
-  @IsNotEmpty()
-  @ApiProperty({
-    description: `Student history id.`,
-    example: 1,
-  })
-  historic_id: number;
-
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
