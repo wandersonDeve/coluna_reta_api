@@ -35,7 +35,6 @@ export class UploadController {
   })
   @UseInterceptors(FileInterceptor('file'))
   async upload(@LoggedUser() user: User, @UploadedFile() file) {
-    console.log(file);
     const response = await this.fileUploadService.upload(file);
 
     if (response.Location) {
