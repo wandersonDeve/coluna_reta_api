@@ -7,53 +7,49 @@ import { CreateConsultationDto } from '../dto/create-consultation.dto';
 
 export class HistoricRepository extends PrismaClient {
   async createHistoric(data: CreateHistoricDto) {
-    try {
-      const student = await this.student.findFirst({
-        where: {
-          id: data.student_id,
-          deleted: false,
-        },
-      });
+    const student = await this.student.findFirst({
+      where: {
+        id: data.student_id,
+        deleted: false,
+      },
+    });
 
-      if (!student) {
-        throw new NotFoundException(
-          `Student with Id '${data.student_id}' not found!`,
-        );
-      }
-
-      return this.historic
-        .create({
-          data: {
-            student: {
-              connect: {
-                id: data.student_id,
-              },
-            },
-            forwarding: data.forwarding,
-            cobb_angle: data.cobb_angle,
-            return_date: data.return_date,
-            image_1: data.image_1,
-            image_2: data.image_2,
-          },
-          select: {
-            id: true,
-            student: {
-              select: {
-                id: true,
-                name: true,
-                phone: true,
-              },
-            },
-            visit_date: true,
-            forwarding: true,
-            cobb_angle: true,
-            return_date: true,
-          },
-        })
-        .catch(handleError);
-    } catch (err) {
-      console.log(err);
+    if (!student) {
+      throw new NotFoundException(
+        `Student with Id '${data.student_id}' not found!`,
+      );
     }
+
+    return this.historic
+      .create({
+        data: {
+          student: {
+            connect: {
+              id: data.student_id,
+            },
+          },
+          forwarding: data.forwarding,
+          cobb_angle: data.cobb_angle,
+          return_date: data.return_date,
+          image_1: data.image_1,
+          image_2: data.image_2,
+        },
+        select: {
+          id: true,
+          student: {
+            select: {
+              id: true,
+              name: true,
+              phone: true,
+            },
+          },
+          visit_date: true,
+          forwarding: true,
+          cobb_angle: true,
+          return_date: true,
+        },
+      })
+      .catch(handleError);
   }
 
   async findHistoricByStudent(

@@ -10,9 +10,13 @@ import {
   FindOneStudentByIdService,
   UpdateStudentService,
 } from './services';
+import { ProducerModule } from '../../shared/sqs/producer/producer.module';
 
 @Module({
-  imports: [PassportModule.register({ defaultStrategy: 'jwt' })],
+  imports: [
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+    ProducerModule,
+  ],
   controllers: [StudentController],
   providers: [
     PrismaService,

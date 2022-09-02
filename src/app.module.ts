@@ -10,6 +10,8 @@ import { UserModule } from './modules/user/user.module';
 import { MailModule } from './modules/mail/mail.module';
 import { ConfigModule } from '@nestjs/config';
 import { UploadModule } from './modules/upload/upload.module';
+import { ConsumerModule } from './shared/sqs/consumer/consumer.module';
+import { ProducerModule } from './shared/sqs/producer/producer.module';
 
 @Module({
   imports: [
@@ -23,6 +25,8 @@ import { UploadModule } from './modules/upload/upload.module';
     MailModule,
     HistoricModule,
     UploadModule,
+    ConsumerModule,
+    ProducerModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
