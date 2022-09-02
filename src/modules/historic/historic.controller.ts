@@ -24,8 +24,8 @@ import { CreateConsultationDto } from './dto/create-consultation.dto';
 import { GeneratePdfFileService } from './services/create-teste-pdf.service';
 
 @ApiTags('Historic')
-// @UseGuards(AuthGuard())
-// @ApiBearerAuth()
+@UseGuards(AuthGuard())
+@ApiBearerAuth()
 @Controller('historic')
 export class HistoricController {
   constructor(
