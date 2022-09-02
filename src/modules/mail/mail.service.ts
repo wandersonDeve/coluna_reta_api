@@ -9,7 +9,10 @@ export class MailService {
   async sendUserConfirmation(user: User) {
     const { email, name, recoverPasswordToken } = user;
 
-    const url = `https://coluna-reta-dev.netlify.app/recover/password/${recoverPasswordToken}`;
+    const url =
+      process.env.NODE_ENV !== 'production'
+        ? `${process.env.URL_PROD}${recoverPasswordToken}`
+        : `${process.env.URL_DEV}${recoverPasswordToken}`;
 
     await this.mailerService.sendMail({
       to: email,
