@@ -7,6 +7,7 @@ import {
   CreateHistoricService,
   FindHistoricByStudentService,
 } from './services';
+import { GeneratePdfFileService } from './services/create-teste-pdf.service';
 import { GeneratePdfService } from './services/generate-pdf.service';
 
 @Module({
@@ -18,6 +19,7 @@ import { GeneratePdfService } from './services/generate-pdf.service';
     GeneratePdfService,
     CreateConsultationService,
     HistoricRepository,
+    GeneratePdfFileService,
   ],
 })
 export class HistoricModule {}
