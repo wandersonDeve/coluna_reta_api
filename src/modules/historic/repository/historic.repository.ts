@@ -97,11 +97,17 @@ export class HistoricRepository extends PrismaClient {
     const prisma = new PrismaClient();
 
     const result =
-      await prisma.$queryRaw(Prisma.sql`SELECT student.name, student.birth_date, student.phone, historic.consultation_date, historic.cobb_angle, historic.return_date, historic.forwarding
-    FROM Student as student
-    LEFT JOIN Historic as historic
-    ON student.id = historic.student_id
-    where historic.id = ${id}
+      await prisma.$queryRaw(Prisma.sql`Select st.name, st.birth_date, st.phone, 
+      inst.name as institution_name, inst.city, inst.state, inst.zip_code,
+      inst.phone_number as institution_phone, hist.forwarding, hist.cobb_angle,
+      hist.return_date, hist.visit_date, hist.image_1, hist.image_2
+      
+      from Student as st
+      LEFT JOIN Institution as inst
+      ON st.id = inst.id
+      Left join Historic as hist
+      on st.id = hist.student_id
+      where st.id = ${id}
     `);
 
     return result[0];
@@ -121,28 +127,14 @@ export class HistoricRepository extends PrismaClient {
       );
     }
 
-    const historic = await this.historic.findFirst({
+    const histories = await this.historic.findMany({
       where: {
-        id: data.historic_id,
         student_id: data.student_id,
         deleted: false,
       },
-      include: {
-        consultation: true,
-      },
     });
 
-    if (!historic) {
-      throw new NotFoundException(
-        `Historic not found or historic Id '${data.historic_id}' does not match student Id '${data.student_id}'!`,
-      );
-    }
-
-    if (historic.consultation.length > 0) {
-      throw new NotFoundException(
-        `There is already an appointment scheduled with the historic Id '${data.historic_id}' for this student!`,
-      );
-    }
+    const lastHistory = histories.at(-1).id;
 
     return this.consultation.create({
       data: {
@@ -153,7 +145,7 @@ export class HistoricRepository extends PrismaClient {
         },
         historic: {
           connect: {
-            id: data.historic_id,
+            id: lastHistory,
           },
         },
         clinic: data.clinic,

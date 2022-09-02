@@ -20,18 +20,18 @@ import {
   CreateHistoricService,
   FindHistoricByStudentService,
 } from './services';
-import { GeneratePdfService } from './services/generate-pdf.service';
 import { CreateConsultationDto } from './dto/create-consultation.dto';
+import { GeneratePdfFileService } from './services/create-teste-pdf.service';
 
 @ApiTags('Historic')
-@UseGuards(AuthGuard())
-@ApiBearerAuth()
+// @UseGuards(AuthGuard())
+// @ApiBearerAuth()
 @Controller('historic')
 export class HistoricController {
   constructor(
     private createhistoricService: CreateHistoricService,
     private findHistoricByStudentService: FindHistoricByStudentService,
-    private generatePdfService: GeneratePdfService,
+    private generatePdfFileService: GeneratePdfFileService,
     private createConsultationService: CreateConsultationService,
   ) {}
 
@@ -63,19 +63,13 @@ export class HistoricController {
     summary: 'Create a PDF file. - (FOR USERS).',
   })
   async getPDF(
-    @LoggedUser() user: User,
+    //@LoggedUser() user: User,
     @Body() data: any,
     @Res() res: Response,
   ): Promise<void> {
-    const buffer = await this.generatePdfService.execute(data.ids);
+    const buffer = await this.generatePdfFileService.execute(data.ids);
 
-    res.set({
-      'Content-Type': 'application/pdf',
-      'Content-Disposition': `attachment; filename=${Date.now()}.pdf`,
-      'Content-Length': buffer.length,
-    });
-
-    res.end(buffer);
+    return buffer;
   }
 
   @Post('make-appointment')

@@ -8,6 +8,8 @@ import { UpdateStudentDto } from './../dto/update-student.dto';
 
 export class StudentRepository extends PrismaClient {
   async createStudent(data: CreateStudentDto): Promise<Student> {
+    await this.validationInstitutionExists(data);
+
     const newStudent = await this.student
       .create({
         data: {
@@ -101,10 +103,7 @@ export class StudentRepository extends PrismaClient {
     return this.student
       .findMany({
         where,
-        select: {
-          id: true,
-          name: true,
-          birth_date: true,
+        include: {
           institution: true,
         },
         skip,
@@ -120,6 +119,8 @@ export class StudentRepository extends PrismaClient {
     id: number,
     { ...data }: UpdateStudentDto,
   ): Promise<Student> {
+    await this.validationInstitutionExists(data);
+
     const updatedStudent = await this.student.update({
       where: {
         id,
@@ -145,5 +146,20 @@ export class StudentRepository extends PrismaClient {
       .catch(handleError);
 
     return 'Student deleted successfully';
+  }
+
+  async validationInstitutionExists(data) {
+    const institution = await this.institution.findFirst({
+      where: {
+        id: data.institution_id,
+        deleted: false,
+      },
+    });
+
+    if (!institution) {
+      throw new NotFoundException(
+        `Institution with Id '${data.institution_id}' not found! Please enter an Id of an existing institution!`,
+      );
+    }
   }
 }
