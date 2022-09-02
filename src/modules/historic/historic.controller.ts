@@ -31,7 +31,6 @@ export class HistoricController {
   constructor(
     private createhistoricService: CreateHistoricService,
     private findHistoricByStudentService: FindHistoricByStudentService,
-    private generatePdfFileService: GeneratePdfFileService,
     private createConsultationService: CreateConsultationService,
   ) {}
 
@@ -58,19 +57,6 @@ export class HistoricController {
     return this.findHistoricByStudentService.execute(query, studentId);
   }
 
-  @Post('pdf')
-  @ApiOperation({
-    summary: 'Create a PDF file. - (FOR USERS).',
-  })
-  async getPDF(
-    //@LoggedUser() user: User,
-    @Body() data: any,
-    @Res() res: Response,
-  ): Promise<void> {
-    const buffer = await this.generatePdfFileService.execute(data.ids);
-
-    return buffer;
-  }
 
   @Post('make-appointment')
   @ApiOperation({

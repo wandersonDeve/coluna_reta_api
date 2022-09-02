@@ -11,7 +11,6 @@ export class CreateUserService {
 
   async execute(data: CreateUserDto): Promise<string> {
     const userRepository = new UserRepository();
-    // const mailService = new MailService();
 
     const userAllreadyExists = await userRepository.findOneByEmail(data.email);
 

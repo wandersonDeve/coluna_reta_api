@@ -2,6 +2,11 @@ import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
 import { User } from '../user/entities/user.entity';
 
+type DataResponse = {
+  local: string;
+  message: string;
+};
+
 @Injectable()
 export class MailService {
   constructor(private mailerService: MailerService) {}
@@ -9,7 +14,10 @@ export class MailService {
   async sendUserConfirmation(user: User) {
     const { email, name, recoverPasswordToken } = user;
 
-    const url = `https://coluna-reta-dev.netlify.app/recover/password/${recoverPasswordToken}`;
+    const url =
+      process.env.NODE_ENV !== 'production'
+        ? `${process.env.URL_PROD}${recoverPasswordToken}`
+        : `${process.env.URL_DEV}${recoverPasswordToken}`;
 
     await this.mailerService.sendMail({
       to: email,
@@ -25,9 +33,7 @@ export class MailService {
     return 'Foi enviado para o seu email uma link para confirmação';
   }
 
-  async sendLogErro(error: any) {
-    const { local, message } = error;
-
+  async sendLogErro({ local, message }: DataResponse) {
     await this.mailerService.sendMail({
       to: process.env.MAIL_LOGS,
       from: process.env.MAIL_LOGS_FROM,
