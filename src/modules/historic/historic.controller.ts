@@ -21,10 +21,11 @@ import {
   FindHistoricByStudentService,
 } from './services';
 import { CreateConsultationDto } from './dto/create-consultation.dto';
+import { GeneratePdfFileService } from './services/create-teste-pdf.service';
 
 @ApiTags('Historic')
-@UseGuards(AuthGuard())
-@ApiBearerAuth()
+// @UseGuards(AuthGuard())
+// @ApiBearerAuth()
 @Controller('historic')
 export class HistoricController {
   constructor(
@@ -55,6 +56,7 @@ export class HistoricController {
   ) {
     return this.findHistoricByStudentService.execute(query, studentId);
   }
+
 
   @Post('make-appointment')
   @ApiOperation({
