@@ -57,7 +57,6 @@ export class HistoricController {
     return this.findHistoricByStudentService.execute(query, studentId);
   }
 
-
   @Post('make-appointment')
   @ApiOperation({
     summary: 'Make an appointment for a student. - (FOR USERS).',

@@ -14,10 +14,6 @@ export class CreateStudentService {
       await studentRepository.findOneStudentByAllData(data);
 
     if (studentAllreadyExist) {
-      await this.messageProducer.sendMessage({
-        local: 'Create student',
-        message: 'Student allready exist',
-      });
       throw new BadRequestException('Student allready exist');
     }
 

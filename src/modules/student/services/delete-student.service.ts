@@ -15,10 +15,6 @@ export class DeleteStudentByIdService {
     const student = await studentRepository.findOneStudentById(id);
 
     if (!student) {
-      await this.messageProducer.sendMessage({
-        local: 'delete student',
-        message: 'Student allready exist',
-      });
       throw new BadRequestException('Student not exist');
     }
 

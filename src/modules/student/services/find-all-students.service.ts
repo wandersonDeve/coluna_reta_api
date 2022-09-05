@@ -17,13 +17,6 @@ export class FindAllStudentsService {
 
     const users = await studentRepository.findAllStudents(pageOptionsDto);
 
-    if (!users) {
-      await this.messageProducer.sendMessage({
-        local: 'Find all student',
-        message: 'No students found',
-      });
-    }
-
     const allUsers = await studentRepository.getAllStudents({
       deleted: false,
     });
