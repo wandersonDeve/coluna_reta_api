@@ -6,6 +6,6 @@ jobs:
   renovate:
     runs-on: ubuntu-latest
     steps:
-      - uses: renovatebot/renovate@37.74.7
+      - uses: renovatebot/renovate@37.118.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
