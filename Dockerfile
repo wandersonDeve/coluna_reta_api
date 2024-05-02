@@ -1,4 +1,4 @@
-FROM node:21-alpine AS builder
+FROM node:22-alpine AS builder
 
 WORKDIR /user/app
 
@@ -14,7 +14,7 @@ COPY . .
 
 RUN npm run build
 
-FROM node:21-alpine
+FROM node:22-alpine
 
 COPY --from=builder /user/app/node_modules ./node_modules
 COPY --from=builder /user/app/package*.json ./
